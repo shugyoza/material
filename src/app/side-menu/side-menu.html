@@ -1,0 +1,29 @@
+@let treeControl = flatTreeControl();
+
+<cdk-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <cdk-tree-node *cdkTreeNodeDef="let node" cdkTreeNodePadding
+                 [style.display]="(node | shouldRender:nodes) ? 'flex' : 'none'"
+                 [isDisabled]="!(node | shouldRender:nodes)"
+                 class="side-menu-tree-node">
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button matIconButton disabled></button>
+    {{node.name}}
+  </cdk-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild" cdkTreeNodePadding
+                 cdkTreeNodeToggle [cdkTreeNodeTypeaheadLabel]="node.name"
+                 [style.display]="(node | shouldRender:nodes) ? 'flex' : 'none'"
+                 [isDisabled]="!(node | shouldRender:nodes)"
+                 (expandedChange)="node.isExpanded = $event"
+                 class="side-menu-tree-node">
+    <button matIconButton cdkTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.name"
+            [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+    {{node.name}}
+  </cdk-tree-node>
+</cdk-tree>
