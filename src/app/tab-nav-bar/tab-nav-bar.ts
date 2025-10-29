@@ -6,6 +6,7 @@ import { RouterLink } from "@angular/router";
 interface Tab {
   label: string;
   path: string;
+  disabled?: boolean;
 
 }
 
@@ -18,9 +19,9 @@ interface Tab {
 export class TabNavBar {
 
   readonly tabs = signal<Tab[]>([
-    {label: 'Login', path: '/login'},
-    {label: 'Register', path: '/register'},
-    {label: 'Tab 3', path: '/tab3'},
+    {label: 'Search', path: '/client-search'},
+    {label: 'General', path: '/client-general'},
+    {label: 'Admin', path: '/admin'}
   ])
 
   readonly activeTab = signal<Tab>(this.tabs()[0]);
