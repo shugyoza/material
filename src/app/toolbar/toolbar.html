@@ -1,5 +1,9 @@
 <mat-toolbar>
-  <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
+  <button
+    matIconButton
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    (click)="toggleMenu()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>My App</span>
@@ -9,5 +13,8 @@
   </button>
   <button matIconButton aria-label="Register" matTooltip="Register">
     <mat-icon>app_registration</mat-icon>
+  </button>
+  <button matIconButton aria-label="Settings" matTooltip="Settings">
+    <mat-icon>settings</mat-icon>
   </button>
 </mat-toolbar>
