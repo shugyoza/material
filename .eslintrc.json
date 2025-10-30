@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "eslint:recommended",
+    // Add other extends as needed (e.g., "plugin:react/recommended")
+    "plugin:prettier/recommended" // Ensures Prettier rules are enforced and disables conflicting ESLint rules
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    // Optional: Add custom ESLint rules here
+  }
+}
