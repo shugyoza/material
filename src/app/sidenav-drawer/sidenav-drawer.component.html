@@ -1,0 +1,24 @@
+<mat-drawer-container
+  class="drawer-container"
+  [ngStyle]="cssStyles().matDrawerContainer"
+  [hasBackdrop]="hasBackdrop()">
+  <mat-drawer
+    #drawerRef
+    [autoFocus]="autoFocus()"
+    [disableClose]="true"
+    [style.width]="drawerWidth()"
+    [mode]="mode()"
+    [position]="position()"
+    [ngStyle]="cssStyles().matDrawer"
+    role="region"
+    [opened]="opened()"
+    (keyup.escape)="onEscape()">
+    <ng-content select="[sidenavDrawer]"></ng-content>
+  </mat-drawer>
+
+  <mat-drawer-content
+    class="drawer-content"
+    [ngStyle]="cssStyles().matDrawerContent">
+    <ng-content select="[sidenavContent]"></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>
