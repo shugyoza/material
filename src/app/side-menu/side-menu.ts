@@ -1,87 +1,115 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {ArrayDataSource} from '@angular/cdk/collections';
-import {FlatTreeControl, CdkTreeModule} from '@angular/cdk/tree';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  viewChild,
+} from '@angular/core';
+import { ArrayDataSource } from '@angular/cdk/collections';
+import { CdkTreeModule, CdkTree } from '@angular/cdk/tree';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { map, timer } from 'rxjs';
 
 import { SideMenuFlatNode } from './side-menu-flat-node.interface';
-import { ShouldRenderPipe } from './should-render-pipe';
-import { E } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-side-menu',
-  imports: [CdkTreeModule, MatButtonModule, MatIconModule, ShouldRenderPipe],
+  imports: [CdkTreeModule, MatButtonModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './side-menu.html',
   styleUrl: './side-menu.scss',
 })
 export class SideMenu {
-  readonly flatTreeControl = signal(new FlatTreeControl<SideMenuFlatNode>(
-    node => node.level,
-    node => node.expandable,
-  ));
+  tree = viewChild<CdkTree<SideMenuFlatNode>>(CdkTree);
+
+  childrenAccessor = (dataNode: SideMenuFlatNode) => {
+    return timer(100).pipe(map(() => dataNode.children ?? []));
+  };
 
   dataSource = new ArrayDataSource(EXAMPLE_DATA);
 
-  nodes = EXAMPLE_DATA
+  nodes = EXAMPLE_DATA;
 
-  hasChild = (_: number, node: SideMenuFlatNode) => node.expandable;
+  hasChild = (_: number, node: SideMenuFlatNode): boolean => {
+    return (node.children?.length ?? 0) > 0;
+  };
+
+  getParentNode(node: SideMenuFlatNode) {
+    for (const parent of flattenNodes(EXAMPLE_DATA)) {
+      if (parent.children?.includes(node)) {
+        return parent;
+      }
+    }
+
+    return null;
+  }
+
+  shouldRender(node: SideMenuFlatNode) {
+    let parent = this.getParentNode(node);
+    while (parent) {
+      if (!this.tree()?.isExpanded(parent)) {
+        return false;
+      }
+      parent = this.getParentNode(parent);
+    }
+    return true;
+  }
+}
+
+function flattenNodes(nodes: SideMenuFlatNode[]): SideMenuFlatNode[] {
+  const flattenedNodes: SideMenuFlatNode[] = [];
+
+  for (const node of nodes) {
+    flattenedNodes.push(node);
+
+    if (node.children) {
+      flattenedNodes.push(...flattenNodes(node.children));
+    }
+  }
+
+  return flattenedNodes;
 }
 
 const EXAMPLE_DATA: SideMenuFlatNode[] = [
   {
-    name: 'Fruit',
-    expandable: true,
-    level: 0,
+    name: 'Admin',
+    children: [
+      {
+        name: 'Client',
+        children: [
+          {
+            name: 'Person',
+          },
+          {
+            name: 'LLC',
+          },
+          {
+            name: 'Corporation',
+          },
+          {
+            name: 'Partnership',
+          },
+        ],
+      },
+      {
+        name: 'Document',
+        children: [
+          {
+            name: 'Deed',
+          },
+          {
+            name: 'Legalization',
+          },
+          {
+            name: 'Registration',
+          },
+        ],
+      },
+    ],
   },
   {
-    name: 'Apple',
-    expandable: false,
-    level: 1,
+    name: 'Client',
   },
   {
-    name: 'Banana',
-    expandable: false,
-    level: 1,
-  },
-  {
-    name: 'Fruit loops',
-    expandable: false,
-    level: 1,
-  },
-  {
-    name: 'Vegetables',
-    expandable: true,
-    level: 0,
-  },
-  {
-    name: 'Green',
-    expandable: true,
-    level: 1,
-  },
-  {
-    name: 'Broccoli',
-    expandable: false,
-    level: 2,
-  },
-  {
-    name: 'Brussels sprouts',
-    expandable: false,
-    level: 2,
-  },
-  {
-    name: 'Orange',
-    expandable: true,
-    level: 1,
-  },
-  {
-    name: 'Pumpkins',
-    expandable: false,
-    level: 2,
-  },
-  {
-    name: 'Carrots',
-    expandable: false,
-    level: 2,
+    name: 'Document',
   },
 ];
