@@ -8,26 +8,52 @@ import { MatDrawer, MatDrawerToggleResult } from '@angular/material/sidenav';
 export class SidenavDrawerService {
   private readonly _document = inject(DOCUMENT);
 
-  private _drawer!: MatDrawer;
+  private _startSidenavDrawer!: MatDrawer;
 
-  set drawer(drawer: MatDrawer) {
-    this._drawer = drawer;
+  private _endSidenavDrawer!: MatDrawer
+
+  set startSidenavDrawer(drawer: MatDrawer) {
+    this._startSidenavDrawer = drawer;
   }
 
-  open(): Promise<MatDrawerToggleResult> {
-    return this._drawer.open();
+  set endSidenavDrawer(drawer: MatDrawer) {
+    this._endSidenavDrawer = drawer;
   }
 
-  close(): Promise<MatDrawerToggleResult> {
-    return this._drawer.close();
+  open(position: 'start' | 'end'): Promise<MatDrawerToggleResult> {
+    switch (position) {
+      case 'start':
+        return this._startSidenavDrawer.open();
+      default:
+        return this._endSidenavDrawer.open();
+    }
   }
 
-  toggle(): Promise<MatDrawerToggleResult> {
-    return this._drawer.toggle();
+  close(position: 'start' | 'end'): Promise<MatDrawerToggleResult> {
+    switch (position) {
+      case 'start':
+        return this._startSidenavDrawer.close();
+      default:
+        return this._endSidenavDrawer.close();
+    }
   }
 
-  drawerIsOpened(): boolean {
-    return this._drawer.opened;
+  toggle(position: 'start' | 'end'): Promise<MatDrawerToggleResult> {
+    switch (position) {
+      case 'start':
+        return this._startSidenavDrawer.toggle();
+      default:
+        return this._endSidenavDrawer.toggle();
+    }
+  }
+
+  startSidenavDrawerIsOpened(): boolean {
+    return this._startSidenavDrawer.opened;
+  }
+
+  endSidenavDrawerIsOpened(): boolean {
+    return this._endSidenavDrawer.opened;
+  
   }
 
   onEscape(): void {
@@ -35,7 +61,13 @@ export class SidenavDrawerService {
     const openOverlaysExist = openOverlays.length > 0;
 
     if (!openOverlaysExist) {
-      this._drawer.close();
+      if (this._startSidenavDrawer.opened) {
+        this._startSidenavDrawer.close();
+      }
+
+      if (this._endSidenavDrawer.opened) {
+        this._endSidenavDrawer.close();
+      }
 
       return;
     }
@@ -44,7 +76,13 @@ export class SidenavDrawerService {
     const openedOverlayIsTooltip =
       openedOverlay.className.indexOf('mat-mdc-tooltip-panel') > -1;
     if (openedOverlayIsTooltip) {
-      this._drawer.close();
+      if (this._startSidenavDrawer.opened) {
+        this._startSidenavDrawer.close();
+      }
+
+      if (this._endSidenavDrawer.opened) {
+        this._endSidenavDrawer.close();
+      }
 
       return;
     }

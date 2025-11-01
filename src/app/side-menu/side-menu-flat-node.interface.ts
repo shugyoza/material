@@ -2,5 +2,6 @@
 export interface SideMenuFlatNode {
   name: string;
   path?: string;
+  icon?: string;
   children?: SideMenuFlatNode[];
 }

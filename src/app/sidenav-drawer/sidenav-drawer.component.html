@@ -2,19 +2,35 @@
   class="drawer-container"
   [ngStyle]="cssStyles().matDrawerContainer"
   [hasBackdrop]="hasBackdrop()">
+
   <mat-drawer
-    #drawerRef
+    #startDrawerRef
     [autoFocus]="autoFocus()"
     [disableClose]="true"
     [style.width]="drawerWidth()"
     [mode]="mode()"
-    [position]="position()"
+    [position]="'start'"
     [ngStyle]="cssStyles().matDrawer"
     role="region"
     [opened]="opened()"
     (keyup.escape)="onEscape()">
-    <ng-content select="[sidenavDrawer]"></ng-content>
+    <ng-content select="[startSidenavDrawer]"></ng-content>
   </mat-drawer>
+
+  <mat-drawer
+    #endDrawerRef
+    [autoFocus]="autoFocus()"
+    [disableClose]="true"
+    [style.width]="drawerWidth()"
+    [mode]="mode()"
+    [position]="'end'"
+    [ngStyle]="cssStyles().matDrawer"
+    role="region"
+    [opened]="opened()"
+    (keyup.escape)="onEscape()">
+    <ng-content select="[startSidenavDrawer]"></ng-content>
+  </mat-drawer>
+
 
   <mat-drawer-content
     class="drawer-content"

@@ -1,4 +1,5 @@
 <cdk-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
+
   <!-- This is the tree node template for leaf nodes -->
   <cdk-tree-node
     *cdkTreeNodeDef="let node"
@@ -6,12 +7,15 @@
     [style.display]="shouldRender(node) ? 'flex' : 'none'"
     [isDisabled]="!shouldRender(node)"
     class="side-menu-tree-node">
-    <!-- use a disabled button to provide padding for tree leaf -->
-    <button matIconButton disabled>
-      <mat-icon>chevron_right</mat-icon>
+    <button matButton [routerLink]="node.path">
+      <mat-icon iconPositionStart>
+        {{ getParentNode(node) ? 'subdirectory_arrow_right' : '' }}
+      </mat-icon>
+      {{node.name}}
+      <mat-icon iconPositionEnd >{{ node.icon }}</mat-icon>
     </button>
-    {{node.name}}
   </cdk-tree-node>
+
   <!-- This is the tree node template for expandable nodes -->
   <cdk-tree-node
     *cdkTreeNodeDef="let node; when: hasChild"
@@ -23,13 +27,18 @@
     [isExpandable]="true"
     class="side-menu-tree-node">
     <button
-      matIconButton
+      matButton
       cdkTreeNodeToggle
       [attr.aria-label]="'Toggle ' + node.name">
-      <mat-icon class="mat-icon-rtl-mirror">
+      <mat-icon iconPositionStart >
+        {{ getParentNode(node) ? 'subdirectory_arrow_right' : node.icon ? node.icon : 'star' }}
+      </mat-icon>
+        {{node.name}}
+      <mat-icon iconPositionEnd class="mat-icon-rtl-mirror">
         {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
+
+      
     </button>
-    {{node.name}}
   </cdk-tree-node>
 </cdk-tree>

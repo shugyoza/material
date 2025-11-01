@@ -10,10 +10,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { map, timer } from 'rxjs';
 
 import { SideMenuFlatNode } from './side-menu-flat-node.interface';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-side-menu',
-  imports: [CdkTreeModule, MatButtonModule, MatIconModule],
+  imports: [CdkTreeModule, MatButtonModule, MatIconModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './side-menu.html',
   styleUrl: './side-menu.scss',
@@ -33,7 +34,7 @@ export class SideMenu {
     return (node.children?.length ?? 0) > 0;
   };
 
-  getParentNode(node: SideMenuFlatNode) {
+  getParentNode(node: SideMenuFlatNode): SideMenuFlatNode | null {
     for (const parent of flattenNodes(EXAMPLE_DATA)) {
       if (parent.children?.includes(node)) {
         return parent;
@@ -72,35 +73,44 @@ function flattenNodes(nodes: SideMenuFlatNode[]): SideMenuFlatNode[] {
 const EXAMPLE_DATA: SideMenuFlatNode[] = [
   {
     name: 'Admin',
+    icon: 'manage_accounts',
     children: [
       {
         name: 'Client',
         children: [
           {
             name: 'Person',
+            icon: 'person',
           },
           {
             name: 'LLC',
+            icon: 'work'
           },
           {
             name: 'Corporation',
+            icon: 'enterprise'
           },
           {
             name: 'Partnership',
+            icon: 'group'
           },
         ],
       },
       {
         name: 'Document',
+        icon: 'docs',
         children: [
           {
             name: 'Deed',
+            icon: 'book'
           },
           {
             name: 'Legalization',
+            icon: 'license'
           },
           {
             name: 'Registration',
+            icon: 'approval'
           },
         ],
       },
@@ -112,4 +122,9 @@ const EXAMPLE_DATA: SideMenuFlatNode[] = [
   {
     name: 'Document',
   },
+  {
+    name: 'Music',
+    path: 'music',
+    icon: 'music_note'
+  }
 ];

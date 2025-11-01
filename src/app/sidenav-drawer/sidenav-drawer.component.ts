@@ -23,7 +23,9 @@ import { SidenavDrawerService } from './sidenav-drawer.service';
   imports: [NgStyle, MatSidenavModule],
 })
 export class SidenavDrawerComponent implements AfterViewInit {
-  @ViewChild('drawerRef') matDrawer!: MatDrawer;
+  @ViewChild('startDrawerRef') startMatDrawer!: MatDrawer;
+
+  @ViewChild('endDrawerRef') endMatDrawer!: MatDrawer;
 
   private _sidenavDrawerService = inject(SidenavDrawerService);
 
@@ -49,7 +51,8 @@ export class SidenavDrawerComponent implements AfterViewInit {
   autoFocus = input<AutoFocusTarget | boolean | string>(false);
 
   ngAfterViewInit(): void {
-    this._sidenavDrawerService.drawer = this.matDrawer;
+    this._sidenavDrawerService.startSidenavDrawer = this.startMatDrawer;
+    this._sidenavDrawerService.endSidenavDrawer = this.endMatDrawer;
   }
 
   onEscape(): void {

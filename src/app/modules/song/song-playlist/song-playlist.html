@@ -1,0 +1,64 @@
+<table cdk-table [dataSource]="dataSource">
+    <ng-container cdkColumnDef="song_cover_art_url">
+        <th cdk-header-cell *cdkHeaderCellDef>Art</th>
+        <td cdk-cell *cdkCellDef="let row" class="song-cover-art">
+            <img mat-card-sm-image src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
+                alt="song cover art">
+        </td>
+    </ng-container>
+
+    <ng-container cdkColumnDef="song_title">
+        <th cdk-header-cell *cdkHeaderCellDef>Song</th>
+        <td cdk-cell *cdkCellDef="let row">
+            <mat-card appearance="filled">
+                <mat-card-header>
+                    <mat-card-title>
+                        {{ row.song_title }}
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        {{ row.song_artist }}
+                    </mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </td>
+    </ng-container>
+
+    <ng-container cdkColumnDef="menu">
+        <th cdk-header-cell *cdkHeaderCellDef>Action</th>
+        <td cdk-cell *cdkCellDef="let row">
+            <button matIconButton [cdkMenuTriggerFor]="menu" class="playlist-row-menu-trigger">
+                <mat-icon>more_horiz</mat-icon>
+            </button>
+
+        </td>
+    </ng-container>
+
+    <tr cdk-header-row *cdkHeaderRowDef="columns(); sticky: true" class="sticky-header"></tr>
+
+    <tr cdk-row *cdkRowDef="let row; columns: columns(); let rowIndex = index"></tr>
+</table>
+
+<ng-template #menu>
+    <mat-list>
+        <div class="playlist-row-menu" cdkMenu>
+            <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+                <mat-icon matListItemIcon>download</mat-icon>
+                <span matListItemTitle>
+                    Download
+                </span>
+            </mat-list-item>
+            <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+                <mat-icon matListItemIcon>info</mat-icon>
+                <span matListItemTitle>
+                    Info
+                </span>
+            </mat-list-item>
+            <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+                <mat-icon matListItemIcon>star</mat-icon>
+                <span matListItemTitle>
+                    Favorite
+                </span>
+            </mat-list-item>
+        </div>
+    </mat-list>
+</ng-template>
