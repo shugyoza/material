@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { StoreService } from '../services/store.service/store.service';
+import { StoreService } from '../../services/store.service/store.service';
 
 @Component({
   selector: 'app-toolbar',
