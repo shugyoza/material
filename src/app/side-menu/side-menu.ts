@@ -1,8 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { CdkTreeModule, CdkTree } from '@angular/cdk/tree';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { map, timer } from 'rxjs';
 
 import { SideMenuFlatNode } from './side-menu-flat-node.interface';
-import { RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu',
@@ -84,15 +80,15 @@ const EXAMPLE_DATA: SideMenuFlatNode[] = [
           },
           {
             name: 'LLC',
-            icon: 'work'
+            icon: 'work',
           },
           {
             name: 'Corporation',
-            icon: 'enterprise'
+            icon: 'enterprise',
           },
           {
             name: 'Partnership',
-            icon: 'group'
+            icon: 'group',
           },
         ],
       },
@@ -102,15 +98,15 @@ const EXAMPLE_DATA: SideMenuFlatNode[] = [
         children: [
           {
             name: 'Deed',
-            icon: 'book'
+            icon: 'book',
           },
           {
             name: 'Legalization',
-            icon: 'license'
+            icon: 'license',
           },
           {
             name: 'Registration',
-            icon: 'approval'
+            icon: 'approval',
           },
         ],
       },
@@ -125,6 +121,6 @@ const EXAMPLE_DATA: SideMenuFlatNode[] = [
   {
     name: 'Music',
     path: 'music',
-    icon: 'music_note'
-  }
+    icon: 'music_note',
+  },
 ];

@@ -10,7 +10,7 @@ export class SidenavDrawerService {
 
   private _startSidenavDrawer!: MatDrawer;
 
-  private _endSidenavDrawer!: MatDrawer
+  private _endSidenavDrawer!: MatDrawer;
 
   set startSidenavDrawer(drawer: MatDrawer) {
     this._startSidenavDrawer = drawer;
@@ -53,7 +53,6 @@ export class SidenavDrawerService {
 
   endSidenavDrawerIsOpened(): boolean {
     return this._endSidenavDrawer.opened;
-  
   }
 
   onEscape(): void {

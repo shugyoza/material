@@ -2,7 +2,6 @@ import { Component, inject, computed } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 
-
 import { TabNavBar } from './tab-nav-bar/tab-nav-bar';
 import { Toolbar } from './toolbar/toolbar';
 import { SideMenu } from './side-menu/side-menu';
@@ -18,7 +17,15 @@ export interface Tile {
 
 @Component({
   selector: 'app-root',
-  imports: [MatGridListModule, AsyncPipe, RouterOutlet, TabNavBar, Toolbar, SideMenu, SidenavDrawerComponent],
+  imports: [
+    MatGridListModule,
+    AsyncPipe,
+    RouterOutlet,
+    TabNavBar,
+    Toolbar,
+    SideMenu,
+    SidenavDrawerComponent,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -36,10 +43,9 @@ export class App {
   protected title = 'material';
 
   tiles: Tile[] = [
-    {text: 'One', color: 'lightblue'},
-    {text: 'Two', color: 'lightgreen'},
-    {text: 'Three', color: 'lightpink'},
-    {text: 'Four', color: '#DDBDF1'},
+    { text: 'One', color: 'lightblue' },
+    { text: 'Two', color: 'lightgreen' },
+    { text: 'Three', color: 'lightpink' },
+    { text: 'Four', color: '#DDBDF1' },
   ];
-
 }

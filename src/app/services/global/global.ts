@@ -25,25 +25,31 @@ export class Global {
     ['XLarge', 12],
   ]);
 
+  readonly breakpoint$ = this._breakpointObserver
+    .observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+    ])
+    .pipe(
+      map(value => {
+        const breakpoints = Object.entries(value.breakpoints);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [width] = breakpoints
+          .filter(([_, value]) => value === true)
+          .map(([key, _]) => key);
+        const breakpoint = this._displayNameMap.get(width) ?? 'Unknown';
 
-  readonly breakpoint$ = this._breakpointObserver.observe([
-        Breakpoints.XSmall,
-        Breakpoints.Small,
-        Breakpoints.Medium,
-        Breakpoints.Large,
-        Breakpoints.XLarge,
-  ]).pipe(
-    map(value => {
-      const breakpoints = Object.entries(value.breakpoints);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [width] = breakpoints.filter(([_, value]) => value === true).map(([key, _]) => key);
-      const breakpoint = this._displayNameMap.get(width) ?? 'Unknown';
+        console.log(42, breakpoints, breakpoint);
+        return breakpoint;
+      }),
+      share()
+    );
 
-      console.log(42, breakpoints, breakpoint)
-      return breakpoint;
-    }),
+  readonly gridCols$ = this.breakpoint$.pipe(
+    map(breakpoint => this._gridColMap.get(breakpoint) ?? 0),
     share()
-  )
-
-  readonly gridCols$ = this.breakpoint$.pipe(map(breakpoint => this._gridColMap.get(breakpoint) ?? 0), share())
+  );
 }

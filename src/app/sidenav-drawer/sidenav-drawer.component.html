@@ -2,7 +2,6 @@
   class="drawer-container"
   [ngStyle]="cssStyles().matDrawerContainer"
   [hasBackdrop]="hasBackdrop()">
-
   <mat-drawer
     #startDrawerRef
     [autoFocus]="autoFocus()"
@@ -30,7 +29,6 @@
     (keyup.escape)="onEscape()">
     <ng-content select="[startSidenavDrawer]"></ng-content>
   </mat-drawer>
-
 
   <mat-drawer-content
     class="drawer-content"

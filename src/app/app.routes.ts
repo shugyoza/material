@@ -13,12 +13,16 @@ export const routes: Routes = [
   {
     path: 'client-search',
     loadComponent: () =>
-      import('./modules/client/client-search/client-search').then(m => m.ClientSearch),
+      import('./modules/client/client-search/client-search').then(
+        m => m.ClientSearch
+      ),
   },
   {
     path: 'client-general',
     loadComponent: () =>
-      import('./modules/client/client-general/client-general').then(m => m.ClientGeneral),
+      import('./modules/client/client-general/client-general').then(
+        m => m.ClientGeneral
+      ),
   },
   {
     path: 'admin',
@@ -26,7 +30,10 @@ export const routes: Routes = [
   },
   {
     path: 'music',
-    loadComponent: () => import('./modules/song/song-playlist/song-playlist').then(m => m.SongPlaylist),
+    loadComponent: () =>
+      import('./modules/song/song-playlist/song-playlist').then(
+        m => m.SongPlaylist
+      ),
   },
   {
     path: '**',

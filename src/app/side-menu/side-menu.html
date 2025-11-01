@@ -1,5 +1,4 @@
 <cdk-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
-
   <!-- This is the tree node template for leaf nodes -->
   <cdk-tree-node
     *cdkTreeNodeDef="let node"
@@ -12,7 +11,7 @@
         {{ getParentNode(node) ? 'subdirectory_arrow_right' : '' }}
       </mat-icon>
       {{node.name}}
-      <mat-icon iconPositionEnd >{{ node.icon }}</mat-icon>
+      <mat-icon iconPositionEnd>{{ node.icon }}</mat-icon>
     </button>
   </cdk-tree-node>
 
@@ -30,15 +29,14 @@
       matButton
       cdkTreeNodeToggle
       [attr.aria-label]="'Toggle ' + node.name">
-      <mat-icon iconPositionStart >
-        {{ getParentNode(node) ? 'subdirectory_arrow_right' : node.icon ? node.icon : 'star' }}
+      <mat-icon iconPositionStart>
+        {{ getParentNode(node) ? 'subdirectory_arrow_right' : node.icon ?
+        node.icon : 'star' }}
       </mat-icon>
-        {{node.name}}
+      {{node.name}}
       <mat-icon iconPositionEnd class="mat-icon-rtl-mirror">
         {{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
-
-      
     </button>
   </cdk-tree-node>
 </cdk-tree>

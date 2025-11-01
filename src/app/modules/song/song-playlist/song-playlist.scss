@@ -1,16 +1,18 @@
 @use '@angular/material' as mat;
 
 :host {
-  @include mat.card-overrides((filled-container-color: white,
-    ));
-
+  @include mat.card-overrides(
+    (
+      filled-container-color: white,
+    )
+  );
 
   table {
     width: 100%;
   }
 
   th {
-    text-align: left
+    text-align: left;
   }
 
   .cdk-column-song_cover_art_url {

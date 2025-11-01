@@ -3,9 +3,7 @@
     <mat-form-field class="form-field">
       <mat-label>Client Search</mat-label>
       <input matInput [formControl]="quickSearch" />
-      <mat-error>
-        {{ quickSearch.errors | json }}
-      </mat-error>
+      <mat-error> {{ quickSearch.errors | json }} </mat-error>
     </mat-form-field>
     <button
       matIconButton
@@ -22,13 +20,12 @@
       (click)="quickSearch.reset()">
       <mat-icon>refresh</mat-icon>
     </button>
-        <button
+    <button
       matIconButton
       aria-label="Category Search"
       matTooltip="Category Search"
       matTooltipPosition="above">
       <mat-icon>category_search</mat-icon>
     </button>
-
   </section>
 </form>
