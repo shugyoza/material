@@ -1,13 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
 
-interface Tab {
-  label: string;
-  path: string;
-  disabled?: boolean;
-}
+import { Tab } from './tab.interface';
 
 @Component({
   selector: 'app-tab-nav-bar',
@@ -16,10 +12,7 @@ interface Tab {
   styleUrl: './tab-nav-bar.scss',
 })
 export class TabNavBar {
-  readonly tabs = signal<Tab[]>([
-    { label: 'Search', path: '/client-search' },
-    { label: 'General', path: '/client-general' },
-  ]);
+  readonly tabs = input<Tab[]>([]);
 
   readonly activeTab = signal<Tab>(this.tabs()[0]);
 }
