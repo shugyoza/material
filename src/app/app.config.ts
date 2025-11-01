@@ -6,8 +6,8 @@ import {
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { StoreService } from '../services/store.service/store.service';
-import { Global } from '../services/global/global';
+import { StoreService } from './services/store.service/store.service';
+import { Global } from './services/global/global';
 
 export const appConfig: ApplicationConfig = {
   providers: [

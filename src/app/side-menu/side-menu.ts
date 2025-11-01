@@ -119,8 +119,8 @@ const EXAMPLE_DATA: SideMenuFlatNode[] = [
     name: 'Document',
   },
   {
-    name: 'Music',
-    path: 'music',
+    name: 'Song',
+    path: 'song',
     icon: 'music_note',
   },
 ];
