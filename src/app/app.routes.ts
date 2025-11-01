@@ -30,15 +30,13 @@ export const routes: Routes = [
     loadComponent: () => import('./modules/admin/admin').then(m => m.Admin),
   },
   {
-    path: 'music',
-    loadComponent: () =>
-      import('./modules/song/song-playlist/song-playlist').then(
-        m => m.SongPlaylist
-      ),
+    path: 'song',
+    loadChildren: () =>
+      import('./modules/song/song.routes').then(m => m.SONG_ROUTES),
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'client-search',
+    redirectTo: '/login',
   },
 ];
