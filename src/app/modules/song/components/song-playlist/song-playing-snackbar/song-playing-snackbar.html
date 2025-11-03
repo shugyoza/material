@@ -1,0 +1,53 @@
+<section class="song-playing-snackbar">
+    <button class="song-playing-snackbar-info-button">
+        <img
+            class="song-cover-art"
+            src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
+            alt="song cover art" />
+        <cite class="song-title">
+            {{ snackBarData.song_title}}
+        </cite>
+    </button>
+    <span
+      class="song-playing-snackbar-action">
+        <button matIconButton (click)="audioControlRef.play()">
+            <mat-icon class="action-icon">play_circle</mat-icon>
+        </button>
+        <button matIconButton>
+            <mat-icon class="action-icon">fast_forward</mat-icon>
+        </button>
+    </span>
+
+</section>
+
+<audio controls #audioControlRef src="mock/test.mp3" type="audio/mpeg" controlsList="noplaybackrate" hidden></audio>
+
+
+<!-- 
+<figure class="audio-player">
+    <cite>Something</cite>
+    <audio controls #audioControlRef src="/shared-assets/audio/t-rex-roar.mp3" controlsList="noplaybackrate"></audio>
+    <button matIconButton [cdkMenuTriggerFor]="menu"
+>
+      <mat-icon class="icon">more_horiz</mat-icon>
+    </button>
+  </figure>
+
+  <ng-template #menu>
+  <mat-list>
+    <div class="playlist-row-menu" cdkMenu>
+      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+        <mat-icon matListItemIcon>download</mat-icon>
+        <span matListItemTitle> Download </span>
+      </mat-list-item>
+      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+        <mat-icon matListItemIcon>info</mat-icon>
+        <span matListItemTitle> Info </span>
+      </mat-list-item>
+      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+        <mat-icon matListItemIcon>star</mat-icon>
+        <span matListItemTitle> Favorite </span>
+      </mat-list-item>
+    </div>
+  </mat-list>
+</ng-template> -->

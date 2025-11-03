@@ -1,0 +1,39 @@
+@let playlist = songs();
+
+<mat-selection-list [multiple]="false" (selectionChange)="selectedSong.set(playlist[$event.options[0].value])">
+
+  @for (song of playlist; track $index) {
+    <mat-list-option [value]="$index">
+      <img
+        matListItemAvatar
+        src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
+        alt="song cover art" />
+      <cite matListItemTitle>
+        {{ song.song_title}}
+      </cite>
+      <span matListItemLine>
+        {{ song.song_artist }}
+      </span>
+    </mat-list-option>
+  }
+
+</mat-selection-list>
+
+<ng-template #menu>
+  <mat-list>
+    <div class="playlist-row-menu" cdkMenu>
+      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+        <mat-icon matListItemIcon>download</mat-icon>
+        <span matListItemTitle> Download </span>
+      </mat-list-item>
+      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+        <mat-icon matListItemIcon>info</mat-icon>
+        <span matListItemTitle> Info </span>
+      </mat-list-item>
+      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+        <mat-icon matListItemIcon>star</mat-icon>
+        <span matListItemTitle> Favorite </span>
+      </mat-list-item>
+    </div>
+  </mat-list>
+</ng-template>

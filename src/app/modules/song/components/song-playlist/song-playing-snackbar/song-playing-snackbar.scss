@@ -1,0 +1,53 @@
+// figure.audio-player {
+//     display: flex;
+//     align-items: center;
+//     width: 100%;
+
+//     audio {
+//         width: 75%;
+//     }
+
+//     .icon {
+//         transform: scale(1.5)
+//     }
+// }
+
+:host {
+    .song-playing-snackbar {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        width: 100%;
+    }
+
+    .song-playing-snackbar-info-button {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-grow: 1;
+        background-color: transparent;
+        border: none;
+        color: white
+    }
+
+    .song-playing-snackbar-action {
+        flex-grow: 0;
+    }
+
+    .song-title {
+        flex-grow: 1;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    img.song-cover-art {
+        height: 44px;
+        width: 44px;
+        flex-grow: 0;
+    }
+
+    .action-icon {
+        transform: scale(1.5)
+    }
+}

@@ -1,13 +1,14 @@
-import { CdkTableModule, DataSource } from '@angular/cdk/table';
-import { Component, inject, signal } from '@angular/core';
+import { CdkTableModule } from '@angular/cdk/table';
+import { Component, effect, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Global } from '../../../core/services/global/global';
-import { CdkMenu, CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatListModule } from '@angular/material/list';
+import { MatListModule, MatSelectionListChange } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+
+import { Global } from '../../../../core/services/global/global';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { SongPlayingSnackbar } from './song-playing-snackbar/song-playing-snackbar';
 
 interface SongPlayListRow {
   song_id: number;
@@ -19,7 +20,7 @@ interface SongPlayListRow {
   song_cover_art_url?: string;
 }
 
-const MUSIC_DATA: SongPlayListRow[] = [
+const SONGS: SongPlayListRow[] = [
   { song_id: 1, song_title: 'Intro', song_artist: 'Sevdaliza' },
   { song_id: 2, song_title: 'On My Own', song_artist: 'Sevdaliza' },
   { song_id: 3, song_title: 'Heroina', song_artist: 'La Joaqui, Sevdaliza' },
@@ -55,9 +56,6 @@ const MUSIC_DATA: SongPlayListRow[] = [
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    CdkMenuTrigger,
-    CdkMenu,
-    CdkMenuItem,
     MatFormFieldModule,
     MatListModule,
   ],
@@ -65,22 +63,36 @@ const MUSIC_DATA: SongPlayListRow[] = [
   styleUrl: './song-playlist.scss',
 })
 export class SongPlaylist {
+  private readonly _snackBar = inject(MatSnackBar);
+
   readonly global = inject(Global);
+
+  readonly songs = signal<SongPlayListRow[]>(SONGS);
+
+  readonly selectedSong = signal<SongPlayListRow | null>(null);
+
   readonly columns = signal<string[]>([
     'song_cover_art_url',
     'song_title',
     'menu',
   ]);
-  readonly message = signal<string>('message');
-  readonly dataSource = new MyDataSource();
-}
 
-export class MyDataSource extends DataSource<SongPlayListRow> {
-  data = new BehaviorSubject<SongPlayListRow[]>(MUSIC_DATA);
+  readonly snackBarPosition = signal<{ horizontalPosition: MatSnackBarHorizontalPosition; verticalPosition: MatSnackBarVerticalPosition }>({
+    horizontalPosition: 'center',
+    verticalPosition: 'bottom'
+  });
 
-  connect(): Observable<SongPlayListRow[]> {
-    return this.data;
+  constructor() {
+    effect(() => {
+      if (this.selectedSong()) {
+        this._snackBar.openFromComponent(SongPlayingSnackbar, { 
+          data: {
+            song_title: this.selectedSong()?.song_title }
+          })
+      } else {
+        this._snackBar.dismiss()
+      }
+    })
   }
-
-  disconnect() {}
+  
 }

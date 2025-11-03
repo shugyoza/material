@@ -42,7 +42,6 @@ export class Global {
           .map(([key, _]) => key);
         const breakpoint = this._displayNameMap.get(width) ?? 'Unknown';
 
-        console.log(42, breakpoints, breakpoint);
         return breakpoint;
       }),
       share()
