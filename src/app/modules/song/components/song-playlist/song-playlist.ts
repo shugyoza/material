@@ -3,11 +3,16 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatListModule, MatSelectionListChange } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { BehaviorSubject, combineLatestWith, map, of, startWith, switchMap } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 
 import { Global } from '../../../../core/services/global/global';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { SongPlayingSnackbar } from './song-playing-snackbar/song-playing-snackbar';
 
 interface SongPlayListRow {
@@ -57,7 +62,12 @@ const SONGS: SongPlayListRow[] = [
     MatIconModule,
     MatCardModule,
     MatFormFieldModule,
+    MatInputModule,
     MatListModule,
+    ReactiveFormsModule,
+    CdkMenu,
+    CdkMenuTrigger,
+    AsyncPipe,
   ],
   templateUrl: './song-playlist.html',
   styleUrl: './song-playlist.scss',
@@ -67,7 +77,39 @@ export class SongPlaylist {
 
   readonly global = inject(Global);
 
-  readonly songs = signal<SongPlayListRow[]>(SONGS);
+  readonly form = new FormGroup({
+    search: new FormControl(''),
+    shuffle: new FormControl<'shuffle' | 'shuffle_on'>('shuffle')
+  });
+
+  readonly songs$ = of<SongPlayListRow[]>(SONGS);
+
+  readonly filteredSongs$ = this.songs$.pipe(
+    combineLatestWith(this.form.valueChanges.pipe(
+      startWith(this.form.value),
+    )),
+    switchMap(([songs, _form]) => {
+      const { search, shuffle } = _form
+
+      if (!search) {
+
+        switch (shuffle) {
+          case 'shuffle_on':
+            return of(this.shuffle(songs, true));
+          default:
+            return of(songs);
+        }
+      }
+
+      const filteredSongs = songs.filter(song => {
+        const filterText = search.toLowerCase();
+
+        return song.song_title.toLowerCase().includes(filterText) || song.song_artist.toLowerCase().includes(filterText);
+      })
+
+      return of(filteredSongs)
+    })
+  )
 
   readonly selectedSong = signal<SongPlayListRow | null>(null);
 
@@ -82,6 +124,41 @@ export class SongPlaylist {
     verticalPosition: 'bottom'
   });
 
+  readonly playlistRowMenu = signal<{ icon: string; title: string }[]>([
+    {
+      icon: 'delete',
+      title: 'Delete from Library'
+    },
+    {
+      icon: 'download',
+      title: 'Download'
+    },
+    {
+      icon: 'playlist_add',
+      title: 'Add to Playlist...'
+    },
+    { 
+      icon: 'queue_play_next',
+      title: 'Play Next'
+    },
+    { 
+      icon: 'ios_share',
+      title: 'Share Song...'
+    },
+    { 
+      icon: 'album',
+      title: 'Go to Album'
+    },
+    { 
+      icon: 'star',
+      title: 'Favorite'
+    },
+    { 
+      icon: 'thumb_down',
+      title: 'Suggest Less'
+    }
+  ]);
+
   constructor() {
     effect(() => {
       if (this.selectedSong()) {
@@ -95,4 +172,32 @@ export class SongPlaylist {
     })
   }
   
+  onToggleShuffle(): void {
+    const control = this.form.get('shuffle')!;
+    const value = control.value;
+    
+    switch (value) {
+      case 'shuffle':
+        control.setValue('shuffle_on')
+        break;
+      case 'shuffle_on':
+        control.setValue('shuffle')
+        break;
+    }
+  }
+  
+  shuffle<T>(array: T[], shuffle: boolean = false): T[] {
+    if (shuffle) {
+      const shuffled = [...array];
+      
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+
+      return shuffled;
+    }
+
+    return array;
+  }
 }

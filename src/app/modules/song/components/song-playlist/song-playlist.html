@@ -1,39 +1,59 @@
-@let playlist = songs();
+  <section class="filter-search-panel" [formGroup]="form">
+    <mat-form-field class="form-field" appearance="outline" subscriptSizing="dynamic">
+      <mat-icon matPrefix>search</mat-icon>
+      <mat-label>Search</mat-label>
+      <input matInput formControlName="search" />
+    </mat-form-field>
+    <button
+      mat-flat-button>
+      <mat-icon>play_arrow</mat-icon>
+      Play
+    </button>
+    <button
+      mat-flat-button
+      (click)="onToggleShuffle()">
+      <mat-icon>{{ form.get('shuffle')?.value }}</mat-icon>
+      Shuffle
+    </button>
+  </section>
 
-<mat-selection-list [multiple]="false" (selectionChange)="selectedSong.set(playlist[$event.options[0].value])">
+<mat-list class="playlist">
 
-  @for (song of playlist; track $index) {
-    <mat-list-option [value]="$index">
+  @for (song of (filteredSongs$ | async); track $index) {
+    
+    <span class="playlist-row">
+    <button mat-list-item class="song-info" (click)="selectedSong.set(song)">
       <img
+        class="song-cover-art"
         matListItemAvatar
         src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
         alt="song cover art" />
+
       <cite matListItemTitle>
         {{ song.song_title}}
       </cite>
+
       <span matListItemLine>
         {{ song.song_artist }}
       </span>
-    </mat-list-option>
+    </button>
+    <button matIconButton [cdkMenuTriggerFor]="menu" class="playlist-row-menu-trigger">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+    </span>
   }
 
-</mat-selection-list>
+</mat-list>
 
 <ng-template #menu>
-  <mat-list>
-    <div class="playlist-row-menu" cdkMenu>
+  <mat-list class="playlist-row-menu" cdkMenu>
+      @for (menuItem of playlistRowMenu(); track $index) {
       <mat-list-item cdkMenuItem class="playlist-row-menu-item">
-        <mat-icon matListItemIcon>download</mat-icon>
-        <span matListItemTitle> Download </span>
+        <mat-icon matListItemIcon>{{ menuItem.icon }}</mat-icon>
+        <span matListItemTitle>
+          {{ menuItem.title }}
+        </span>
       </mat-list-item>
-      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
-        <mat-icon matListItemIcon>info</mat-icon>
-        <span matListItemTitle> Info </span>
-      </mat-list-item>
-      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
-        <mat-icon matListItemIcon>star</mat-icon>
-        <span matListItemTitle> Favorite </span>
-      </mat-list-item>
-    </div>
+      }
   </mat-list>
 </ng-template>
