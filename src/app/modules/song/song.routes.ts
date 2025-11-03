@@ -10,9 +10,13 @@ export const SONG_ROUTES: Routes = [
     loadComponent: () =>
       import('./song-playlist/song-playlist').then(m => m.SongPlaylist),
   },
+  { 
+    path: 'song-search',
+    loadComponent: () => import('./song-search/song-search').then(m => m.SongSearch)
+  },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: '/',
+    redirectTo: 'song-search',
   },
 ];
