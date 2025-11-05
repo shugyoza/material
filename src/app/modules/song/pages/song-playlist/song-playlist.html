@@ -1,3 +1,6 @@
+  @let playlist = songPlaylistService;
+  @let play = playlist.play$ | async;
+
   <section class="filter-search-panel">
     <mat-form-field class="search-field" appearance="outline" subscriptSizing="dynamic">
       <mat-icon matPrefix>search</mat-icon>
@@ -7,19 +10,19 @@
 
     <button
       mat-flat-button
-      (click)="toggle.play.set(!toggle.play())">
+      (click)="playlist.toggle.play$.next(true)">
       <mat-icon>
         play_arrow
       </mat-icon>
       Play
     </button>
 
-    @let shuffleOn = toggle.shuffle();
+    @let shuffleOn = playlist.toggle.shuffle$ | async;
     <button
       mat-flat-button
       matTooltipPosition="above"
       [matTooltip]="shuffleOn ? 'Turn shuffle off' : 'Turn shuffle on'"
-      (click)="toggle.shuffle.set(!shuffleOn)">
+      (click)="playlist.toggle.shuffle$.next(!shuffleOn)">
       <mat-icon>
         {{ shuffleOn ? 'shuffle_on' : 'shuffle' }}
       </mat-icon>
@@ -32,7 +35,7 @@
   @for (song of (filteredSongs$ | async); track $index) {
     
     <span class="playlist-row">
-    <button mat-list-item class="song-info" (click)="onSongClick(song)">
+    <button mat-list-item class="song-info" (click)="playlist.selectedIndex$.next($index)">
       <img
         class="song-cover-art"
         matListItemAvatar
@@ -67,3 +70,5 @@
       }
   </mat-list>
 </ng-template>
+
+<audio controls #audioPlayerRef [src]="play?.song_resource_url" [attr.autoplay]="!!play?.song_resource_url"></audio>
