@@ -7,13 +7,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { BehaviorSubject, combineLatestWith, map, of, startWith, switchMap } from 'rxjs';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { map, of, startWith, switchMap } from 'rxjs';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 
 import { Global } from '../../../../core/services/global/global';
-import { SongPlayingSnackbar } from './song-playing-snackbar/song-playing-snackbar';
+import { SongPlayingSnackbar } from './components/song-playing-snackbar/song-playing-snackbar';
+import { MatTooltip } from "@angular/material/tooltip";
 
 interface SongPlayListRow {
   song_id: number;
@@ -68,7 +69,8 @@ const SONGS: SongPlayListRow[] = [
     CdkMenu,
     CdkMenuTrigger,
     AsyncPipe,
-  ],
+    MatTooltip
+],
   templateUrl: './song-playlist.html',
   styleUrl: './song-playlist.scss',
 })
@@ -77,39 +79,32 @@ export class SongPlaylist {
 
   readonly global = inject(Global);
 
-  readonly form = new FormGroup({
-    search: new FormControl(''),
-    shuffle: new FormControl<'shuffle' | 'shuffle_on'>('shuffle')
-  });
+  readonly search = new FormControl<null | string>(null)
+  
+  readonly toggle = {
+    shuffle: signal<boolean>(false),
+    play: signal<boolean>(false)
+  }
 
   readonly songs$ = of<SongPlayListRow[]>(SONGS);
 
-  readonly filteredSongs$ = this.songs$.pipe(
-    combineLatestWith(this.form.valueChanges.pipe(
-      startWith(this.form.value),
-    )),
-    switchMap(([songs, _form]) => {
-      const { search, shuffle } = _form
+  readonly filteredSongs$ = this.search.valueChanges.pipe(
+    startWith(null),
+    switchMap(value => this.songs$.pipe(
+      map(songs => {
+        if (value) {
 
-      if (!search) {
+          return songs.filter(song => {
+            const filterText = value.toLowerCase();
 
-        switch (shuffle) {
-          case 'shuffle_on':
-            return of(this.shuffle(songs, true));
-          default:
-            return of(songs);
+            return song.song_title.toLowerCase().includes(filterText) || song.song_artist.toLowerCase().includes(filterText)
+          })
         }
-      }
 
-      const filteredSongs = songs.filter(song => {
-        const filterText = search.toLowerCase();
-
-        return song.song_title.toLowerCase().includes(filterText) || song.song_artist.toLowerCase().includes(filterText);
+        return songs;
       })
-
-      return of(filteredSongs)
-    })
-  )
+    )
+  ))
 
   readonly selectedSong = signal<SongPlayListRow | null>(null);
 
@@ -172,32 +167,9 @@ export class SongPlaylist {
     })
   }
   
-  onToggleShuffle(): void {
-    const control = this.form.get('shuffle')!;
-    const value = control.value;
-    
-    switch (value) {
-      case 'shuffle':
-        control.setValue('shuffle_on')
-        break;
-      case 'shuffle_on':
-        control.setValue('shuffle')
-        break;
-    }
+  onSongClick(song: SongPlayListRow): void {
+    this.selectedSong.set(song);
   }
-  
-  shuffle<T>(array: T[], shuffle: boolean = false): T[] {
-    if (shuffle) {
-      const shuffled = [...array];
-      
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
 
-      return shuffled;
-    }
-
-    return array;
-  }
+  onPlay(): void {}
 }
