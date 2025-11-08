@@ -17,6 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     StoreService,
     Global,
-    provideHttpClient()
+    provideHttpClient(),
   ],
 };

@@ -1,17 +1,32 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { AfterViewInit, Component, computed, ElementRef, HostListener, inject, OnDestroy, signal, TemplateRef, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  inject,
+  OnDestroy,
+  signal,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { interval, map, of, startWith, switchMap, takeWhile, tap } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 
 import { Global } from '../../../../core/services/global/global';
@@ -51,24 +66,28 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
   readonly audioTemplate = viewChild<TemplateRef<unknown>>('audioTemplate');
 
   readonly search = new FormControl<null | string>(null);
-  
+
   readonly filteredSongs$ = this.search.valueChanges.pipe(
     startWith(null),
-    switchMap(value => this.playlistService.songs$.pipe(
-      map(songs => {
-        if (value) {
+    switchMap(value =>
+      this.playlistService.songs$.pipe(
+        map(songs => {
+          if (value) {
+            return songs.filter(song => {
+              const filterText = value.toLowerCase();
 
-          return songs.filter(song => {
-            const filterText = value.toLowerCase();
+              return (
+                song.song_title.toLowerCase().includes(filterText) ||
+                song.song_artist.toLowerCase().includes(filterText)
+              );
+            });
+          }
 
-            return song.song_title.toLowerCase().includes(filterText) || song.song_artist.toLowerCase().includes(filterText)
-          })
-        }
-
-        return songs;
-      })
+          return songs;
+        })
+      )
     )
-  ))
+  );
 
   readonly columns = signal<string[]>([
     'song_cover_art_url',
@@ -76,44 +95,47 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
     'menu',
   ]);
 
-  readonly snackBarPosition = signal<{ horizontalPosition: MatSnackBarHorizontalPosition; verticalPosition: MatSnackBarVerticalPosition }>({
+  readonly snackBarPosition = signal<{
+    horizontalPosition: MatSnackBarHorizontalPosition;
+    verticalPosition: MatSnackBarVerticalPosition;
+  }>({
     horizontalPosition: 'center',
-    verticalPosition: 'bottom'
+    verticalPosition: 'bottom',
   });
 
   readonly playlistRowMenu = signal<{ icon: string; title: string }[]>([
     {
       icon: 'delete',
-      title: 'Delete from Library'
+      title: 'Delete from Library',
     },
     {
       icon: 'download',
-      title: 'Download'
+      title: 'Download',
     },
     {
       icon: 'playlist_add',
-      title: 'Add to Playlist...'
+      title: 'Add to Playlist...',
     },
-    { 
+    {
       icon: 'queue_play_next',
-      title: 'Play Next'
+      title: 'Play Next',
     },
-    { 
+    {
       icon: 'ios_share',
-      title: 'Share Song...'
+      title: 'Share Song...',
     },
-    { 
+    {
       icon: 'album',
-      title: 'Go to Album'
+      title: 'Go to Album',
     },
-    { 
+    {
       icon: 'star',
-      title: 'Favorite'
+      title: 'Favorite',
     },
-    { 
+    {
       icon: 'thumb_down',
-      title: 'Suggest Less'
-    }
+      title: 'Suggest Less',
+    },
   ]);
 
   readonly shuffle = computed<boolean>(() => this.playlistService.shuffle());
@@ -121,56 +143,57 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
   readonly paused = signal<boolean>(true);
 
   progress$ = of(0);
-  
+
   readonly dimension = signal({
     height: '0px',
-    width: '0px'
+    width: '0px',
   });
-  
+
   ngAfterViewInit(): void {
-    this._snackBar.openFromTemplate(this.audioTemplate()!, { });
+    this._snackBar.openFromTemplate(this.audioTemplate()!, {});
   }
 
   ngOnDestroy(): void {
     this._snackBar.dismiss();
   }
-  
+
   onSongClick(song: SongPlayListRow, songs: SongPlayListRow[] | null): void {
     if (!songs?.length || !song) {
-
       return;
     }
 
     const playlist = this.playlistService;
-    const selectedIndex = songs.findIndex(({ song_id }) => song_id === song.song_id);
+    const selectedIndex = songs.findIndex(
+      ({ song_id }) => song_id === song.song_id
+    );
 
     const audio = this.audioElement()!.nativeElement;
 
     playlist.currentIndex$.next(selectedIndex);
 
-    audio.play().then(() => {
-
-      this.setProgress();
-      this.paused.set(false);
-
-    }).catch(error => {
-      console.log(150, error)
-    })
+    audio
+      .play()
+      .then(() => {
+        this.setProgress();
+        this.paused.set(false);
+      })
+      .catch(error => {
+        console.log(150, error);
+      });
   }
 
   onPlay(audio = this.audioElement()!.nativeElement): void {
-
     if (audio.paused) {
       audio.play().then(() => {
         this.setProgress();
         this.paused.set(false);
       });
-    
+
       return;
     }
 
-      audio.pause();
-      this.paused.set(true);
+    audio.pause();
+    this.paused.set(true);
   }
 
   onEnded(currentIndex: number, songs: SongPlayListRow[]): void {
@@ -178,7 +201,7 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
     const maxIndex = songs.length - 1;
 
     if (shuffle) {
-      const randomIndex = Math.floor(Math.random() * maxIndex)
+      const randomIndex = Math.floor(Math.random() * maxIndex);
       console.log(169, randomIndex);
 
       return;
@@ -194,15 +217,16 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
     audio.pause();
     this.paused.set(true);
 
-    audio.play().then(() => {
-
-      this.setProgress();
-      this.paused.set(false);
-
-    }).catch(() => {
-      // retry playing
-      this.onPlay()
-    })
+    audio
+      .play()
+      .then(() => {
+        this.setProgress();
+        this.paused.set(false);
+      })
+      .catch(() => {
+        // retry playing
+        this.onPlay();
+      });
   }
 
   onReplay10(seconds: number = 10): void {
@@ -213,7 +237,6 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
     }
   }
 
-
   onFastForward(seconds: number = 10): void {
     const audio = this.audioElement()?.nativeElement;
 
@@ -221,11 +244,11 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
       audio.currentTime += seconds;
     }
   }
-  
+
   onMute(): void {
     const audio = this.audioElement()?.nativeElement;
 
-    if (audio) {      
+    if (audio) {
       const volume = audio.volume;
       audio.volume = [1, 0][volume];
     }
@@ -245,9 +268,11 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
     const sec = 1000;
     this.progress$ = interval(sec).pipe(
       startWith(Math.round(audio.currentTime)),
-      takeWhile(() => audio.duration - audio.currentTime >= audio.played.length),
-      map(() => Math.round(audio.currentTime)),
-    )
+      takeWhile(
+        () => audio.duration - audio.currentTime >= audio.played.length
+      ),
+      map(() => Math.round(audio.currentTime))
+    );
   }
 
   onProgressChange(currentTime: number) {
@@ -255,10 +280,10 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
 
     audio.currentTime = currentTime;
     this.setProgress();
-  } 
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize($event: Event) {
-    console.log(262, event)
+    console.log(262, event);
   }
 }

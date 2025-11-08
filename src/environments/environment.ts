@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export const environment = {};
-=======
 import { PATH } from './url-path';
 
 import { ENVIRONMENT as dev } from './environment.dev';
@@ -23,7 +20,7 @@ const env = {
   uat,
 };
 
-export const ENVIRONMENT = {
+export const environment = {
   ...env[proxyEnv],
   name: 'local',
   api: {
@@ -31,4 +28,3 @@ export const ENVIRONMENT = {
     path: PATH,
   },
 };
->>>>>>> 19840c2930f9f08b0e09bf999f61ab151d620d41

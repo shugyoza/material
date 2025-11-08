@@ -34,10 +34,10 @@
     "song_duration": 3000,
     "song_url": "mock/flute-melody-315241.mp3"
   },
-  { 
-    "song_id": 6, 
-    "song_title": "Ocean Breeze Beat by JTWAYNE", 
-    "song_artist": "JTWAYNE", 
+  {
+    "song_id": 6,
+    "song_title": "Ocean Breeze Beat by JTWAYNE",
+    "song_artist": "JTWAYNE",
     "song_duration": 3000,
     "song_url": "mock/ocean-breeze-beat-by-jtwayne-213318.mp3"
   }

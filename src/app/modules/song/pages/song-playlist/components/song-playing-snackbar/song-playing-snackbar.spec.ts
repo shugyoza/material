@@ -8,9 +8,8 @@ describe('SongPlayingSnackbar', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SongPlayingSnackbar]
-    })
-    .compileComponents();
+      imports: [SongPlayingSnackbar],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SongPlayingSnackbar);
     component = fixture.componentInstance;
