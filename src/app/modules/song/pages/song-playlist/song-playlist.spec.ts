@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 import { SongPlaylist } from './song-playlist';
 
@@ -9,6 +10,7 @@ describe('SongPlaylist', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SongPlaylist],
+      providers: [provideHttpClient()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SongPlaylist);
