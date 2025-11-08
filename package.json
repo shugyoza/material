@@ -3,15 +3,19 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
+    "dev": "ng serve --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --code-coverage --browsers=ChromeHeadless",
+    "test:watch": "ng test --watch --code-coverage --browsers=ChromeHeadless",
+    "test:view:coverage": "open ./coverage/material/index.html",
     "lint": "ng lint && npx prettier . --check",
     "prettier:fix": "npx prettier . --write"
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.10",
     "@angular/cdk": "^20.2.10",
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",
