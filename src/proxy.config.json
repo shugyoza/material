@@ -1,0 +1,29 @@
+{
+  "/api/dev": {
+    "target": "https://api.dev.harmony.csmedley.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/dev": ""
+    }
+  },
+  "/api/qa": {
+    "target": "https://api.qa.harmony.csmedley.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/qa": ""
+    }
+  },
+  "/api/uat": {
+    "target": "https://api.uat.harmony.csmedley.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/uat": ""
+    }
+  }
+}
