@@ -177,8 +177,9 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
         this.setProgress();
         this.paused.set(false);
       })
-      .catch(error => {
-        console.error(error);
+      .catch(() => {
+        // retry playing
+        this.onPlay();
       });
   }
 
