@@ -8,6 +8,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 
+import { MyDatePipe } from '../../../../shared/library/pipes/my-date.pipe/my-date-pipe';
+
 const JOB_DATA: JobRow[] = [{
   job_id: 1,
   job_position: 'Software Engineer',
@@ -47,6 +49,8 @@ interface JobRow {
     MatFormFieldModule,
     MatListModule,
     MatSortModule,
+
+    MyDatePipe
 ],
   templateUrl: './job-tracker.html',
   styleUrl: './job-tracker.scss',
