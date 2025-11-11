@@ -35,6 +35,11 @@ export const routes: Routes = [
       import('./modules/song/song.routes').then(m => m.SONG_ROUTES),
   },
   {
+    path: 'job',
+    loadChildren: () =>
+      import('./modules/job/job.routes').then(m => m.JOB_ROUTES),
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: '/login',

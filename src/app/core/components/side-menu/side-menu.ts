@@ -113,7 +113,16 @@ const EXAMPLE_DATA: SideMenuFlatNode[] = [
     ],
   },
   {
-    name: 'Client',
+    name: 'Job',
+    icon: 'work',
+    path: 'job',
+    children: [
+      {
+        name: 'Job Tracker',
+        icon: 'view_object_track',
+        path: 'job-tracker',
+      },
+    ],
   },
   {
     name: 'Document',
