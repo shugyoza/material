@@ -174,21 +174,17 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
   }
 
   onEnded(currentIndex: number, songs: SongPlayListRow[]): void {
-    const shuffle = this.shuffle();
     const maxIndex = songs.length - 1;
+    const audio = this.audioElement()!.nativeElement;
+    this.progress$ = of(0); // reset progress bar
 
-    if (shuffle) {
-      const randomIndex = Math.floor(Math.random() * maxIndex)
-      console.log(169, randomIndex);
+    let nextIndex = (currentIndex + 1) % songs.length;
 
-      return;
+    if (this.shuffle()) {
+      const randomIndex = Math.floor(Math.random() * maxIndex);
+      nextIndex = randomIndex;
     }
 
-    const audio = this.audioElement()!.nativeElement;
-
-    this.progress$ = of(0);
-
-    const nextIndex = (currentIndex + 1) % songs.length;
     this.playlistService.currentIndex$.next(nextIndex);
 
     audio.pause();
