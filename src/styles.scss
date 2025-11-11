@@ -43,4 +43,24 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+
+  .xs {
+    background-color: chartreuse;
+  }
+
+  .s {
+    background-color: beige;
+  }
+
+  .m {
+    background-color: aqua;
+  }
+
+  .l {
+    background-color: pink
+  }
+
+  .xl {
+    background-color: azure;
+  }
 }
