@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { songPlaylistResolver } from './resolvers/song-resolver';
+
 export const SONG_ROUTES: Routes = [
   {
     path: '',
@@ -11,6 +13,9 @@ export const SONG_ROUTES: Routes = [
           import('./pages/song-playlist/song-playlist').then(
             m => m.SongPlaylist
           ),
+        resolve: {
+          songs: songPlaylistResolver
+        }
       },
       {
         path: 'song-search',

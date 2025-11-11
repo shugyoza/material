@@ -22,12 +22,14 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { interval, map, of, startWith, switchMap, takeWhile, tap } from 'rxjs';
+import { interval, map, of, startWith, switchMap, takeWhile } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
+import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 import { Global } from '../../../../core/services/global/global';
 import { SongPlaylistService } from './services/song-playlist/song-playlist.service';
@@ -56,6 +58,8 @@ import { SongPlayListRow } from './song-playlist.interface';
 })
 export class SongPlaylist implements AfterViewInit, OnDestroy {
   private readonly _snackBar = inject(MatSnackBar);
+
+  private readonly _activatedRoute = inject(ActivatedRoute);
 
   readonly global = inject(Global);
 
@@ -148,6 +152,8 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
     height: '0px',
     width: '0px',
   });
+
+  readonly data = toSignal(this._activatedRoute.data);
 
   ngAfterViewInit(): void {
     this._snackBar.openFromTemplate(this.audioTemplate()!, {});
