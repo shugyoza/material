@@ -20,7 +20,7 @@ const env = {
   uat,
 };
 
-export const ENVIRONMENT = {
+export const environment = {
   ...env[proxyEnv],
   name: 'local',
   api: {

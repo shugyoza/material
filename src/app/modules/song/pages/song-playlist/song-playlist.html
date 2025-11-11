@@ -1,47 +1,38 @@
-  @let playlist = playlistService;
-  @let currentIndex = (playlist.currentIndex$ | async)!;
-  @let songs = (playlist.songs$ | async) ?? [];
-  @let currentSong = songs[currentIndex];
-  @let isPlaying = !paused();
-  @let progress = progress$ | async;
+@let playlist = playlistService; @let currentIndex = (playlist.currentIndex$ |
+async)!; @let songs = (playlist.songs$ | async) ?? []; @let currentSong =
+songs[currentIndex]; @let isPlaying = !paused(); @let progress = progress$ |
+async; @if (progress) { }
 
-  @if (progress) {
-  }
+<section class="filter-search-panel">
+  <mat-form-field
+    class="search-field"
+    appearance="outline"
+    subscriptSizing="dynamic">
+    <mat-icon matPrefix>search</mat-icon>
+    <mat-label>Search</mat-label>
+    <input matInput [formControl]="search" />
+  </mat-form-field>
 
-  <section class="filter-search-panel">
-    <mat-form-field class="search-field" appearance="outline" subscriptSizing="dynamic">
-      <mat-icon matPrefix>search</mat-icon>
-      <mat-label>Search</mat-label>
-      <input matInput [formControl]="search" />
-    </mat-form-field>
+  <button mat-flat-button (click)="onPlay()">
+    <mat-icon> {{ isPlaying ? 'pause' : 'play_arrow' }} </mat-icon>
+    {{ isPlaying ? 'Pause' : 'Play' }}
+  </button>
 
-    <button
-      mat-flat-button
-      (click)="onPlay()">
-      <mat-icon>
-        {{ isPlaying ? 'pause' : 'play_arrow' }}
-      </mat-icon>
-        {{ isPlaying ? 'Pause' : 'Play' }}
-    </button>
-
-    @let shuffleOn = shuffle();
-    <button
-      mat-flat-button
-      matTooltipPosition="above"
-      [matTooltip]="shuffleOn ? 'Turn shuffle off' : 'Turn shuffle on'"
-      (click)="playlist.shuffle.set(!shuffleOn)">
-      <mat-icon>
-        {{ shuffleOn ? 'shuffle_on' : 'shuffle' }}
-      </mat-icon>
-      Shuffle
-    </button>
-  </section>
+  @let shuffleOn = shuffle();
+  <button
+    mat-flat-button
+    matTooltipPosition="above"
+    [matTooltip]="shuffleOn ? 'Turn shuffle off' : 'Turn shuffle on'"
+    (click)="playlist.shuffle.set(!shuffleOn)">
+    <mat-icon> {{ shuffleOn ? 'shuffle_on' : 'shuffle' }} </mat-icon>
+    Shuffle
+  </button>
+</section>
 
 <mat-list class="playlist">
-
   @for (song of (filteredSongs$ | async); track $index) {
-    
-    <span class="playlist-row">
+
+  <span class="playlist-row">
     <button mat-list-item class="song-info" (click)="onSongClick(song, songs)">
       <img
         class="song-cover-art"
@@ -49,104 +40,103 @@
         src="https://material.angular.dev/assets/img/examples/shiba2.jpg"
         alt="song cover art" />
 
-      <cite matListItemTitle>
-        {{ song.song_title}}
-      </cite>
+      <cite matListItemTitle> {{ song.song_title}} </cite>
 
-      <span matListItemLine>
-        {{ song.song_artist }}
-      </span>
+      <span matListItemLine> {{ song.song_artist }} </span>
     </button>
-    <button matIconButton [cdkMenuTriggerFor]="menu" class="playlist-row-menu-trigger">
+    <button
+      matIconButton
+      [cdkMenuTriggerFor]="menu"
+      class="playlist-row-menu-trigger">
       <mat-icon>more_horiz</mat-icon>
     </button>
-    </span>
+  </span>
   }
-
 </mat-list>
 
 <ng-template #menu>
   <mat-list class="playlist-row-menu" cdkMenu>
-      @for (menuItem of playlistRowMenu(); track $index) {
-      <mat-list-item cdkMenuItem class="playlist-row-menu-item">
-        <mat-icon matListItemIcon>{{ menuItem.icon }}</mat-icon>
-        <span matListItemTitle>
-          {{ menuItem.title }}
-        </span>
-      </mat-list-item>
-      }
+    @for (menuItem of playlistRowMenu(); track $index) {
+    <mat-list-item cdkMenuItem class="playlist-row-menu-item">
+      <mat-icon matListItemIcon>{{ menuItem.icon }}</mat-icon>
+      <span matListItemTitle> {{ menuItem.title }} </span>
+    </mat-list-item>
+    }
   </mat-list>
 </ng-template>
 
 <ng-template #audioTemplate>
-    @let duration = audioRef.duration;
-    <mat-slider min="0" [max]="duration" [step]="1" showTickMarks discrete #progressSlider>
-    <input 
+  @let duration = audioRef.duration;
+  <mat-slider
+    min="0"
+    [max]="duration"
+    [step]="1"
+    showTickMarks
+    discrete
+    #progressSlider>
+    <input
       matSliderThumb
       [value]="progress"
-      (dragEnd)="onProgressChange($event.value)">
+      (dragEnd)="onProgressChange($event.value)" />
   </mat-slider>
 
   <section class="song-playing-snackbar">
-
     <span class="song-playing-snackbar-info">
-      
       <mat-icon class="song-cover-art">
         <svg>
           <image
             href="https://material.angular.dev/assets/img/examples/shiba2.jpg"
             alt="song cover art"
             height="44"
-            width="44"/>
+            width="44" />
         </svg>
       </mat-icon>
 
-      <cite class="song-title">
-        {{ currentSong?.song_title}}
-      </cite>
+      <cite class="song-title"> {{ currentSong?.song_title}} </cite>
     </span>
 
-    <span
-      class="song-playing-snackbar-action">
-        <button
-          matIconButton
-          (click)="onReplay10()">
-            <mat-icon class="action-icon">replay_10</mat-icon>
-        </button>
-        <button 
-          matIconButton 
-          (click)="onPlay()">
-            <mat-icon class="action-icon" [class.ripple]="isPlaying">
-              {{ isPlaying ? 'pause_circle' : 'play_circle' }}
-            </mat-icon>
-        </button>
-        <button
-          matIconButton
-          (click)="onFastForward()">
-            <mat-icon class="action-icon">fast_forward</mat-icon>
-        </button>
-        <button
-          matIconButton
-          [cdkMenuTriggerFor]="volumeSlider">
-            <mat-icon class="action-icon">
-              {{ audioRef?.volume === 0 ? 'volume_off' : 'volume_up' }}
-            </mat-icon>
-        </button>
-
-      </span>
+    <span class="song-playing-snackbar-action">
+      <button matIconButton (click)="onReplay10()">
+        <mat-icon class="action-icon">replay_10</mat-icon>
+      </button>
+      <button matIconButton (click)="onPlay()">
+        <mat-icon class="action-icon" [class.ripple]="isPlaying">
+          {{ isPlaying ? 'pause_circle' : 'play_circle' }}
+        </mat-icon>
+      </button>
+      <button matIconButton (click)="onFastForward()">
+        <mat-icon class="action-icon">fast_forward</mat-icon>
+      </button>
+      <button matIconButton [cdkMenuTriggerFor]="volumeSlider">
+        <mat-icon class="action-icon">
+          {{ audioRef?.volume === 0 ? 'volume_off' : 'volume_up' }}
+        </mat-icon>
+      </button>
+    </span>
   </section>
 </ng-template>
 
 <ng-template #volumeSlider>
   @let multiplier = 100;
-  <mat-slider min="0" [max]="multiplier" step="1" showTickMarks discrete vertical>
-    <input 
+  <mat-slider
+    min="0"
+    [max]="multiplier"
+    step="1"
+    showTickMarks
+    discrete
+    vertical>
+    <input
       matSliderThumb
       #volumeSliderInput
       [value]="audioRef.volume * multiplier"
-      (valueChange)="audioRef.volume = $event / multiplier">
+      (valueChange)="audioRef.volume = $event / multiplier" />
   </mat-slider>
 </ng-template>
 
-
-<audio controls #audioRef hidden preload="none" [src]="currentSong?.song_url" (ended)="onEnded(currentIndex, songs)"></audio>
+<audio
+  controls
+  #audioRef
+  hidden
+  preload="none"
+  [src]="currentSong?.song_url"
+  (ended)="onEnded(currentIndex, songs)"></audio>

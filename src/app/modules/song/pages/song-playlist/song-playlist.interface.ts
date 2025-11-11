@@ -8,4 +8,3 @@ export interface SongPlayListRow {
   song_url?: string;
   song_cover_art_url?: string;
 }
-

@@ -21,7 +21,12 @@ describe('SidenavDrawerService', () => {
     _document = TestBed.inject(DOCUMENT);
     sidenavDrawerService = TestBed.inject(SidenavDrawerService);
 
-    sidenavDrawerService.drawer = jasmine.createSpyObj('MatDrawer', [
+    sidenavDrawerService.startSidenavDrawer = jasmine.createSpyObj(
+      'MatDrawer',
+      ['open', 'close', 'toggle', 'onOpened', 'onClosed']
+    );
+
+    sidenavDrawerService.endSidenavDrawer = jasmine.createSpyObj('MatDrawer', [
       'open',
       'close',
       'toggle',
@@ -44,7 +49,9 @@ describe('SidenavDrawerService', () => {
     expect(
       sidenavDrawerService['_document'].querySelectorAll
     ).toHaveBeenCalledWith('.cdk-overlay-pane');
-    expect(sidenavDrawerService['_drawer'].close).toHaveBeenCalled();
+    expect(
+      sidenavDrawerService['_startSidenavDrawer'].close
+    ).toHaveBeenCalled();
   });
 
   it('should close on key escape press when only a tooltip is opened on hover while the MatDrawer is still opened', () => {
@@ -60,7 +67,9 @@ describe('SidenavDrawerService', () => {
     expect(
       sidenavDrawerService['_document'].querySelectorAll
     ).toHaveBeenCalledWith('.cdk-overlay-pane');
-    expect(sidenavDrawerService['_drawer'].close).toHaveBeenCalled();
+    expect(
+      sidenavDrawerService['_startSidenavDrawer'].close
+    ).toHaveBeenCalled();
   });
 
   it('should not close on key escape press when a dialog is opened while the MatDrawer is still opened', () => {
@@ -76,6 +85,8 @@ describe('SidenavDrawerService', () => {
     expect(
       sidenavDrawerService['_document'].querySelectorAll
     ).toHaveBeenCalledWith('.cdk-overlay-pane');
-    expect(sidenavDrawerService['_drawer'].close).not.toHaveBeenCalled();
+    expect(
+      sidenavDrawerService['_startSidenavDrawer'].close
+    ).not.toHaveBeenCalled();
   });
 });

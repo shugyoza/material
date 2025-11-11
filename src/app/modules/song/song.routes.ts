@@ -8,13 +8,16 @@ export const SONG_ROUTES: Routes = [
       {
         path: 'song-playlist',
         loadComponent: () =>
-        import('./pages/song-playlist/song-playlist').then(m => m.SongPlaylist),
+          import('./pages/song-playlist/song-playlist').then(
+            m => m.SongPlaylist
+          ),
       },
-      { 
+      {
         path: 'song-search',
-        loadComponent: () => import('./song-search/song-search').then(m => m.SongSearch)
+        loadComponent: () =>
+          import('./song-search/song-search').then(m => m.SongSearch),
       },
-    ]
+    ],
   },
   {
     path: '**',
