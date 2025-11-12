@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { MatDrawer, MatDrawerToggleResult } from '@angular/material/sidenav';
 
 @Injectable({
@@ -8,64 +8,87 @@ import { MatDrawer, MatDrawerToggleResult } from '@angular/material/sidenav';
 export class SidenavDrawerService {
   private readonly _document = inject(DOCUMENT);
 
-  private _startSidenavDrawer!: MatDrawer;
+  readonly sidenavDrawer = {
+    start: signal<MatDrawer | null>(null),
+    end: signal<MatDrawer | null>(null)
+  };
 
-  private _endSidenavDrawer!: MatDrawer;
-
-  set startSidenavDrawer(drawer: MatDrawer) {
-    this._startSidenavDrawer = drawer;
-  }
-
-  set endSidenavDrawer(drawer: MatDrawer) {
-    this._endSidenavDrawer = drawer;
-  }
-
-  open(position: 'start' | 'end'): Promise<MatDrawerToggleResult> {
-    switch (position) {
-      case 'start':
-        return this._startSidenavDrawer.open();
-      default:
-        return this._endSidenavDrawer.open();
+  open(position: 'start' | 'end'): null | Promise<MatDrawerToggleResult> {
+    const sidenavDrawer = {
+      start: this.sidenavDrawer.start(),
+      end: this.sidenavDrawer.end()
     }
-  }
 
-  close(position: 'start' | 'end'): Promise<MatDrawerToggleResult> {
-    switch (position) {
-      case 'start':
-        return this._startSidenavDrawer.close();
-      default:
-        return this._endSidenavDrawer.close();
+    if (position === 'start' && sidenavDrawer.start) {
+      return sidenavDrawer.start.open()
     }
-  }
 
-  toggle(position: 'start' | 'end'): Promise<MatDrawerToggleResult> {
-    switch (position) {
-      case 'start':
-        return this._startSidenavDrawer.toggle();
-      default:
-        return this._endSidenavDrawer.toggle();
+    if (position === 'end' && sidenavDrawer.end) {
+      return sidenavDrawer.end.open()
     }
+
+    return null;
   }
 
-  startSidenavDrawerIsOpened(): boolean {
-    return this._startSidenavDrawer.opened;
+  close(position: 'start' | 'end'): null | Promise<MatDrawerToggleResult> {
+        const sidenavDrawer = {
+      start: this.sidenavDrawer.start(),
+      end: this.sidenavDrawer.end()
+    }
+
+    if (position === 'start' && sidenavDrawer.start) {
+      return sidenavDrawer.start.close()
+    }
+
+    if (position === 'end' && sidenavDrawer.end) {
+      return sidenavDrawer.end.close()
+    }
+
+    return null;
   }
 
-  endSidenavDrawerIsOpened(): boolean {
-    return this._endSidenavDrawer.opened;
+  toggle(position: 'start' | 'end'): null | Promise<MatDrawerToggleResult> {
+    const sidenavDrawer = {
+      start: this.sidenavDrawer.start(),
+      end: this.sidenavDrawer.end()
+    }
+
+    if (position === 'start' && sidenavDrawer.start) {
+      return sidenavDrawer.start.toggle()
+    }
+
+    if (position === 'end' && sidenavDrawer.end) {
+      return sidenavDrawer.end.toggle()
+    }
+
+    return null;
+  }
+
+  sidenavDrawerIsOpened(position: 'start' | 'end'): boolean {
+    const sidenavDrawer = {
+      start: this.sidenavDrawer.start(),
+      end: this.sidenavDrawer.end()
+    }
+
+    return sidenavDrawer[position]?.opened ?? false;
   }
 
   onEscape(): void {
     const openOverlays = this._document.querySelectorAll('.cdk-overlay-pane');
     const openOverlaysExist = openOverlays.length > 0;
+    const sidenavDrawer = {
+      start: this.sidenavDrawer.start(),
+      end: this.sidenavDrawer.end()
+    }
+
 
     if (!openOverlaysExist) {
-      if (this._startSidenavDrawer.opened) {
-        this._startSidenavDrawer.close();
+      if (sidenavDrawer.start?.opened) {
+        sidenavDrawer.start.close();
       }
 
-      if (this._endSidenavDrawer.opened) {
-        this._endSidenavDrawer.close();
+      if (sidenavDrawer.end?.opened) {
+        sidenavDrawer.end.close();
       }
 
       return;
@@ -75,12 +98,12 @@ export class SidenavDrawerService {
     const openedOverlayIsTooltip =
       openedOverlay.className.indexOf('mat-mdc-tooltip-panel') > -1;
     if (openedOverlayIsTooltip) {
-      if (this._startSidenavDrawer.opened) {
-        this._startSidenavDrawer.close();
+      if (sidenavDrawer.start?.opened) {
+        sidenavDrawer.start.close();
       }
 
-      if (this._endSidenavDrawer.opened) {
-        this._endSidenavDrawer.close();
+      if (sidenavDrawer.end?.opened) {
+        sidenavDrawer.end.close();
       }
 
       return;

@@ -1,31 +1,37 @@
+@let config = {
+  mode: mode(),
+  autoFocus: autoFocus(),
+  opened: opened()
+};
+
 <mat-drawer-container
   class="drawer-container"
   [ngStyle]="cssStyles().matDrawerContainer"
   [hasBackdrop]="hasBackdrop()">
   <mat-drawer
     #startDrawerRef
-    [autoFocus]="autoFocus()"
-    [disableClose]="true"
+    disableClose
+    [autoFocus]="config.autoFocus"
     [style.width]="drawerWidth()"
-    [mode]="mode()"
-    [position]="'start'"
+    [mode]="config.mode"
+    position="start"
     [ngStyle]="cssStyles().matDrawer"
     role="region"
-    [opened]="opened()"
+    [opened]="config.opened.start"
     (keyup.escape)="onEscape()">
     <ng-content select="[startSidenavDrawer]"></ng-content>
   </mat-drawer>
 
   <mat-drawer
     #endDrawerRef
-    [autoFocus]="autoFocus()"
-    [disableClose]="true"
+    disableClose
+    [autoFocus]="config.autoFocus"
     [style.width]="drawerWidth()"
-    [mode]="mode()"
-    [position]="'end'"
+    [mode]="config.mode"
+    position="end"
     [ngStyle]="cssStyles().matDrawer"
     role="region"
-    [opened]="opened()"
+    [opened]="config.opened.end"
     (keyup.escape)="onEscape()">
     <ng-content select="[startSidenavDrawer]"></ng-content>
   </mat-drawer>

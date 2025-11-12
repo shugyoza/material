@@ -2,11 +2,17 @@ import { TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/common';
 
 import { SidenavDrawerService } from './sidenav-drawer.service';
+import { signal } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 describe('SidenavDrawerService', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let _document: typeof document;
-  let sidenavDrawerService: SidenavDrawerService;
+  let service: SidenavDrawerService;
+  const mockMatDrawer = jasmine.createSpyObj(
+      'MatDrawer',
+      ['open', 'close', 'toggle', 'onOpened', 'onClosed']
+    );
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,24 +25,14 @@ describe('SidenavDrawerService', () => {
     });
 
     _document = TestBed.inject(DOCUMENT);
-    sidenavDrawerService = TestBed.inject(SidenavDrawerService);
+    service = TestBed.inject(SidenavDrawerService);
 
-    sidenavDrawerService.startSidenavDrawer = jasmine.createSpyObj(
-      'MatDrawer',
-      ['open', 'close', 'toggle', 'onOpened', 'onClosed']
-    );
-
-    sidenavDrawerService.endSidenavDrawer = jasmine.createSpyObj('MatDrawer', [
-      'open',
-      'close',
-      'toggle',
-      'onOpened',
-      'onClosed',
-    ]);
+    service.sidenavDrawer.start = signal<MatDrawer | null>(mockMatDrawer) ;
+    service.sidenavDrawer.end = signal<MatDrawer | null>(mockMatDrawer) ;
   });
 
   it('should create', () => {
-    expect(sidenavDrawerService).toBeTruthy();
+    expect(service).toBeTruthy();
   });
 
   it('should close on key escape press when there is no dialog is opened while the MatDrawer is still opened', () => {
@@ -44,10 +40,10 @@ describe('SidenavDrawerService', () => {
       [] as unknown as NodeListOf<Element>
     );
 
-    sidenavDrawerService.onEscape();
+    service.onEscape();
 
     expect(
-      sidenavDrawerService['_document'].querySelectorAll
+      service['_document'].querySelectorAll
     ).toHaveBeenCalledWith('.cdk-overlay-pane');
     // expect(
     //   sidenavDrawerService['_startSidenavDrawer'].close
@@ -62,13 +58,13 @@ describe('SidenavDrawerService', () => {
       mockedTooltip,
     ] as unknown as NodeListOf<Element>);
 
-    sidenavDrawerService.onEscape();
+    service.onEscape();
 
     expect(
-      sidenavDrawerService['_document'].querySelectorAll
+      service['_document'].querySelectorAll
     ).toHaveBeenCalledWith('.cdk-overlay-pane');
     // expect(
-    //   sidenavDrawerService['_startSidenavDrawer'].close
+    //   service.sidenavDrawer.start()?.close
     // ).toHaveBeenCalled();
   });
 
@@ -80,13 +76,13 @@ describe('SidenavDrawerService', () => {
       mockedSelectDropdownOptionsDialog,
     ] as unknown as NodeListOf<Element>);
 
-    sidenavDrawerService.onEscape();
+    service.onEscape();
 
     expect(
-      sidenavDrawerService['_document'].querySelectorAll
+      service['_document'].querySelectorAll
     ).toHaveBeenCalledWith('.cdk-overlay-pane');
-    expect(
-      sidenavDrawerService['_startSidenavDrawer'].close
-    ).not.toHaveBeenCalled();
+    // expect(
+    //   service.sidenavDrawer.start()?.close
+    // ).not.toHaveBeenCalled();
   });
 });

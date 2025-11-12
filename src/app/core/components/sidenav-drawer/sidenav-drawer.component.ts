@@ -1,8 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  effect,
+  ElementRef,
   inject,
   input,
+  viewChild,
   ViewChild,
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
@@ -22,16 +25,14 @@ import { SidenavDrawerService } from './sidenav-drawer.service';
   styleUrls: ['./sidenav-drawer.component.scss'],
   imports: [NgStyle, MatSidenavModule],
 })
-export class SidenavDrawerComponent implements AfterViewInit {
-  @ViewChild('startDrawerRef') startMatDrawer!: MatDrawer;
+export class SidenavDrawerComponent {
+  readonly startMatDrawer = viewChild<MatDrawer>('startDrawerRef');
 
-  @ViewChild('endDrawerRef') endMatDrawer!: MatDrawer;
+  readonly endMatDrawer = viewChild<MatDrawer>('endDrawerRef');
 
-  private _sidenavDrawerService = inject(SidenavDrawerService);
+  private _service = inject(SidenavDrawerService);
 
   mode = input<MatDrawerMode>('side');
-
-  position = input<'start' | 'end'>('end');
 
   /* accept any css size units as string, i.e: '888px', '8rem', '8em', '80%' */
   drawerWidth = input<string>('');
@@ -46,16 +47,31 @@ export class SidenavDrawerComponent implements AfterViewInit {
 
   hasBackdrop = input<boolean>(false);
 
-  opened = input<boolean>(false);
+  opened = input<{ start: boolean; end: boolean }>({
+    start: false,
+    end: false
+  });
 
   autoFocus = input<AutoFocusTarget | boolean | string>(false);
 
-  ngAfterViewInit(): void {
-    this._sidenavDrawerService.startSidenavDrawer = this.startMatDrawer;
-    this._sidenavDrawerService.endSidenavDrawer = this.endMatDrawer;
+  constructor() {
+    effect(() => {
+      const sidenavDrawer = {
+        start: this.startMatDrawer(),
+        end: this.endMatDrawer()
+      }
+
+      if (sidenavDrawer.start) {
+        this._service.sidenavDrawer.start.set(sidenavDrawer.start);
+      }
+
+      if (sidenavDrawer.end) {
+        this._service.sidenavDrawer.end.set(sidenavDrawer.end);
+      }
+    })
   }
 
   onEscape(): void {
-    this._sidenavDrawerService.onEscape();
+    this._service.onEscape();
   }
 }

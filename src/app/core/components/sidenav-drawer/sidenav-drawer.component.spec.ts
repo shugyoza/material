@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { NgStyle } from '@angular/common';
 
 import { SidenavDrawerComponent } from './sidenav-drawer.component';
 import { SidenavDrawerService } from './sidenav-drawer.service';
+import { signal } from '@angular/core';
 
 describe('HarmonySidenavDrawerComponent', () => {
   let component: SidenavDrawerComponent;
@@ -21,7 +22,12 @@ describe('HarmonySidenavDrawerComponent', () => {
       providers: [
         {
           provide: SidenavDrawerService,
-          useValue: {},
+          useValue: {
+            sidenavDrawer: {
+              start: signal<MatDrawer | null>(null),
+              end: signal<MatDrawer | null>(null)
+            }
+          },
         },
       ],
     }).compileComponents();
@@ -29,7 +35,6 @@ describe('HarmonySidenavDrawerComponent', () => {
     fixture = TestBed.createComponent(SidenavDrawerComponent);
     component = fixture.componentInstance;
 
-    component.ngAfterViewInit();
     fixture.detectChanges();
   });
 
