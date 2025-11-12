@@ -64,3 +64,23 @@ body {
     background-color: azure;
   }
 }
+
+.skeleton-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%; /* Make the gradient wider than the element */
+  color: transparent;
+  animation: shimmer 1.5s infinite linear; /* Apply the animation */
+  pointer-events: none; /* Allows clicks to pass through the ripple */
+  margin: 4px;
+  z-index: 100;
+    
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0; /* Start off-screen to the left */
+  }
+  100% {
+    background-position: 200% 0; /* End off-screen to the right */
+  }
+}
