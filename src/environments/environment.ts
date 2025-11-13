@@ -27,4 +27,8 @@ export const environment = {
 		root: `http://localhost:4200/api/${proxyEnv}`,
 		path: PATH,
 	},
+	supabase: {
+		url: 'XXXXXXXXXXXXXXXXXXXXXXX',
+		key: 'xxx',
+	},
 };

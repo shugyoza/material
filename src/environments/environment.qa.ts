@@ -7,4 +7,8 @@ export const ENVIRONMENT = {
 		root: 'https://api.qa.whatever.com',
 		path: PATH,
 	},
+	supabase: {
+		url: 'XXXXXXXXXXXXXXXXXXXXXXX',
+		key: 'xxx',
+	},
 };

@@ -8,4 +8,8 @@ export const ENVIRONMENT = {
 		root: 'https://api.prod.whatever.com',
 		path: PATH,
 	},
+	supabase: {
+		url: 'XXXXXXXXXXXXXXXXXXXXXXX',
+		key: 'xxx',
+	},
 };
