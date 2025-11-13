@@ -1,167 +1,167 @@
 <app-tab-group [tabs]="stepLabels()" class="step-tab-group"></app-tab-group>
 <button matButton="filled" [cdkMenuTriggerFor]="columnSelections">
-  Columns
+	Columns
 </button>
 <ng-template #columnSelections>
-  <div class="selection-menu">
-    @for (columnOption of optionalColumns(); track $index) {
-    <button
-      cdkMenuItemCheckbox
-      class="selection-menu-item"
-      [cdkMenuItemChecked]="columnOption.selected"
-      (cdkMenuItemTriggered)="onOptionalColumnsClick($index)">
-      {{ columnOption.label }}
-    </button>
-    }
-  </div>
+	<div class="selection-menu">
+		@for (columnOption of optionalColumns(); track $index) {
+		<button
+			cdkMenuItemCheckbox
+			class="selection-menu-item"
+			[cdkMenuItemChecked]="columnOption.selected"
+			(cdkMenuItemTriggered)="onOptionalColumnsClick($index)">
+			{{ columnOption.label }}
+		</button>
+		}
+	</div>
 </ng-template>
 
 <section class="top-panel">Test</section>
 <table cdk-table [dataSource]="dataSource" matSort>
-  <ng-container cdkColumnDef="job_position">
-    <th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Job Position</th>
-    <td cdk-cell *cdkCellDef="let row" class="cdk-header-cell-align-start">
-      {{ row.job_position }}
-    </td>
-  </ng-container>
+	<ng-container cdkColumnDef="job_position">
+		<th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Job Position</th>
+		<td cdk-cell *cdkCellDef="let row" class="cdk-header-cell-align-start">
+			{{ row.job_position }}
+		</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="company">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Company
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.company }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="company">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Company
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.company }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="min_salary">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Min. Salary
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.min_salary }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="min_salary">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Min. Salary
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.min_salary }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="max_salary">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Max. Salary
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.max_salary }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="max_salary">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Max. Salary
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.max_salary }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="job_location">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Location
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.job_location }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="job_location">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Location
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.job_location }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="application_status">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Status
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.application_status }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="application_status">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Status
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.application_status }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="posted_date">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Date Posted
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.posted_date }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="posted_date">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Date Posted
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.posted_date }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="save_date">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Date Saved
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.save_date | myDate }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="save_date">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Date Saved
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.save_date | myDate }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="deadline_date">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Deadline
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.deadline_date | myDate }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="deadline_date">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Deadline
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.deadline_date | myDate }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="applied_date">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Date Applied
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.applied_date | myDate }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="applied_date">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Date Applied
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.applied_date | myDate }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="follow_up_date">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Follow Up
-    </th>
-    <td cdk-cell *cdkCellDef="let row">{{ row.follow_up_date | myDate }}</td>
-  </ng-container>
+	<ng-container cdkColumnDef="follow_up_date">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Follow Up
+		</th>
+		<td cdk-cell *cdkCellDef="let row">{{ row.follow_up_date | myDate }}</td>
+	</ng-container>
 
-  <ng-container cdkColumnDef="excitement">
-    <th
-      cdk-header-cell
-      *cdkHeaderCellDef
-      mat-sort-header
-      class="cdk-header-cell-align-start">
-      Excitement
-    </th>
-    <td cdk-cell *cdkCellDef="let row">
-      @for (star of stars(); track $index) { @let fill = row.excitement -
-      $index;
-      <button matIconButton class="star-rating">
-        <mat-icon [class.empty-star]="fill < 0.5">
-          @if (fill > 0 && fill < 1) { {{ 'star_half' }} } @if (fill >= 1) { {{
-          'star' }} } @else { {{ 'star' }} }
-        </mat-icon>
-      </button>
-      }
-    </td>
-  </ng-container>
+	<ng-container cdkColumnDef="excitement">
+		<th
+			cdk-header-cell
+			*cdkHeaderCellDef
+			mat-sort-header
+			class="cdk-header-cell-align-start">
+			Excitement
+		</th>
+		<td cdk-cell *cdkCellDef="let row">
+			@for (star of stars(); track $index) { @let fill = row.excitement -
+			$index;
+			<button matIconButton class="star-rating">
+				<mat-icon [class.empty-star]="fill < 0.5">
+					@if (fill > 0 && fill < 1) { {{ 'star_half' }} } @if (fill >= 1) { {{
+					'star' }} } @else { {{ 'star' }} }
+				</mat-icon>
+			</button>
+			}
+		</td>
+	</ng-container>
 
-  <tr
-    cdk-header-row
-    *cdkHeaderRowDef="columns(); sticky: true"
-    class="sticky-header"></tr>
+	<tr
+		cdk-header-row
+		*cdkHeaderRowDef="columns(); sticky: true"
+		class="sticky-header"></tr>
 
-  <tr
-    cdk-row
-    *cdkRowDef="let row; columns: columns(); let rowIndex = index"></tr>
+	<tr
+		cdk-row
+		*cdkRowDef="let row; columns: columns(); let rowIndex = index"></tr>
 </table>

@@ -1,19 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { TestBed } from "@angular/core/testing";
+import { provideHttpClient } from "@angular/common/http";
 
-import { Http } from './http';
+import { Http } from "./http";
 
-describe('Http', () => {
-  let service: Http;
+describe("Http", () => {
+	let service: Http;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideHttpClient()],
-    });
-    service = TestBed.inject(Http);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [provideHttpClient()],
+		});
+		service = TestBed.inject(Http);
+	});
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });

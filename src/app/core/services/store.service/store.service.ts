@@ -1,13 +1,13 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: "root",
 })
 export class StoreService {
-  readonly sidenav = {
-    opened: signal<{ start: boolean; end: boolean }>({
-      start: true,
-      end: false,
-    }),
-  };
+	readonly sidenav = {
+		opened: signal<{ start: boolean; end: boolean }>({
+			start: true,
+			end: false,
+		}),
+	};
 }

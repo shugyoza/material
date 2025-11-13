@@ -1,19 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { TestBed } from "@angular/core/testing";
+import { provideHttpClient } from "@angular/common/http";
 
-import { SongPlaylistService } from './song-playlist.service';
+import { SongPlaylistService } from "./song-playlist.service";
 
-describe('SongPlaylistService', () => {
-  let service: SongPlaylistService;
+describe("SongPlaylistService", () => {
+	let service: SongPlaylistService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideHttpClient()],
-    });
-    service = TestBed.inject(SongPlaylistService);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [provideHttpClient()],
+		});
+		service = TestBed.inject(SongPlaylistService);
+	});
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });

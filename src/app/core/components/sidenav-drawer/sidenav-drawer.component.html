@@ -1,45 +1,45 @@
 @let config =
-  {
-    mode: mode(),
-    autoFocus: autoFocus(),
-    opened: opened(),
-  };
+	{
+		mode: mode(),
+		autoFocus: autoFocus(),
+		opened: opened(),
+	};
 
 <mat-drawer-container
-  class="drawer-container"
-  [ngStyle]="cssStyles().matDrawerContainer"
-  [hasBackdrop]="hasBackdrop()">
-  <mat-drawer
-    #startDrawerRef
-    disableClose
-    [autoFocus]="config.autoFocus"
-    [style.width]="drawerWidth()"
-    [mode]="config.mode"
-    position="start"
-    [ngStyle]="cssStyles().matDrawer"
-    role="region"
-    [opened]="config.opened.start"
-    (keyup.escape)="onEscape()">
-    <ng-content select="[startSidenavDrawer]"></ng-content>
-  </mat-drawer>
+	class="drawer-container"
+	[ngStyle]="cssStyles().matDrawerContainer"
+	[hasBackdrop]="hasBackdrop()">
+	<mat-drawer
+		#startDrawerRef
+		disableClose
+		[autoFocus]="config.autoFocus"
+		[style.width]="drawerWidth()"
+		[mode]="config.mode"
+		position="start"
+		[ngStyle]="cssStyles().matDrawer"
+		role="region"
+		[opened]="config.opened.start"
+		(keyup.escape)="onEscape()">
+		<ng-content select="[startSidenavDrawer]"></ng-content>
+	</mat-drawer>
 
-  <mat-drawer
-    #endDrawerRef
-    disableClose
-    [autoFocus]="config.autoFocus"
-    [style.width]="drawerWidth()"
-    [mode]="config.mode"
-    position="end"
-    [ngStyle]="cssStyles().matDrawer"
-    role="region"
-    [opened]="config.opened.end"
-    (keyup.escape)="onEscape()">
-    <ng-content select="[endSidenavDrawer]"></ng-content>
-  </mat-drawer>
+	<mat-drawer
+		#endDrawerRef
+		disableClose
+		[autoFocus]="config.autoFocus"
+		[style.width]="drawerWidth()"
+		[mode]="config.mode"
+		position="end"
+		[ngStyle]="cssStyles().matDrawer"
+		role="region"
+		[opened]="config.opened.end"
+		(keyup.escape)="onEscape()">
+		<ng-content select="[endSidenavDrawer]"></ng-content>
+	</mat-drawer>
 
-  <mat-drawer-content
-    class="drawer-content"
-    [ngStyle]="cssStyles().matDrawerContent">
-    <ng-content select="[sidenavContent]"></ng-content>
-  </mat-drawer-content>
+	<mat-drawer-content
+		class="drawer-content"
+		[ngStyle]="cssStyles().matDrawerContent">
+		<ng-content select="[sidenavContent]"></ng-content>
+	</mat-drawer-content>
 </mat-drawer-container>
