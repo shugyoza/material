@@ -24,8 +24,8 @@ export interface Tile {
     Toolbar,
     SideMenu,
     SidenavDrawerComponent,
-    NgClass
-],
+    NgClass,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

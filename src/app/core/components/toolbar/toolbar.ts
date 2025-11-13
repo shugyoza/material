@@ -16,6 +16,9 @@ export class Toolbar {
   private readonly _storeService = inject(StoreService);
 
   toggleMenu(): void {
-    this._storeService.sidenav.opened.update(({ start, end }) => ({ start: !start, end }));
+    this._storeService.sidenav.opened.update(({ start, end }) => ({
+      start: !start,
+      end,
+    }));
   }
 }

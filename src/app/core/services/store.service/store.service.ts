@@ -5,6 +5,9 @@ import { Injectable, signal } from '@angular/core';
 })
 export class StoreService {
   readonly sidenav = {
-    opened: signal<{ start: boolean; end: boolean }>({ start: true, end: false }),
+    opened: signal<{ start: boolean; end: boolean }>({
+      start: true,
+      end: false,
+    }),
   };
 }

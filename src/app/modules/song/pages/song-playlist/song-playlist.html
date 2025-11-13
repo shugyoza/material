@@ -1,10 +1,7 @@
-@let playlist = playlistService;
-@let currentIndex = (playlist.currentIndex$ | async)!;
-@let songs = data()?.['songs'] ?? [];
-@let currentSong = songs[currentIndex]; @let isPlaying = !paused(); @let progress = progress$ | async;
-
-@if (progress) { 
-}
+@let playlist = playlistService; @let currentIndex = (playlist.currentIndex$ |
+async)!; @let songs = data()?.['songs'] ?? []; @let currentSong =
+songs[currentIndex]; @let isPlaying = !paused(); @let progress = progress$ |
+async; @if (progress) { }
 
 <section class="filter-search-panel">
   <mat-form-field

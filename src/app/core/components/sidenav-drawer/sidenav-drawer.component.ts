@@ -49,7 +49,7 @@ export class SidenavDrawerComponent {
 
   opened = input<{ start: boolean; end: boolean }>({
     start: false,
-    end: false
+    end: false,
   });
 
   autoFocus = input<AutoFocusTarget | boolean | string>(false);
@@ -58,8 +58,8 @@ export class SidenavDrawerComponent {
     effect(() => {
       const sidenavDrawer = {
         start: this.startMatDrawer(),
-        end: this.endMatDrawer()
-      }
+        end: this.endMatDrawer(),
+      };
 
       if (sidenavDrawer.start) {
         this._service.sidenavDrawer.start.set(sidenavDrawer.start);
@@ -68,7 +68,7 @@ export class SidenavDrawerComponent {
       if (sidenavDrawer.end) {
         this._service.sidenavDrawer.end.set(sidenavDrawer.end);
       }
-    })
+    });
   }
 
   onEscape(): void {

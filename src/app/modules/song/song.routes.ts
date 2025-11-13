@@ -14,8 +14,8 @@ export const SONG_ROUTES: Routes = [
             m => m.SongPlaylist
           ),
         resolve: {
-          songs: songPlaylistResolver
-        }
+          songs: songPlaylistResolver,
+        },
       },
       {
         path: 'song-search',

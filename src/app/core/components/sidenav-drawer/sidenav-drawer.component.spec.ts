@@ -25,8 +25,8 @@ describe('HarmonySidenavDrawerComponent', () => {
           useValue: {
             sidenavDrawer: {
               start: signal<MatDrawer | null>(null),
-              end: signal<MatDrawer | null>(null)
-            }
+              end: signal<MatDrawer | null>(null),
+            },
           },
         },
       ],

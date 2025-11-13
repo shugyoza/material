@@ -13,8 +13,8 @@ describe('Song', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: {}
-        }
+          useValue: {},
+        },
       ],
     }).compileComponents();
 

@@ -35,14 +35,14 @@ export class Global {
     ])
     .pipe(
       startWith({
-        "matches": true,
-        "breakpoints": {
-          "(max-width: 599.98px)": false,
-          "(min-width: 600px) and (max-width: 959.98px)": false,
-          "(min-width: 960px) and (max-width: 1279.98px)": false,
-          "(min-width: 1280px) and (max-width: 1919.98px)": true,
-          "(min-width: 1920px)": false
-        }
+        matches: true,
+        breakpoints: {
+          '(max-width: 599.98px)': false,
+          '(min-width: 600px) and (max-width: 959.98px)': false,
+          '(min-width: 960px) and (max-width: 1279.98px)': false,
+          '(min-width: 1280px) and (max-width: 1919.98px)': true,
+          '(min-width: 1920px)': false,
+        },
       }),
       map(value => {
         const breakpoints = Object.entries(value.breakpoints);

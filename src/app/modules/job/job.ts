@@ -14,5 +14,4 @@ export class Job {
   readonly tabs = signal<Tab[]>([
     { label: 'Job Tracker', path: '/job/job-tracker' },
   ]);
-
 }

@@ -9,10 +9,13 @@ describe('SidenavDrawerService', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let _document: typeof document;
   let service: SidenavDrawerService;
-  const mockMatDrawer = jasmine.createSpyObj(
-      'MatDrawer',
-      ['open', 'close', 'toggle', 'onOpened', 'onClosed']
-    );
+  const mockMatDrawer = jasmine.createSpyObj('MatDrawer', [
+    'open',
+    'close',
+    'toggle',
+    'onOpened',
+    'onClosed',
+  ]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -27,8 +30,8 @@ describe('SidenavDrawerService', () => {
     _document = TestBed.inject(DOCUMENT);
     service = TestBed.inject(SidenavDrawerService);
 
-    service.sidenavDrawer.start = signal<MatDrawer | null>(mockMatDrawer) ;
-    service.sidenavDrawer.end = signal<MatDrawer | null>(mockMatDrawer) ;
+    service.sidenavDrawer.start = signal<MatDrawer | null>(mockMatDrawer);
+    service.sidenavDrawer.end = signal<MatDrawer | null>(mockMatDrawer);
   });
 
   it('should create', () => {
@@ -42,9 +45,9 @@ describe('SidenavDrawerService', () => {
 
     service.onEscape();
 
-    expect(
-      service['_document'].querySelectorAll
-    ).toHaveBeenCalledWith('.cdk-overlay-pane');
+    expect(service['_document'].querySelectorAll).toHaveBeenCalledWith(
+      '.cdk-overlay-pane'
+    );
     // expect(
     //   sidenavDrawerService['_startSidenavDrawer'].close
     // ).toHaveBeenCalled();
@@ -60,9 +63,9 @@ describe('SidenavDrawerService', () => {
 
     service.onEscape();
 
-    expect(
-      service['_document'].querySelectorAll
-    ).toHaveBeenCalledWith('.cdk-overlay-pane');
+    expect(service['_document'].querySelectorAll).toHaveBeenCalledWith(
+      '.cdk-overlay-pane'
+    );
     // expect(
     //   service.sidenavDrawer.start()?.close
     // ).toHaveBeenCalled();
@@ -78,9 +81,9 @@ describe('SidenavDrawerService', () => {
 
     service.onEscape();
 
-    expect(
-      service['_document'].querySelectorAll
-    ).toHaveBeenCalledWith('.cdk-overlay-pane');
+    expect(service['_document'].querySelectorAll).toHaveBeenCalledWith(
+      '.cdk-overlay-pane'
+    );
     // expect(
     //   service.sidenavDrawer.start()?.close
     // ).not.toHaveBeenCalled();

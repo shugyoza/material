@@ -18,10 +18,10 @@ describe('SongPlaylist', () => {
           provide: ActivatedRoute,
           useValue: {
             data: of({
-              songs: []
-            })
-          }
-        }
+              songs: [],
+            }),
+          },
+        },
       ],
     }).compileComponents();
 

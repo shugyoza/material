@@ -2,14 +2,16 @@ import { inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 import { formatDate } from '@angular/common';
 
 @Pipe({
-  name: 'myDate'
+  name: 'myDate',
 })
 export class MyDatePipe implements PipeTransform {
   private _locale = inject(LOCALE_ID);
 
-  transform(value: string, options?: { format: string; locale: string }): string {
+  transform(
+    value: string,
+    options?: { format: string; locale: string }
+  ): string {
     if (!value) {
-
       return '';
     }
 
@@ -18,5 +20,4 @@ export class MyDatePipe implements PipeTransform {
 
     return formatDate(value, format, locale);
   }
-
 }

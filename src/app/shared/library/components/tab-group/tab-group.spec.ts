@@ -8,9 +8,8 @@ describe('TabGroup', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TabGroup]
-    })
-    .compileComponents();
+      imports: [TabGroup],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TabGroup);
     component = fixture.componentInstance;

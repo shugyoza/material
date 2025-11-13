@@ -57,7 +57,7 @@ body {
   }
 
   .l {
-    background-color: pink
+    background-color: pink;
   }
 
   .xl {
@@ -73,7 +73,6 @@ body {
   pointer-events: none; /* Allows clicks to pass through the ripple */
   margin: 4px;
   z-index: 100;
-    
 }
 
 @keyframes shimmer {

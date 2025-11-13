@@ -1,22 +1,12 @@
-    @for (tab of tabs(); track $index) {
-        @if ('badge' in tab && tab.badge) {
-            <button 
-              matButton="elevated"
-              matBadgePosition="before"
-              [matBadge]="tab.badge"
-              [value]="$index"
-              >
-                {{ tab.label }}
-        </button>
-        }
+@for (tab of tabs(); track $index) { @if ('badge' in tab && tab.badge) {
+<button
+  matButton="elevated"
+  matBadgePosition="before"
+  [matBadge]="tab.badge"
+  [value]="$index">
+  {{ tab.label }}
+</button>
+} @else {
+<button matButton="elevated" [value]="$index">{{ tab.label }}</button>
 
-        @else {
-            <button 
-              matButton="elevated"
-              [value]="$index"
-              >
-                {{ tab.label }}
-        </button>
-
-        }
-    }
+} }

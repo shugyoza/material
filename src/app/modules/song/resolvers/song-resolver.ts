@@ -7,5 +7,5 @@ import { SongPlayListRow } from '../pages/song-playlist/song-playlist.interface'
 export const songPlaylistResolver: ResolveFn<SongPlayListRow[]> = () => {
   const songPlaylistService = inject(SongPlaylistService);
 
-  return songPlaylistService.songs$
+  return songPlaylistService.songs$;
 };
