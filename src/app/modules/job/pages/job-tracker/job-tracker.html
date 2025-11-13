@@ -3,17 +3,22 @@
 	Columns
 </button>
 <ng-template #columnSelections>
-	<div class="selection-menu">
+	<section cdkDropList class="selection-menu" (cdkDropListDropped)="drop($event)">
 		@for (columnOption of optionalColumns(); track $index) {
-		<button
-			cdkMenuItemCheckbox
-			class="selection-menu-item"
-			[cdkMenuItemChecked]="columnOption.selected"
-			(cdkMenuItemTriggered)="onOptionalColumnsClick($index)">
-			{{ columnOption.label }}
-		</button>
+		<span
+		    cdkDrag
+		    class="selection-menu-row" >
+			<mat-checkbox 
+		  		[checked]="columnOption.selected"
+		  		(change)="onOptionalColumnsChange($index, $event.checked)">
+				{{ columnOption.label }}
+			</mat-checkbox>
+			<mat-icon>
+				drag_indicator
+			</mat-icon>
+		</span>
 		}
-	</div>
+	</section>
 </ng-template>
 
 <section class="top-panel">Test</section>

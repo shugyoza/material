@@ -8,6 +8,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { CdkMenuModule } from '@angular/cdk/menu';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { MyDatePipe } from '../../../../shared/library/pipes/my-date.pipe/my-date-pipe';
 import { TabGroup } from '../../../../shared/library/components/tab-group/tab-group';
@@ -45,18 +47,20 @@ interface JobRow {
 @Component({
 	selector: 'app-job-tracker',
 	imports: [
-		CdkTableModule,
-		MatButtonModule,
-		MatIconModule,
-		MatCardModule,
-		MatFormFieldModule,
-		MatListModule,
-		MatSortModule,
-		CdkMenuModule,
-
-		MyDatePipe,
-		TabGroup,
-	],
+    CdkTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatListModule,
+    MatSortModule,
+    CdkMenuModule,
+    MatCheckboxModule,
+    MyDatePipe,
+    TabGroup,
+	CdkDropList,
+    CdkDrag
+],
 	templateUrl: './job-tracker.html',
 	styleUrl: './job-tracker.scss',
 })
@@ -97,12 +101,52 @@ export class JobTracker {
 		{ badge: 7, label: 'Accepted' },
 	]);
 
-	onOptionalColumnsClick($index: number) {
+	onOptionalColumnsChange($index: number, checked: boolean) {
 		this.optionalColumns.update(columns => {
-			columns[$index].selected = !columns[$index].selected;
+			columns[$index].selected = checked;
 
 			return [...columns]; // return a new array copy to trigger change detection
 		});
+	}
+
+	drop($event: CdkDragDrop<{key: string; label: string;selected: boolean;}[]>) {
+		const previousIndex = $event.previousIndex;
+		const currentIndex = $event.currentIndex;
+		const optionalColumns = [...this.optionalColumns()];
+		const index = {
+			previous: previousIndex,
+			current: currentIndex,
+			min: Math.min(previousIndex, currentIndex),
+			max: Math.max(previousIndex, currentIndex)
+		}
+		const drag = {
+			forward: previousIndex < currentIndex,
+			backward: previousIndex > currentIndex
+		}
+
+		const part = {
+			first: optionalColumns.slice(0, index.min),
+			middle: optionalColumns.slice(index.min, index.max + 1),
+			last: optionalColumns.slice(index.max + 1)
+		}
+
+		if (drag.forward) {
+			const dragged = part.middle.shift();
+			if (dragged) {
+				part.middle.push(dragged)
+			}
+
+			this.optionalColumns.set([...part.first, ...part.middle, ...part.last])
+
+			return;
+		} 
+		
+		const dragged = part.middle.pop();
+		if (dragged) {
+			part.middle.unshift(dragged)
+		}
+
+		this.optionalColumns.set([...part.first, ...part.middle, ...part.last])
 	}
 }
 
