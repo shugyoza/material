@@ -1,5 +1,5 @@
 import { CdkTableModule, DataSource } from '@angular/cdk/table';
-import { Component, signal, viewChildren } from '@angular/core';
+import { Component, computed, signal, viewChildren } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -7,8 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { CdkMenuModule } from '@angular/cdk/menu';
 
 import { MyDatePipe } from '../../../../shared/library/pipes/my-date.pipe/my-date-pipe';
+import { TabGroup } from '../../../../shared/library/components/tab-group/tab-group';
 
 const JOB_DATA: JobRow[] = [{
   job_id: 1,
@@ -49,8 +51,10 @@ interface JobRow {
     MatFormFieldModule,
     MatListModule,
     MatSortModule,
+    CdkMenuModule,
 
-    MyDatePipe
+    MyDatePipe,
+    TabGroup
 ],
   templateUrl: './job-tracker.html',
   styleUrl: './job-tracker.scss',
@@ -62,19 +66,45 @@ export class JobTracker {
 
   readonly dataSource = new MyDataSource();
 
-  readonly columns = signal<string[]>([
-  'job_position',
-  'company',
-  'max_salary',
-  'job_location',
-  'application_status',
-  'save_date',
-  'deadline_date',
-  'applied_date',
-  'follow_up_date',
-  'excitement'
-]);
+  readonly optionalColumns = signal([
+  { key: 'min_salary', label: 'Min. Salary', selected: false },
+  { key: 'max_salary', label: 'Max. Salary', selected: true },
+  { key: 'job_location', label: 'Location', selected: true },
+  { key: 'application_status', label: 'Status', selected: true },
+  { key: 'posted_date', label: 'Date Posted', selected: false },
+  { key: 'save_date', label: 'Date Saved', selected: true },
+  { key: 'deadline_date', label: 'Deadline', selected: true },
+  { key: 'applied_date', label: 'Date Applied', selected: true },
+  { key: 'follow_up_date', label: 'Follow up', selected: true },
+  { key: 'excitement', label: 'Excitement', selected: true }
+  ])
 
+  readonly columns = computed<string[]>(() => {
+    const optionalColumns = this.optionalColumns().filter(column => column.selected).map(column => column.key)
+
+    return [
+      'job_position',
+      'company',
+    ].concat(optionalColumns)
+});
+
+  readonly stepLabels = signal([
+    { badge: 0, label: 'Bookmarked' },
+    { badge: 0, label: 'Applying' },
+    { badge: 4, label: 'Applied' },
+    { badge: 99, label: 'Interviewing' },
+    { badge: 88, label: 'Negotiating' },
+    { badge: 7, label: 'Accepted' },
+  ]
+)
+
+  onOptionalColumnsClick($index: number) {
+    this.optionalColumns.update((columns) => {
+      columns[$index].selected = !columns[$index].selected
+
+      return [...columns] // return a new array copy to trigger change detection
+    })
+  }
 }
 
 export class MyDataSource extends DataSource<JobRow> {

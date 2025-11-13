@@ -17,3 +17,37 @@ table {
         text-align: left;
     }
 } 
+
+.selection-menu {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 180px;
+    max-width: 280px;
+    background-color: white;
+    padding: 6px 0;
+
+    .selection-menu-item {
+        background-color: transparent;
+        cursor: pointer;
+        border: none;
+
+        user-select: none;
+        min-width: 64px;
+        line-height: 36px;
+        padding: 0 16px;
+
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex: 1
+    }
+    .selection-menu-item:hover {
+        background-color: rgb(208, 208, 208)
+    }
+    .selection-menu-item:active {
+        background-color: rgb(170, 170, 170)
+    }
+    .selection-menu-item[role='menuitemcheckbox'][aria-checked='true'] {
+        background-color: rgb(225, 225, 225);
+    }
+}

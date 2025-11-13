@@ -1,3 +1,24 @@
+<app-tab-group [tabs]="stepLabels()" class="step-tab-group"></app-tab-group>
+<button matButton="filled" [cdkMenuTriggerFor]="columnSelections">
+  Columns
+</button>
+<ng-template #columnSelections>
+  <div class="selection-menu">
+    @for (columnOption of optionalColumns(); track $index) {
+      <button 
+        cdkMenuItemCheckbox
+        class="selection-menu-item"
+        [cdkMenuItemChecked]="columnOption.selected"
+        (cdkMenuItemTriggered)="onOptionalColumnsClick($index)">
+        {{ columnOption.label }}
+      </button>
+    }
+  </div>
+</ng-template>
+
+  <section class="top-panel">
+  Test
+</section>
 <table  
   cdk-table
   [dataSource]="dataSource"
@@ -26,6 +47,20 @@
         {{ row.company }}
     </td>
   </ng-container>
+
+  <ng-container cdkColumnDef="min_salary">
+    <th 
+      cdk-header-cell 
+      *cdkHeaderCellDef 
+      mat-sort-header
+      class="cdk-header-cell-align-start">
+      Min. Salary
+    </th>
+    <td cdk-cell *cdkCellDef="let row">
+        {{ row.min_salary }}
+    </td>
+  </ng-container>
+
 
   <ng-container cdkColumnDef="max_salary">
     <th 
@@ -63,6 +98,19 @@
     </th>
     <td cdk-cell *cdkCellDef="let row">
         {{ row.application_status }}
+    </td>
+  </ng-container>
+
+    <ng-container cdkColumnDef="posted_date">
+    <th 
+      cdk-header-cell 
+      *cdkHeaderCellDef 
+      mat-sort-header
+      class="cdk-header-cell-align-start">
+      Date Posted
+    </th>
+    <td cdk-cell *cdkCellDef="let row">
+        {{ row.posted_date }}
     </td>
   </ng-container>
 
@@ -155,4 +203,3 @@
     cdk-row
     *cdkRowDef="let row; columns: columns(); let rowIndex = index"></tr>
 </table>
-
