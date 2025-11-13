@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { MatDrawer, MatSidenavModule } from "@angular/material/sidenav";
-import { NgStyle } from "@angular/common";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { NgStyle } from '@angular/common';
 
-import { SidenavDrawerComponent } from "./sidenav-drawer.component";
-import { SidenavDrawerService } from "./sidenav-drawer.service";
-import { signal } from "@angular/core";
+import { SidenavDrawerComponent } from './sidenav-drawer.component';
+import { SidenavDrawerService } from './sidenav-drawer.service';
+import { signal } from '@angular/core';
 
-describe("HarmonySidenavDrawerComponent", () => {
+describe('HarmonySidenavDrawerComponent', () => {
 	let component: SidenavDrawerComponent;
 	let fixture: ComponentFixture<SidenavDrawerComponent>;
 
@@ -38,7 +38,7 @@ describe("HarmonySidenavDrawerComponent", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

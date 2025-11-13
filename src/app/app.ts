@@ -1,13 +1,13 @@
-import { Component, inject } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
-import { MatGridListModule } from "@angular/material/grid-list";
-import { AsyncPipe, NgClass } from "@angular/common";
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { AsyncPipe, NgClass } from '@angular/common';
 
-import { Toolbar } from "./core/components/toolbar/toolbar";
-import { SideMenu } from "./core/components/side-menu/side-menu";
-import { SidenavDrawerComponent } from "./core/components/sidenav-drawer/sidenav-drawer.component";
-import { StoreService } from "./core/services/store.service/store.service";
-import { Global } from "./core/services/global/global";
+import { Toolbar } from './core/components/toolbar/toolbar';
+import { SideMenu } from './core/components/side-menu/side-menu';
+import { SidenavDrawerComponent } from './core/components/sidenav-drawer/sidenav-drawer.component';
+import { StoreService } from './core/services/store.service/store.service';
+import { Global } from './core/services/global/global';
 
 export interface Tile {
 	color: string;
@@ -15,7 +15,7 @@ export interface Tile {
 }
 
 @Component({
-	selector: "app-root",
+	selector: 'app-root',
 	imports: [
 		MatGridListModule,
 		AsyncPipe,
@@ -26,26 +26,26 @@ export interface Tile {
 		SidenavDrawerComponent,
 		NgClass,
 	],
-	templateUrl: "./app.html",
-	styleUrl: "./app.scss",
+	templateUrl: './app.html',
+	styleUrl: './app.scss',
 })
 export class App {
 	readonly storeService = inject(StoreService);
 	readonly global = inject(Global);
 	readonly colsMap = new Map([
-		["xs", 1],
-		["s", 1],
-		["m", 2],
-		["l", 3],
-		["xl", 3],
+		['xs', 1],
+		['s', 1],
+		['m', 2],
+		['l', 3],
+		['xl', 3],
 	]);
 
-	protected title = "material";
+	protected title = 'material';
 
 	tiles: Tile[] = [
-		{ text: "One", color: "lightblue" },
-		{ text: "Two", color: "lightgreen" },
-		{ text: "Three", color: "lightpink" },
-		{ text: "Four", color: "#DDBDF1" },
+		{ text: 'One', color: 'lightblue' },
+		{ text: 'Two', color: 'lightgreen' },
+		{ text: 'Three', color: 'lightpink' },
+		{ text: 'Four', color: '#DDBDF1' },
 	];
 }

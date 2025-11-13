@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { provideHttpClient } from "@angular/common/http";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 
-import { SongPlaylist } from "./song-playlist";
-import { ActivatedRoute } from "@angular/router";
-import { of } from "rxjs";
+import { SongPlaylist } from './song-playlist';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
-describe("SongPlaylist", () => {
+describe('SongPlaylist', () => {
 	let component: SongPlaylist;
 	let fixture: ComponentFixture<SongPlaylist>;
 
@@ -30,7 +30,7 @@ describe("SongPlaylist", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

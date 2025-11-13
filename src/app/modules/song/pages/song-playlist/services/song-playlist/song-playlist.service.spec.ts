@@ -1,9 +1,9 @@
-import { TestBed } from "@angular/core/testing";
-import { provideHttpClient } from "@angular/common/http";
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 
-import { SongPlaylistService } from "./song-playlist.service";
+import { SongPlaylistService } from './song-playlist.service';
 
-describe("SongPlaylistService", () => {
+describe('SongPlaylistService', () => {
 	let service: SongPlaylistService;
 
 	beforeEach(() => {
@@ -13,7 +13,7 @@ describe("SongPlaylistService", () => {
 		service = TestBed.inject(SongPlaylistService);
 	});
 
-	it("should be created", () => {
+	it('should be created', () => {
 		expect(service).toBeTruthy();
 	});
 });

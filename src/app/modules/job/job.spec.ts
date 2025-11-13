@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Job } from "./job";
+import { Job } from './job';
 
-describe("Job", () => {
+describe('Job', () => {
 	let component: Job;
 	let fixture: ComponentFixture<Job>;
 
@@ -16,7 +16,7 @@ describe("Job", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

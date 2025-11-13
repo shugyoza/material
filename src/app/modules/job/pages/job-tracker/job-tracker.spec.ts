@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobTracker } from "./job-tracker";
+import { JobTracker } from './job-tracker';
 
-describe("JobTracker", () => {
+describe('JobTracker', () => {
 	let component: JobTracker;
 	let fixture: ComponentFixture<JobTracker>;
 
@@ -16,7 +16,7 @@ describe("JobTracker", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

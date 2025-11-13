@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabNavBar } from "./tab-nav-bar";
+import { TabNavBar } from './tab-nav-bar';
 
-describe("TabNavBar", () => {
+describe('TabNavBar', () => {
 	let component: TabNavBar;
 	let fixture: ComponentFixture<TabNavBar>;
 
@@ -16,7 +16,7 @@ describe("TabNavBar", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

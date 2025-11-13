@@ -1,10 +1,10 @@
-import { TestBed } from "@angular/core/testing";
-import { ResolveFn } from "@angular/router";
+import { TestBed } from '@angular/core/testing';
+import { ResolveFn } from '@angular/router';
 
-import { songPlaylistResolver } from "./song-resolver";
-import { SongPlayListRow } from "../pages/song-playlist/song-playlist.interface";
+import { songPlaylistResolver } from './song-resolver';
+import { SongPlayListRow } from '../pages/song-playlist/song-playlist.interface';
 
-describe("songPlaylistResolver", () => {
+describe('songPlaylistResolver', () => {
 	const executeResolver: ResolveFn<SongPlayListRow[]> = (
 		...resolverParameters
 	) =>
@@ -16,7 +16,7 @@ describe("songPlaylistResolver", () => {
 		TestBed.configureTestingModule({});
 	});
 
-	it("should be created", () => {
+	it('should be created', () => {
 		expect(executeResolver).toBeTruthy();
 	});
 });

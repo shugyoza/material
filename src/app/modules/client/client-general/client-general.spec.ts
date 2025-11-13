@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientGeneral } from "./client-general";
+import { ClientGeneral } from './client-general';
 
-describe("ClientGeneral", () => {
+describe('ClientGeneral', () => {
 	let component: ClientGeneral;
 	let fixture: ComponentFixture<ClientGeneral>;
 
@@ -16,7 +16,7 @@ describe("ClientGeneral", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

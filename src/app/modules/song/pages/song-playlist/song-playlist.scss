@@ -1,4 +1,4 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 :host {
 	.filter-search-panel {
@@ -68,7 +68,7 @@
 		background-color: rgb(239, 239, 239);
 	}
 
-	.playlist-row-menu-item[aria-expanded="true"] {
+	.playlist-row-menu-item[aria-expanded='true'] {
 		background-color: rgb(208, 208, 208);
 	}
 }

@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Song } from "./song";
-import { ActivatedRoute } from "@angular/router";
+import { Song } from './song';
+import { ActivatedRoute } from '@angular/router';
 
-describe("Song", () => {
+describe('Song', () => {
 	let component: Song;
 	let fixture: ComponentFixture<Song>;
 
@@ -23,7 +23,7 @@ describe("Song", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

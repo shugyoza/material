@@ -1,4 +1,4 @@
-import { CdkTableModule } from "@angular/cdk/table";
+import { CdkTableModule } from '@angular/cdk/table';
 import {
 	AfterViewInit,
 	Component,
@@ -10,33 +10,33 @@ import {
 	signal,
 	TemplateRef,
 	viewChild,
-} from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatIconModule } from "@angular/material/icon";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatListModule } from "@angular/material/list";
-import { MatCardModule } from "@angular/material/card";
-import { CdkMenu, CdkMenuTrigger } from "@angular/cdk/menu";
+} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
 import {
 	MatSnackBar,
 	MatSnackBarHorizontalPosition,
 	MatSnackBarVerticalPosition,
-} from "@angular/material/snack-bar";
-import { interval, map, of, startWith, switchMap, takeWhile } from "rxjs";
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
-import { AsyncPipe } from "@angular/common";
-import { MatInputModule } from "@angular/material/input";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatSliderModule } from "@angular/material/slider";
-import { ActivatedRoute } from "@angular/router";
-import { toSignal } from "@angular/core/rxjs-interop";
+} from '@angular/material/snack-bar';
+import { interval, map, of, startWith, switchMap, takeWhile } from 'rxjs';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSliderModule } from '@angular/material/slider';
+import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-import { Global } from "../../../../core/services/global/global";
-import { SongPlaylistService } from "./services/song-playlist/song-playlist.service";
-import { SongPlayListRow } from "./song-playlist.interface";
+import { Global } from '../../../../core/services/global/global';
+import { SongPlaylistService } from './services/song-playlist/song-playlist.service';
+import { SongPlayListRow } from './song-playlist.interface';
 
 @Component({
-	selector: "app-song-playlist",
+	selector: 'app-song-playlist',
 	imports: [
 		CdkTableModule,
 		MatButtonModule,
@@ -53,8 +53,8 @@ import { SongPlayListRow } from "./song-playlist.interface";
 		MatSliderModule,
 	],
 	providers: [SongPlaylistService],
-	templateUrl: "./song-playlist.html",
-	styleUrl: "./song-playlist.scss",
+	templateUrl: './song-playlist.html',
+	styleUrl: './song-playlist.scss',
 })
 export class SongPlaylist implements AfterViewInit, OnDestroy {
 	private readonly _snackBar = inject(MatSnackBar);
@@ -65,9 +65,9 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
 
 	readonly playlistService = inject(SongPlaylistService);
 
-	readonly audioElement = viewChild<ElementRef<HTMLMediaElement>>("audioRef");
+	readonly audioElement = viewChild<ElementRef<HTMLMediaElement>>('audioRef');
 
-	readonly audioTemplate = viewChild<TemplateRef<unknown>>("audioTemplate");
+	readonly audioTemplate = viewChild<TemplateRef<unknown>>('audioTemplate');
 
 	readonly search = new FormControl<null | string>(null);
 
@@ -94,51 +94,51 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
 	);
 
 	readonly columns = signal<string[]>([
-		"song_cover_art_url",
-		"song_title",
-		"menu",
+		'song_cover_art_url',
+		'song_title',
+		'menu',
 	]);
 
 	readonly snackBarPosition = signal<{
 		horizontalPosition: MatSnackBarHorizontalPosition;
 		verticalPosition: MatSnackBarVerticalPosition;
 	}>({
-		horizontalPosition: "center",
-		verticalPosition: "bottom",
+		horizontalPosition: 'center',
+		verticalPosition: 'bottom',
 	});
 
 	readonly playlistRowMenu = signal<{ icon: string; title: string }[]>([
 		{
-			icon: "delete",
-			title: "Delete from Library",
+			icon: 'delete',
+			title: 'Delete from Library',
 		},
 		{
-			icon: "download",
-			title: "Download",
+			icon: 'download',
+			title: 'Download',
 		},
 		{
-			icon: "playlist_add",
-			title: "Add to Playlist...",
+			icon: 'playlist_add',
+			title: 'Add to Playlist...',
 		},
 		{
-			icon: "queue_play_next",
-			title: "Play Next",
+			icon: 'queue_play_next',
+			title: 'Play Next',
 		},
 		{
-			icon: "ios_share",
-			title: "Share Song...",
+			icon: 'ios_share',
+			title: 'Share Song...',
 		},
 		{
-			icon: "album",
-			title: "Go to Album",
+			icon: 'album',
+			title: 'Go to Album',
 		},
 		{
-			icon: "star",
-			title: "Favorite",
+			icon: 'star',
+			title: 'Favorite',
 		},
 		{
-			icon: "thumb_down",
-			title: "Suggest Less",
+			icon: 'thumb_down',
+			title: 'Suggest Less',
 		},
 	]);
 
@@ -149,8 +149,8 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
 	progress$ = of(0);
 
 	readonly dimension = signal({
-		height: "0px",
-		width: "0px",
+		height: '0px',
+		width: '0px',
 	});
 
 	readonly data = toSignal(this._activatedRoute.data);
@@ -285,7 +285,7 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
 		this.setProgress();
 	}
 
-	@HostListener("window:resize", ["$event"])
+	@HostListener('window:resize', ['$event'])
 	onResize($event: Event) {
 		console.log(262, event);
 	}

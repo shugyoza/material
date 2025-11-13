@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClientSearch } from "./client-search";
+import { ClientSearch } from './client-search';
 
-describe("ClientSearch", () => {
+describe('ClientSearch', () => {
 	let component: ClientSearch;
 	let fixture: ComponentFixture<ClientSearch>;
 
@@ -16,7 +16,7 @@ describe("ClientSearch", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

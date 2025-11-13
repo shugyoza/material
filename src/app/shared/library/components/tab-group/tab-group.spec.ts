@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabGroup } from "./tab-group";
+import { TabGroup } from './tab-group';
 
-describe("TabGroup", () => {
+describe('TabGroup', () => {
 	let component: TabGroup;
 	let fixture: ComponentFixture<TabGroup>;
 
@@ -16,7 +16,7 @@ describe("TabGroup", () => {
 		fixture.detectChanges();
 	});
 
-	it("should create", () => {
+	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
 });

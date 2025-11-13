@@ -1,4 +1,4 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 table {
 	width: 100%;
@@ -49,7 +49,7 @@ table {
 	.selection-menu-item:active {
 		background-color: rgb(170, 170, 170);
 	}
-	.selection-menu-item[role="menuitemcheckbox"][aria-checked="true"] {
+	.selection-menu-item[role='menuitemcheckbox'][aria-checked='true'] {
 		background-color: rgb(225, 225, 225);
 	}
 }

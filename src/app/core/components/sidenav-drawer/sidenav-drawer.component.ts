@@ -7,37 +7,37 @@ import {
 	input,
 	viewChild,
 	ViewChild,
-} from "@angular/core";
-import { NgStyle } from "@angular/common";
+} from '@angular/core';
+import { NgStyle } from '@angular/common';
 import {
 	MatDrawer,
 	MatDrawerMode,
 	MatSidenavModule,
-} from "@angular/material/sidenav";
-import { AutoFocusTarget } from "@angular/material/dialog";
+} from '@angular/material/sidenav';
+import { AutoFocusTarget } from '@angular/material/dialog';
 
-import { SidenavDrawerService } from "./sidenav-drawer.service";
+import { SidenavDrawerService } from './sidenav-drawer.service';
 
 @Component({
 	standalone: true,
-	selector: "app-sidenav-drawer",
-	templateUrl: "./sidenav-drawer.component.html",
-	styleUrls: ["./sidenav-drawer.component.scss"],
+	selector: 'app-sidenav-drawer',
+	templateUrl: './sidenav-drawer.component.html',
+	styleUrls: ['./sidenav-drawer.component.scss'],
 	imports: [NgStyle, MatSidenavModule],
 })
 export class SidenavDrawerComponent {
-	readonly startMatDrawer = viewChild<MatDrawer>("startDrawerRef");
+	readonly startMatDrawer = viewChild<MatDrawer>('startDrawerRef');
 
-	readonly endMatDrawer = viewChild<MatDrawer>("endDrawerRef");
+	readonly endMatDrawer = viewChild<MatDrawer>('endDrawerRef');
 
 	private _service = inject(SidenavDrawerService);
 
-	mode = input<MatDrawerMode>("side");
+	mode = input<MatDrawerMode>('side');
 
 	/* accept any css size units as string, i.e: '888px', '8rem', '8em', '80%' */
-	drawerWidth = input<string>("");
+	drawerWidth = input<string>('');
 
-	drawerContainerHeight = input<string>("");
+	drawerContainerHeight = input<string>('');
 
 	cssStyles = input<{
 		matDrawerContainer?: Record<string, string>;

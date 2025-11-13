@@ -1,19 +1,19 @@
-import { ChangeDetectionStrategy, Component, viewChild } from "@angular/core";
-import { ArrayDataSource } from "@angular/cdk/collections";
-import { CdkTreeModule, CdkTree } from "@angular/cdk/tree";
-import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
-import { map, timer } from "rxjs";
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { ArrayDataSource } from '@angular/cdk/collections';
+import { CdkTreeModule, CdkTree } from '@angular/cdk/tree';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { map, timer } from 'rxjs';
 
-import { SideMenuFlatNode } from "./side-menu-flat-node.interface";
-import { RouterLink } from "@angular/router";
+import { SideMenuFlatNode } from './side-menu-flat-node.interface';
+import { RouterLink } from '@angular/router';
 
 @Component({
-	selector: "app-side-menu",
+	selector: 'app-side-menu',
 	imports: [CdkTreeModule, MatButtonModule, MatIconModule, RouterLink],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	templateUrl: "./side-menu.html",
-	styleUrl: "./side-menu.scss",
+	templateUrl: './side-menu.html',
+	styleUrl: './side-menu.scss',
 })
 export class SideMenu {
 	tree = viewChild<CdkTree<SideMenuFlatNode>>(CdkTree);
@@ -68,68 +68,68 @@ function flattenNodes(nodes: SideMenuFlatNode[]): SideMenuFlatNode[] {
 
 const EXAMPLE_DATA: SideMenuFlatNode[] = [
 	{
-		name: "Admin",
-		icon: "manage_accounts",
+		name: 'Admin',
+		icon: 'manage_accounts',
 		children: [
 			{
-				name: "Client",
+				name: 'Client',
 				children: [
 					{
-						name: "Person",
-						icon: "person",
+						name: 'Person',
+						icon: 'person',
 					},
 					{
-						name: "LLC",
-						icon: "work",
+						name: 'LLC',
+						icon: 'work',
 					},
 					{
-						name: "Corporation",
-						icon: "enterprise",
+						name: 'Corporation',
+						icon: 'enterprise',
 					},
 					{
-						name: "Partnership",
-						icon: "group",
+						name: 'Partnership',
+						icon: 'group',
 					},
 				],
 			},
 			{
-				name: "Document",
-				icon: "docs",
+				name: 'Document',
+				icon: 'docs',
 				children: [
 					{
-						name: "Deed",
-						icon: "book",
+						name: 'Deed',
+						icon: 'book',
 					},
 					{
-						name: "Legalization",
-						icon: "license",
+						name: 'Legalization',
+						icon: 'license',
 					},
 					{
-						name: "Registration",
-						icon: "approval",
+						name: 'Registration',
+						icon: 'approval',
 					},
 				],
 			},
 		],
 	},
 	{
-		name: "Job",
-		icon: "work",
-		path: "job",
+		name: 'Job',
+		icon: 'work',
+		path: 'job',
 		children: [
 			{
-				name: "Job Tracker",
-				icon: "view_object_track",
-				path: "job-tracker",
+				name: 'Job Tracker',
+				icon: 'view_object_track',
+				path: 'job-tracker',
 			},
 		],
 	},
 	{
-		name: "Document",
+		name: 'Document',
 	},
 	{
-		name: "Song",
-		path: "song",
-		icon: "music_note",
+		name: 'Song',
+		path: 'song',
+		icon: 'music_note',
 	},
 ];

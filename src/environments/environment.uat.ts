@@ -1,10 +1,10 @@
-import { PATH } from "./url-path";
+import { PATH } from './url-path';
 
 export const ENVIRONMENT = {
-	name: "uat",
+	name: 'uat',
 	production: false,
 	api: {
-		root: "https://api.uat.whatever.com",
+		root: 'https://api.uat.whatever.com',
 		path: PATH,
 	},
 };

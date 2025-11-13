@@ -1,16 +1,16 @@
-import { Routes } from "@angular/router";
+import { Routes } from '@angular/router';
 
-import { songPlaylistResolver } from "./resolvers/song-resolver";
+import { songPlaylistResolver } from './resolvers/song-resolver';
 
 export const SONG_ROUTES: Routes = [
 	{
-		path: "",
-		loadComponent: () => import("./song/song").then(m => m.Song),
+		path: '',
+		loadComponent: () => import('./song/song').then(m => m.Song),
 		children: [
 			{
-				path: "song-playlist",
+				path: 'song-playlist',
 				loadComponent: () =>
-					import("./pages/song-playlist/song-playlist").then(
+					import('./pages/song-playlist/song-playlist').then(
 						m => m.SongPlaylist
 					),
 				resolve: {
@@ -18,15 +18,15 @@ export const SONG_ROUTES: Routes = [
 				},
 			},
 			{
-				path: "song-search",
+				path: 'song-search',
 				loadComponent: () =>
-					import("./song-search/song-search").then(m => m.SongSearch),
+					import('./song-search/song-search').then(m => m.SongSearch),
 			},
 		],
 	},
 	{
-		path: "**",
-		pathMatch: "full",
-		redirectTo: "song-search",
+		path: '**',
+		pathMatch: 'full',
+		redirectTo: 'song-search',
 	},
 ];
