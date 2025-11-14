@@ -1,7 +1,20 @@
-<app-tab-group [tabs]="stepLabels()" class="step-tab-group"></app-tab-group>
-<button matButton="filled" [cdkMenuTriggerFor]="columnSelections">
-	Columns
-</button>
+<section class="top-section">
+	<app-tab-group [tabs]="stepLabels()" class="step-tab-group"></app-tab-group>
+	<div class="second-section">
+		<button matButton="outlined" [cdkMenuTriggerFor]="columnSelections">
+			<mat-icon>view_column</mat-icon>
+			Columns
+		</button>
+		<button matButton="outlined" [cdkMenuTriggerFor]="columnSelections">
+			<mat-icon>menu</mat-icon>
+			Menu
+		</button>
+		<button matButton="filled" [cdkMenuTriggerFor]="columnSelections">
+			<mat-icon>add_circle</mat-icon>
+			Add a New Job
+		</button>
+	</div>
+</section>
 <ng-template #columnSelections>
 	<section cdkDropList class="selection-menu" (cdkDropListDropped)="drop($event)">
 		@for (columnOption of optionalColumns(); track $index) {
@@ -21,8 +34,11 @@
 	</section>
 </ng-template>
 
-<section class="top-panel">Test</section>
-<table cdk-table [dataSource]="dataSource" matSort>
+<table 
+	cdk-table
+	[dataSource]="dataSource"
+	matSort
+	multiTemplateDataRows>
 	<ng-container cdkColumnDef="job_position">
 		<th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Job Position</th>
 		<td cdk-cell *cdkCellDef="let row" class="cdk-header-cell-align-start">
@@ -161,12 +177,29 @@
 		</td>
 	</ng-container>
 
+	<!-- Secondary Column -->
+    <ng-container cdkColumnDef="secondary">
+      <td cdk-cell [attr.colspan]="columns().length" *cdkCellDef="let row; let dataIndex = dataIndex;">
+			dataIndex: {{ dataIndex }}
+		
+      </td>
+    </ng-container>
+
+
 	<tr
 		cdk-header-row
 		*cdkHeaderRowDef="columns(); sticky: true"
 		class="sticky-header"></tr>
 
+	<!-- As we utilize multiTemplateDataRows directive for secondary row, the rowIndex reference should be dataIndex,
+	 i.e: let rowIndex = dataIndex, NOT index, i.e: let rowIndex = index -->
+	<tr 
+	    #test
+		cdk-row 
+		*cdkRowDef="let row; columns: ['secondary']; let rowIndex = dataIndex"></tr>
+
 	<tr
 		cdk-row
-		*cdkRowDef="let row; columns: columns(); let rowIndex = index"></tr>
+		*cdkRowDef="let row; columns: columns(); let rowIndex = dataIndex"></tr>
+	
 </table>

@@ -1,15 +1,16 @@
-import { CdkTableModule, DataSource } from '@angular/cdk/table';
-import { Component, computed, signal, viewChildren } from '@angular/core';
+import { CdkTableModule } from '@angular/cdk/table';
+import { AfterViewInit, Component, computed, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 
 import { MyDatePipe } from '../../../../shared/library/pipes/my-date.pipe/my-date-pipe';
 import { TabGroup } from '../../../../shared/library/components/tab-group/tab-group';
@@ -28,6 +29,20 @@ const JOB_DATA: JobRow[] = [
 		follow_up_date: [new Date('2021-01-01')],
 		excitement: 3.5,
 	},
+	{
+		job_id: 2,
+		job_position: 'Software Engineer',
+		company: 'Meta',
+		max_salary: 100000,
+		job_location: 'Menlo Park, CA',
+		application_status: 'Applying',
+		save_date: new Date('2021-01-01'),
+		deadline_date: new Date('2021-01-01'),
+		applied_date: new Date('2021-01-01'),
+		follow_up_date: [new Date('2021-01-01')],
+		excitement: 3.5,
+	},
+
 ];
 
 interface JobRow {
@@ -48,6 +63,7 @@ interface JobRow {
 	selector: 'app-job-tracker',
 	imports: [
     CdkTableModule,
+	CommonModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
@@ -64,12 +80,12 @@ interface JobRow {
 	templateUrl: './job-tracker.html',
 	styleUrl: './job-tracker.scss',
 })
-export class JobTracker {
-	readonly sortList = viewChildren(MatSort);
+export class JobTracker implements AfterViewInit {
+	readonly sort = viewChild(MatSort);
 
 	readonly stars = signal<(0 | 0.5 | 1)[]>([0, 0, 0, 0, 0]);
 
-	readonly dataSource = new MyDataSource();
+	readonly dataSource = new MatTableDataSource();
 
 	readonly optionalColumns = signal([
 		{ key: 'min_salary', label: 'Min. Salary', selected: false },
@@ -100,6 +116,13 @@ export class JobTracker {
 		{ badge: 88, label: 'Negotiating' },
 		{ badge: 7, label: 'Accepted' },
 	]);
+
+	readonly groupBy = signal<null | 'Status'>(null)
+
+	ngAfterViewInit(): void {
+		this.dataSource.data = JOB_DATA;
+		this.dataSource.sort = this.sort();
+	}
 
 	onOptionalColumnsChange($index: number, checked: boolean) {
 		this.optionalColumns.update(columns => {
@@ -148,14 +171,4 @@ export class JobTracker {
 
 		this.optionalColumns.set([...part.first, ...part.middle, ...part.last])
 	}
-}
-
-export class MyDataSource extends DataSource<JobRow> {
-	data = new BehaviorSubject<JobRow[]>(JOB_DATA);
-
-	connect(): Observable<JobRow[]> {
-		return this.data;
-	}
-
-	disconnect() {}
 }

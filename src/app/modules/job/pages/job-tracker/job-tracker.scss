@@ -5,18 +5,29 @@ table {
 }
 
 :host {
-	@include mat.icon-overrides(
-		(
-			color: orange,
-		)
-	);
+	.star-rating {
+		@include mat.icon-overrides(
+			(
+				color: orange,
+			)
+		);
 
-	.star-rating .empty-star {
-		color: lightgray;
+		.empty-star {
+			color: lightgray;
+		}
 	}
 
 	.cdk-header-cell-align-start {
 		text-align: left;
+	}
+
+	.top-section {
+		display: flex;
+		flex-direction: column;
+
+		.second-section button {
+			margin: 0.5rem;
+		}
 	}
 }
 
