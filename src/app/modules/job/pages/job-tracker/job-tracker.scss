@@ -25,8 +25,17 @@ table {
 		display: flex;
 		flex-direction: column;
 
-		.second-section button {
-			margin: 0.5rem;
+		.second-section {
+			display: flex;
+
+				.group-by {
+					width: fit-content;
+				}
+
+				button,
+				.group-by {
+				margin: 0.5rem;
+				}
 		}
 	}
 }

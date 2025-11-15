@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 
 import { MyDatePipe } from '../../../../shared/library/pipes/my-date.pipe/my-date-pipe';
 import { TabGroup } from '../../../../shared/library/components/tab-group/tab-group';
+import { MatSelectModule } from '@angular/material/select';
 
 const JOB_DATA: JobRow[] = [
 	{
@@ -35,6 +36,19 @@ const JOB_DATA: JobRow[] = [
 		company: 'Meta',
 		max_salary: 100000,
 		job_location: 'Menlo Park, CA',
+		application_status: 'Interviewing',
+		save_date: new Date('2021-01-01'),
+		deadline_date: new Date('2021-01-01'),
+		applied_date: new Date('2021-01-01'),
+		follow_up_date: [new Date('2021-01-01')],
+		excitement: 3.5,
+	},
+	{
+		job_id: 3,
+		job_position: 'Software Engineer',
+		company: 'Netflix',
+		max_salary: 100000,
+		job_location: 'San Jose, CA',
 		application_status: 'Applying',
 		save_date: new Date('2021-01-01'),
 		deadline_date: new Date('2021-01-01'),
@@ -42,7 +56,45 @@ const JOB_DATA: JobRow[] = [
 		follow_up_date: [new Date('2021-01-01')],
 		excitement: 3.5,
 	},
-
+	{
+		job_id: 4,
+		job_position: 'Software Engineer',
+		company: 'Yahoo',
+		max_salary: 100000,
+		job_location: 'Menlo Park, CA',
+		application_status: 'Interviewing',
+		save_date: new Date('2021-01-01'),
+		deadline_date: new Date('2021-01-01'),
+		applied_date: new Date('2021-01-01'),
+		follow_up_date: [new Date('2021-01-01')],
+		excitement: 3.5,
+	},
+	{
+		job_id: 5,
+		job_position: 'Software Engineer',
+		company: 'Linkedin',
+		max_salary: 100000,
+		job_location: 'San Jose, CA',
+		application_status: 'Applying',
+		save_date: new Date('2021-01-01'),
+		deadline_date: new Date('2021-01-01'),
+		applied_date: new Date('2021-01-01'),
+		follow_up_date: [new Date('2021-01-01')],
+		excitement: 3.5,
+	},
+	{
+		job_id: 6,
+		job_position: 'Software Engineer',
+		company: 'Adobe',
+		max_salary: 100000,
+		job_location: 'San Jose, CA',
+		application_status: 'Negotiating',
+		save_date: new Date('2021-01-01'),
+		deadline_date: new Date('2021-01-01'),
+		applied_date: new Date('2021-01-01'),
+		follow_up_date: [new Date('2021-01-01')],
+		excitement: 3.5,
+	},
 ];
 
 interface JobRow {
@@ -72,6 +124,7 @@ interface JobRow {
     MatSortModule,
     CdkMenuModule,
     MatCheckboxModule,
+	MatSelectModule,
     MyDatePipe,
     TabGroup,
 	CdkDropList,
@@ -85,7 +138,7 @@ export class JobTracker implements AfterViewInit {
 
 	readonly stars = signal<(0 | 0.5 | 1)[]>([0, 0, 0, 0, 0]);
 
-	readonly dataSource = new MatTableDataSource();
+	readonly dataSource = new MatTableDataSource<JobRow>();
 
 	readonly optionalColumns = signal([
 		{ key: 'min_salary', label: 'Min. Salary', selected: false },
@@ -170,5 +223,20 @@ export class JobTracker implements AfterViewInit {
 		}
 
 		this.optionalColumns.set([...part.first, ...part.middle, ...part.last])
+	}
+
+	onMatSortChange($event: Sort): void {
+		const data = {
+			original: this.dataSource.data, 
+			sorted: this.dataSource.sortData(this.dataSource.data, this.dataSource.sort!)
+		}
+
+		const result = [ data.sorted[0].job_id ]
+		for (let i = 1; i < data.sorted.length; i++) {
+			//
+		}
+		console.log(229, $event, data);
+
+
 	}
 }

@@ -1,15 +1,28 @@
 <section class="top-section">
 	<app-tab-group [tabs]="stepLabels()" class="step-tab-group"></app-tab-group>
 	<div class="second-section">
+		<mat-select
+		  class="group-by"
+		  [value]="groupBy()"
+		  (selectionChange)="groupBy.set($event.value)">
+			<mat-option
+			    value="null">
+				Group by: None
+			</mat-option>
+			<mat-option
+			    value="Status">
+				Group by: Status
+			</mat-option>
+		</mat-select>
 		<button matButton="outlined" [cdkMenuTriggerFor]="columnSelections">
 			<mat-icon>view_column</mat-icon>
 			Columns
 		</button>
-		<button matButton="outlined" [cdkMenuTriggerFor]="columnSelections">
+		<button matButton="outlined" [cdkMenuTriggerFor]="null">
 			<mat-icon>menu</mat-icon>
 			Menu
 		</button>
-		<button matButton="filled" [cdkMenuTriggerFor]="columnSelections">
+		<button matButton="filled">
 			<mat-icon>add_circle</mat-icon>
 			Add a New Job
 		</button>
@@ -38,7 +51,8 @@
 	cdk-table
 	[dataSource]="dataSource"
 	matSort
-	multiTemplateDataRows>
+	multiTemplateDataRows
+	(matSortChange)="onMatSortChange($event)">
 	<ng-container cdkColumnDef="job_position">
 		<th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Job Position</th>
 		<td cdk-cell *cdkCellDef="let row" class="cdk-header-cell-align-start">
@@ -180,9 +194,8 @@
 	<!-- Secondary Column -->
     <ng-container cdkColumnDef="secondary">
       <td cdk-cell [attr.colspan]="columns().length" *cdkCellDef="let row; let dataIndex = dataIndex;">
-			dataIndex: {{ dataIndex }}
-		
-      </td>
+		<!-- row.job_id exists in the ... display text -->
+  	  </td>
     </ng-container>
 
 
