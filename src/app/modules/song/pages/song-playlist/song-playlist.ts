@@ -34,6 +34,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Global } from '../../../../core/services/global/global';
 import { SongPlaylistService } from './services/song-playlist/song-playlist.service';
 import { SongPlayListRow } from './song-playlist.interface';
+import { Http } from '../../http/http';
 
 @Component({
 	selector: 'app-song-playlist',
@@ -64,6 +65,8 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
 	readonly global = inject(Global);
 
 	readonly playlistService = inject(SongPlaylistService);
+
+	readonly _http = inject(Http);
 
 	readonly audioElement = viewChild<ElementRef<HTMLMediaElement>>('audioRef');
 
@@ -157,6 +160,7 @@ export class SongPlaylist implements AfterViewInit, OnDestroy {
 
 	ngAfterViewInit(): void {
 		this._snackBar.openFromTemplate(this.audioTemplate()!, {});
+		this._http.getTodos();
 	}
 
 	ngOnDestroy(): void {

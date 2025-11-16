@@ -12,4 +12,11 @@ export class Http {
 	getSongs(): Observable<SongPlayListRow[]> {
 		return this._http.get<SongPlayListRow[]>('mock/songs.json');
 	}
+
+	getTodos() {
+		const response$ = this._http.get('api/dev/todos');
+
+		response$.subscribe(val => console.log(19, val));
+		return response$;
+	}
 }
