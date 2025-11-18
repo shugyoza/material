@@ -1,6 +1,6 @@
 {
 	"/api/dev": {
-		"target": "https://api.dev.harmony.csmedley.net",
+		"target": "http://localhost:3000/api",
 		"secure": true,
 		"changeOrigin": true,
 		"logLevel": "debug",
@@ -9,7 +9,7 @@
 		}
 	},
 	"/api/qa": {
-		"target": "https://api.qa.harmony.csmedley.net",
+		"target": "https://api.qa.whatever.net",
 		"secure": true,
 		"changeOrigin": true,
 		"logLevel": "debug",
@@ -18,7 +18,7 @@
 		}
 	},
 	"/api/uat": {
-		"target": "https://api.uat.harmony.csmedley.net",
+		"target": "https://api.uat.whatever.net",
 		"secure": true,
 		"changeOrigin": true,
 		"logLevel": "debug",
