@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { StoreService } from '../../services/store.service/store.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
 	selector: 'app-toolbar',
-	imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule],
+	imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule, RouterLink],
 	templateUrl: './toolbar.html',
 	styleUrl: './toolbar.scss',
 })

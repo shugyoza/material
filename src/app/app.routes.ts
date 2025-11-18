@@ -12,6 +12,11 @@ export const routes: Routes = [
 			import('./core/components/register/register').then(m => m.Register),
 	},
 	{
+		path: 'settings',
+		loadComponent: () => 
+			import('./core/components/settings/settings').then(m => m.Settings),
+	},
+	{
 		path: 'client-search',
 		loadComponent: () =>
 			import('./modules/client/client-search/client-search').then(
