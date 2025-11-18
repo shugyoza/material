@@ -5,14 +5,13 @@
 		cdkTreeNodePadding
 		[style.display]="shouldRender(node) ? 'flex' : 'none'"
 		[isDisabled]="!shouldRender(node)"
-		class="side-menu-tree-node"[routerLink]="node.path">
-			<mat-icon iconPositionStart class="icon">
-				{{ getParentNode(node) ? 'subdirectory_arrow_right' : '' }}
-			</mat-icon>
-			<span class="side-menu-tree-node-text">
-				{{node.name}}
-			</span>
-			<mat-icon iconPositionEnd class="icon">{{ node.icon }}</mat-icon>
+		class="side-menu-tree-node"
+		[routerLink]="node.path">
+		<mat-icon iconPositionStart class="icon">
+			{{ getParentNode(node) ? 'subdirectory_arrow_right' : '' }}
+		</mat-icon>
+		<span class="side-menu-tree-node-text"> {{node.name}} </span>
+		<mat-icon iconPositionEnd class="icon">{{ node.icon }}</mat-icon>
 	</cdk-tree-node>
 
 	<!-- This is the tree node template for expandable nodes -->
@@ -25,16 +24,14 @@
 		[isDisabled]="!shouldRender(node)"
 		[isExpandable]="true"
 		class="side-menu-tree-node"
-			[attr.aria-label]="'Toggle ' + node.name">
-			<mat-icon iconPositionStart class="icon">
-				{{ getParentNode(node) ? 'subdirectory_arrow_right' : node.icon ?
-				node.icon : 'star' }}
-			</mat-icon>
-			<span class="side-menu-tree-node-text">
-				{{node.name}}
-			</span>
-			<mat-icon iconPositionEnd class="icon">
-				{{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-			</mat-icon>
+		[attr.aria-label]="'Toggle ' + node.name">
+		<mat-icon iconPositionStart class="icon">
+			{{ getParentNode(node) ? 'subdirectory_arrow_right' : node.icon ?
+			node.icon : 'star' }}
+		</mat-icon>
+		<span class="side-menu-tree-node-text"> {{node.name}} </span>
+		<mat-icon iconPositionEnd class="icon">
+			{{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+		</mat-icon>
 	</cdk-tree-node>
 </cdk-tree>

@@ -1,5 +1,11 @@
 import { CdkTableModule } from '@angular/cdk/table';
-import { AfterViewInit, Component, computed, signal, viewChild } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	computed,
+	signal,
+	viewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -114,22 +120,22 @@ interface JobRow {
 @Component({
 	selector: 'app-job-tracker',
 	imports: [
-    CdkTableModule,
-	CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatListModule,
-    MatSortModule,
-    CdkMenuModule,
-    MatCheckboxModule,
-	MatSelectModule,
-    MyDatePipe,
-    TabGroup,
-	CdkDropList,
-    CdkDrag
-],
+		CdkTableModule,
+		CommonModule,
+		MatButtonModule,
+		MatIconModule,
+		MatCardModule,
+		MatFormFieldModule,
+		MatListModule,
+		MatSortModule,
+		CdkMenuModule,
+		MatCheckboxModule,
+		MatSelectModule,
+		MyDatePipe,
+		TabGroup,
+		CdkDropList,
+		CdkDrag,
+	],
 	templateUrl: './job-tracker.html',
 	styleUrl: './job-tracker.scss',
 })
@@ -170,7 +176,7 @@ export class JobTracker implements AfterViewInit {
 		{ badge: 7, label: 'Accepted' },
 	]);
 
-	readonly groupBy = signal<null | 'Status'>(null)
+	readonly groupBy = signal<null | 'Status'>(null);
 
 	ngAfterViewInit(): void {
 		this.dataSource.data = JOB_DATA;
@@ -185,7 +191,9 @@ export class JobTracker implements AfterViewInit {
 		});
 	}
 
-	drop($event: CdkDragDrop<{key: string; label: string;selected: boolean;}[]>) {
+	drop(
+		$event: CdkDragDrop<{ key: string; label: string; selected: boolean }[]>
+	) {
 		const previousIndex = $event.previousIndex;
 		const currentIndex = $event.currentIndex;
 		const optionalColumns = [...this.optionalColumns()];
@@ -193,50 +201,51 @@ export class JobTracker implements AfterViewInit {
 			previous: previousIndex,
 			current: currentIndex,
 			min: Math.min(previousIndex, currentIndex),
-			max: Math.max(previousIndex, currentIndex)
-		}
+			max: Math.max(previousIndex, currentIndex),
+		};
 		const drag = {
 			forward: previousIndex < currentIndex,
-			backward: previousIndex > currentIndex
-		}
+			backward: previousIndex > currentIndex,
+		};
 
 		const part = {
 			first: optionalColumns.slice(0, index.min),
 			middle: optionalColumns.slice(index.min, index.max + 1),
-			last: optionalColumns.slice(index.max + 1)
-		}
+			last: optionalColumns.slice(index.max + 1),
+		};
 
 		if (drag.forward) {
 			const dragged = part.middle.shift();
 			if (dragged) {
-				part.middle.push(dragged)
+				part.middle.push(dragged);
 			}
 
-			this.optionalColumns.set([...part.first, ...part.middle, ...part.last])
+			this.optionalColumns.set([...part.first, ...part.middle, ...part.last]);
 
 			return;
-		} 
-		
-		const dragged = part.middle.pop();
-		if (dragged) {
-			part.middle.unshift(dragged)
 		}
 
-		this.optionalColumns.set([...part.first, ...part.middle, ...part.last])
+		const dragged = part.middle.pop();
+		if (dragged) {
+			part.middle.unshift(dragged);
+		}
+
+		this.optionalColumns.set([...part.first, ...part.middle, ...part.last]);
 	}
 
 	onMatSortChange($event: Sort): void {
 		const data = {
-			original: this.dataSource.data, 
-			sorted: this.dataSource.sortData(this.dataSource.data, this.dataSource.sort!)
-		}
+			original: this.dataSource.data,
+			sorted: this.dataSource.sortData(
+				this.dataSource.data,
+				this.dataSource.sort!
+			),
+		};
 
-		const result = [ data.sorted[0].job_id ]
+		const result = [data.sorted[0].job_id];
 		for (let i = 1; i < data.sorted.length; i++) {
 			//
 		}
 		console.log(229, $event, data);
-
-
 	}
 }

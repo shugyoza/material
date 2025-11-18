@@ -2,17 +2,11 @@
 	<app-tab-group [tabs]="stepLabels()" class="step-tab-group"></app-tab-group>
 	<div class="second-section">
 		<mat-select
-		  class="group-by"
-		  [value]="groupBy()"
-		  (selectionChange)="groupBy.set($event.value)">
-			<mat-option
-			    value="null">
-				Group by: None
-			</mat-option>
-			<mat-option
-			    value="Status">
-				Group by: Status
-			</mat-option>
+			class="group-by"
+			[value]="groupBy()"
+			(selectionChange)="groupBy.set($event.value)">
+			<mat-option value="null"> Group by: None </mat-option>
+			<mat-option value="Status"> Group by: Status </mat-option>
 		</mat-select>
 		<button matButton="outlined" [cdkMenuTriggerFor]="columnSelections">
 			<mat-icon>view_column</mat-icon>
@@ -29,25 +23,24 @@
 	</div>
 </section>
 <ng-template #columnSelections>
-	<section cdkDropList class="selection-menu" (cdkDropListDropped)="drop($event)">
+	<section
+		cdkDropList
+		class="selection-menu"
+		(cdkDropListDropped)="drop($event)">
 		@for (columnOption of optionalColumns(); track $index) {
-		<span
-		    cdkDrag
-		    class="selection-menu-row" >
-			<mat-checkbox 
-		  		[checked]="columnOption.selected"
-		  		(change)="onOptionalColumnsChange($index, $event.checked)">
+		<span cdkDrag class="selection-menu-row">
+			<mat-checkbox
+				[checked]="columnOption.selected"
+				(change)="onOptionalColumnsChange($index, $event.checked)">
 				{{ columnOption.label }}
 			</mat-checkbox>
-			<mat-icon>
-				drag_indicator
-			</mat-icon>
+			<mat-icon> drag_indicator </mat-icon>
 		</span>
 		}
 	</section>
 </ng-template>
 
-<table 
+<table
 	cdk-table
 	[dataSource]="dataSource"
 	matSort
@@ -192,12 +185,14 @@
 	</ng-container>
 
 	<!-- Secondary Column -->
-    <ng-container cdkColumnDef="secondary">
-      <td cdk-cell [attr.colspan]="columns().length" *cdkCellDef="let row; let dataIndex = dataIndex;">
-		<!-- row.job_id exists in the ... display text -->
-  	  </td>
-    </ng-container>
-
+	<ng-container cdkColumnDef="secondary">
+		<td
+			cdk-cell
+			[attr.colspan]="columns().length"
+			*cdkCellDef="let row; let dataIndex = dataIndex;">
+			<!-- row.job_id exists in the ... display text -->
+		</td>
+	</ng-container>
 
 	<tr
 		cdk-header-row
@@ -206,13 +201,12 @@
 
 	<!-- As we utilize multiTemplateDataRows directive for secondary row, the rowIndex reference should be dataIndex,
 	 i.e: let rowIndex = dataIndex, NOT index, i.e: let rowIndex = index -->
-	<tr 
-	    #test
-		cdk-row 
+	<tr
+		#test
+		cdk-row
 		*cdkRowDef="let row; columns: ['secondary']; let rowIndex = dataIndex"></tr>
 
 	<tr
 		cdk-row
 		*cdkRowDef="let row; columns: columns(); let rowIndex = dataIndex"></tr>
-	
 </table>
