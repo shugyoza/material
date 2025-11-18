@@ -1,4 +1,14 @@
 .side-menu-tree-node {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
+	width: 100%;
+	background-color: white;
+	gap: 0.5rem;
+	padding: 0.5rem;
+
+	.side-menu-tree-node-text {
+		width: 100%;
+		justify-self: start;
+		flex-grow: 1;
+	}
 }
