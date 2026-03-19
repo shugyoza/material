@@ -7,9 +7,9 @@ async) ?? 'l';
 		[mode]="'side'"
 		[hasBackdrop]="false"
 		[opened]="storeService.sidenav.opened()"
-		[cssStyles]="{matDrawerContainer: { height: '100%'}}">
+		[cssStyles]="{matDrawerContainer: { minHeight: 'calc(100vh - 64px)'}}">
 		<ng-container startSidenavDrawer>
-			<app-side-menu />
+			<app-side-menu-tree />
 		</ng-container>
 		<ng-container sidenavContent>
 			<router-outlet />
