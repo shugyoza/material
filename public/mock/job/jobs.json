@@ -1,0 +1,101 @@
+{
+    "status": {
+        "code": 200,
+        "message": "success"
+    },
+    "body": {
+        "count": 6,
+        "data": [
+            {
+                "job_id": 1,
+                "job_position": "Software Engineer",
+                "company": "Google",
+                "max_salary": 100000,
+                "job_location": "Mountain View, CA",
+                "application_status": "Applied",
+                "save_date": "2025-10-05T14:48:00.000Z",
+                "deadline_date": "2025-10-05T14:48:00.000Z",
+                "applied_date": "2025-10-05T14:48:00.000Z",
+                "follow_up_date": [
+                    "2025-10-05T14:48:00.000Z"
+                ],
+                "excitement": 3.5
+            },
+            {
+                "job_id": 2,
+                "job_position": "Software Engineer",
+                "company": "Meta",
+                "max_salary": 100000,
+                "job_location": "Menlo Park, CA",
+                "application_status": "Interviewing",
+                "save_date": "2025-10-05T14:48:00.000Z",
+                "deadline_date": "2025-10-05T14:48:00.000Z",
+                "applied_date": "2025-10-05T14:48:00.000Z",
+                "follow_up_date": [
+                    "2025-10-05T14:48:00.000Z"
+                ],
+                "excitement": 3.5
+            },
+            {
+                "job_id": 3,
+                "job_position": "Software Engineer",
+                "company": "Netflix",
+                "max_salary": 100000,
+                "job_location": "San Jose, CA",
+                "application_status": "Applying",
+                "save_date": "2025-10-05T14:48:00.000Z",
+                "deadline_date": "2025-10-05T14:48:00.000Z",
+                "applied_date": "2025-10-05T14:48:00.000Z",
+                "follow_up_date": [
+                    "2025-10-05T14:48:00.000Z"
+                ],
+                "excitement": 3.5
+            },
+            {
+                "job_id": 4,
+                "job_position": "Software Engineer",
+                "company": "Yahoo",
+                "max_salary": 100000,
+                "job_location": "Menlo Park, CA",
+                "application_status": "Interviewing",
+                "save_date": "2025-10-05T14:48:00.000Z",
+                "deadline_date": "2025-10-05T14:48:00.000Z",
+                "applied_date": "2025-10-05T14:48:00.000Z",
+                "follow_up_date": [
+                    "2025-10-05T14:48:00.000Z"
+                ],
+                "excitement": 3.5
+            },
+            {
+                "job_id": 5,
+                "job_position": "Software Engineer",
+                "company": "Linkedin",
+                "max_salary": 100000,
+                "job_location": "San Jose, CA",
+                "application_status": "Applying",
+                "save_date": "2025-10-05T14:48:00.000Z",
+                "deadline_date": "2025-10-05T14:48:00.000Z",
+                "applied_date": "2025-10-05T14:48:00.000Z",
+                "follow_up_date": [
+                    "2025-10-05T14:48:00.000Z"
+                ],
+                "excitement": 3.5
+            },
+            {
+                "job_id": 6,
+                "job_position": "Software Engineer",
+                "company": "Adobe",
+                "max_salary": 100000,
+                "job_location": "San Jose, CA",
+                "application_status": "Negotiating",
+                "save_date": "2025-10-05T14:48:00.000Z",
+                "deadline_date": "2025-10-05T14:48:00.000Z",
+                "applied_date": "2025-10-05T14:48:00.000Z",
+                "follow_up_date": [
+                    "2025-10-05T14:48:00.000Z"
+                ],
+                "excitement": 3.5
+            }
+        ]
+    }
+}
