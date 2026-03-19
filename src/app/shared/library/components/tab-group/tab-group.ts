@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -10,4 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class TabGroup {
 	readonly tabs = input<{ badge?: number; label: string }[]>([]);
+
+	readonly tabClick = output<string>();
 }

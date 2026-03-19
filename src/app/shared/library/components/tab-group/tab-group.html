@@ -3,9 +3,15 @@
 	matButton="elevated"
 	matBadgePosition="before"
 	[matBadge]="tab.badge"
-	[value]="$index">
+	[value]="$index"
+	(click)="tabClick.emit(tab.label)">
 	{{ tab.label }}
 </button>
 } @else {
-<button matButton="elevated" [value]="$index">{{ tab.label }}</button>
+<button 
+    matButton="elevated" 
+	[value]="$index" 
+	(click)="tabClick.emit(tab.label)">
+	{{ tab.label }}
+</button>
 } }
