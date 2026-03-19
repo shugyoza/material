@@ -4,7 +4,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { AsyncPipe, NgClass } from '@angular/common';
 
 import { Toolbar } from './core/components/toolbar/toolbar';
-import { SideMenu } from './core/components/side-menu/side-menu';
+import { SideMenuTree } from './core/components/side-menu-tree/side-menu-tree';
 import { SidenavDrawerComponent } from './core/components/sidenav-drawer/sidenav-drawer.component';
 import { StoreService } from './core/services/store.service/store.service';
 import { Global } from './core/services/global/global';
@@ -22,7 +22,7 @@ export interface Tile {
 		NgClass,
 		RouterOutlet,
 		Toolbar,
-		SideMenu,
+		SideMenuTree,
 		SidenavDrawerComponent,
 		NgClass,
 	],
