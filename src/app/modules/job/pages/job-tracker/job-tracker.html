@@ -1,5 +1,10 @@
 <section class="top-section">
-	<app-tab-group [tabs]="stepLabels()" class="step-tab-group"></app-tab-group>
+	<span>
+		<app-tab-group [tabs]="stepLabels()" class="step-tab-group" (tabClick)="onTabClick($event)" />
+		<button mat-icon-button (click)="dataSource.filter = ''">
+			<mat-icon>refresh</mat-icon>
+		</button>
+	</span>
 	<div class="second-section">
 		<mat-select
 			class="group-by"

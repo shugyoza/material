@@ -3,6 +3,7 @@ import {
 	AfterViewInit,
 	Component,
 	computed,
+	inject,
 	signal,
 	viewChild,
 } from '@angular/core';
@@ -17,10 +18,16 @@ import { CdkMenuModule } from '@angular/cdk/menu';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 import { MyDatePipe } from '../../../../shared/library/pipes/my-date.pipe/my-date-pipe';
 import { TabGroup } from '../../../../shared/library/components/tab-group/tab-group';
-import { MatSelectModule } from '@angular/material/select';
+
+import { JobRow } from '../../models/job-row.model';
+import { HttpService } from '../../services/http.service';
+import { MyHttpResponse } from '../../../../shared/library/models/my-http-response.model';
 
 const JOB_DATA: JobRow[] = [
 	{
@@ -103,20 +110,6 @@ const JOB_DATA: JobRow[] = [
 	},
 ];
 
-interface JobRow {
-	job_id: number;
-	job_position: string;
-	company: string;
-	max_salary?: number;
-	job_location?: string;
-	application_status?: string;
-	save_date?: string | Date;
-	deadline_date?: string | Date;
-	applied_date?: string | Date;
-	follow_up_date?: string[] | Date[];
-	excitement?: number;
-}
-
 @Component({
 	selector: 'app-job-tracker',
 	imports: [
@@ -140,11 +133,22 @@ interface JobRow {
 	styleUrl: './job-tracker.scss',
 })
 export class JobTracker implements AfterViewInit {
+	private readonly _httpService = inject(HttpService);
+
 	readonly sort = viewChild(MatSort);
 
 	readonly stars = signal<(0 | 0.5 | 1)[]>([0, 0, 0, 0, 0]);
 
 	readonly dataSource = new MatTableDataSource<JobRow>();
+
+	readonly jobs$: Observable<MyHttpResponse<JobRow[]> | null> = this._httpService.getJobs().pipe(
+		catchError(() => of(null)),
+		tap(response => {
+			this.dataSource.data = response?.body.data ?? []
+		})
+	);
+
+	readonly jobs = toSignal<MyHttpResponse<JobRow[]> | null>(this.jobs$, { initialValue: null })
 
 	readonly optionalColumns = signal([
 		{ key: 'min_salary', label: 'Min. Salary', selected: false },
@@ -167,20 +171,42 @@ export class JobTracker implements AfterViewInit {
 		return ['job_position', 'company'].concat(optionalColumns);
 	});
 
-	readonly stepLabels = signal([
-		{ badge: 0, label: 'Bookmarked' },
-		{ badge: 0, label: 'Applying' },
-		{ badge: 4, label: 'Applied' },
-		{ badge: 99, label: 'Interviewing' },
-		{ badge: 88, label: 'Negotiating' },
-		{ badge: 7, label: 'Accepted' },
-	]);
+	readonly stepLabels = computed(() => {
+		const jobs = this.jobs()?.body.data ?? [];
+
+		return [
+			{ badge: jobs.filter(job => job.application_status === 'Bookmarked').length, label: 'Bookmarked' },
+			{ badge: jobs.filter(job => job.application_status === 'Applying').length, label: 'Applying' },
+			{ badge: jobs.filter(job => job.application_status === 'Applied').length, label: 'Applied' },
+			{ badge: jobs.filter(job => job.application_status === 'Interviewing').length, label: 'Interviewing' },
+			{ badge: jobs.filter(job => job.application_status === 'Negotiating').length, label: 'Negotiating' },
+			{ badge: jobs.filter(job => job.application_status === 'Accepted').length, label: 'Accepted' },
+		]
+	});
 
 	readonly groupBy = signal<null | 'Status'>(null);
 
 	ngAfterViewInit(): void {
-		this.dataSource.data = JOB_DATA;
 		this.dataSource.sort = this.sort();
+		this.dataSource.filterPredicate = (row: JobRow, filter: string): boolean => {
+			switch (filter) {
+				case 'Bookmarked':
+					return row.application_status === 'Bookmarked';
+				case 'Applying':
+					return row.application_status === 'Applying';
+				case 'Applied':
+					return row.application_status === 'Applied';
+				case 'Interviewing':
+					return row.application_status === 'Interviewing';
+				case 'Negotiating':
+					return row.application_status === 'Negotiating';
+				case 'Accepted':
+					return row.application_status === 'Accepted';
+				default:
+					return true;
+			}
+
+		}
 	}
 
 	onOptionalColumnsChange($index: number, checked: boolean) {
@@ -247,5 +273,9 @@ export class JobTracker implements AfterViewInit {
 			//
 		}
 		console.log(229, $event, data);
+	}
+
+	onTabClick(label: string): void {
+		this.dataSource.filter = label;
 	}
 }
