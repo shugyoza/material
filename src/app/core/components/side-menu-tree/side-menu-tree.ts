@@ -9,13 +9,13 @@ import { SideMenuFlatNode } from './side-menu-flat-node.interface';
 import { RouterLink } from '@angular/router';
 
 @Component({
-	selector: 'app-side-menu',
+	selector: 'app-side-menu-tree',
 	imports: [CdkTreeModule, MatButtonModule, MatIconModule, RouterLink],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	templateUrl: './side-menu.html',
-	styleUrl: './side-menu.scss',
+	templateUrl: './side-menu-tree.html',
+	styleUrl: './side-menu-tree.scss',
 })
-export class SideMenu {
+export class SideMenuTree {
 	tree = viewChild<CdkTree<SideMenuFlatNode>>(CdkTree);
 
 	childrenAccessor = (dataNode: SideMenuFlatNode) => {

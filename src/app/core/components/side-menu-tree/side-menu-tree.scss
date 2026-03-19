@@ -2,9 +2,14 @@
 	display: flex;
 	align-items: flex-start;
 	width: 100%;
-	background-color: white;
 	gap: 0.5rem;
 	padding: 0.5rem;
+
+	button {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
 
 	.side-menu-tree-node-text {
 		width: 100%;
