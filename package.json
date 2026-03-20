@@ -39,6 +39,7 @@
 		"@angular/build": "^20.0.2",
 		"@angular/cli": "^20.0.2",
 		"@angular/compiler-cli": "^20.0.0",
+		"@types/crypto-js": "^4.2.2",
 		"@types/jasmine": "~5.1.0",
 		"angular-eslint": "^20.5.0",
 		"eslint": "8.57.1",
