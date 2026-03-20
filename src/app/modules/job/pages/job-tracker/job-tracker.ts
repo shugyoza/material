@@ -141,14 +141,17 @@ export class JobTracker implements AfterViewInit {
 
 	readonly dataSource = new MatTableDataSource<JobRow>();
 
-	readonly jobs$: Observable<MyHttpResponse<JobRow[]> | null> = this._httpService.getJobs().pipe(
-		catchError(() => of(null)),
-		tap(response => {
-			this.dataSource.data = response?.body.data ?? []
-		})
-	);
+	readonly jobs$: Observable<MyHttpResponse<JobRow[]> | null> =
+		this._httpService.getJobs().pipe(
+			catchError(() => of(null)),
+			tap(response => {
+				this.dataSource.data = response?.body.data ?? [];
+			})
+		);
 
-	readonly jobs = toSignal<MyHttpResponse<JobRow[]> | null>(this.jobs$, { initialValue: null })
+	readonly jobs = toSignal<MyHttpResponse<JobRow[]> | null>(this.jobs$, {
+		initialValue: null,
+	});
 
 	readonly optionalColumns = signal([
 		{ key: 'min_salary', label: 'Min. Salary', selected: false },
@@ -175,20 +178,44 @@ export class JobTracker implements AfterViewInit {
 		const jobs = this.jobs()?.body.data ?? [];
 
 		return [
-			{ badge: jobs.filter(job => job.application_status === 'Bookmarked').length, label: 'Bookmarked' },
-			{ badge: jobs.filter(job => job.application_status === 'Applying').length, label: 'Applying' },
-			{ badge: jobs.filter(job => job.application_status === 'Applied').length, label: 'Applied' },
-			{ badge: jobs.filter(job => job.application_status === 'Interviewing').length, label: 'Interviewing' },
-			{ badge: jobs.filter(job => job.application_status === 'Negotiating').length, label: 'Negotiating' },
-			{ badge: jobs.filter(job => job.application_status === 'Accepted').length, label: 'Accepted' },
-		]
+			{
+				badge: jobs.filter(job => job.application_status === 'Bookmarked')
+					.length,
+				label: 'Bookmarked',
+			},
+			{
+				badge: jobs.filter(job => job.application_status === 'Applying').length,
+				label: 'Applying',
+			},
+			{
+				badge: jobs.filter(job => job.application_status === 'Applied').length,
+				label: 'Applied',
+			},
+			{
+				badge: jobs.filter(job => job.application_status === 'Interviewing')
+					.length,
+				label: 'Interviewing',
+			},
+			{
+				badge: jobs.filter(job => job.application_status === 'Negotiating')
+					.length,
+				label: 'Negotiating',
+			},
+			{
+				badge: jobs.filter(job => job.application_status === 'Accepted').length,
+				label: 'Accepted',
+			},
+		];
 	});
 
 	readonly groupBy = signal<null | 'Status'>(null);
 
 	ngAfterViewInit(): void {
 		this.dataSource.sort = this.sort();
-		this.dataSource.filterPredicate = (row: JobRow, filter: string): boolean => {
+		this.dataSource.filterPredicate = (
+			row: JobRow,
+			filter: string
+		): boolean => {
 			switch (filter) {
 				case 'Bookmarked':
 					return row.application_status === 'Bookmarked';
@@ -205,8 +232,7 @@ export class JobTracker implements AfterViewInit {
 				default:
 					return true;
 			}
-
-		}
+		};
 	}
 
 	onOptionalColumnsChange($index: number, checked: boolean) {

@@ -8,9 +8,9 @@
 	{{ tab.label }}
 </button>
 } @else {
-<button 
-    matButton="elevated" 
-	[value]="$index" 
+<button
+	matButton="elevated"
+	[value]="$index"
 	(click)="tabClick.emit(tab.label)">
 	{{ tab.label }}
 </button>

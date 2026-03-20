@@ -1,6 +1,9 @@
 <section class="top-section">
 	<span>
-		<app-tab-group [tabs]="stepLabels()" class="step-tab-group" (tabClick)="onTabClick($event)" />
+		<app-tab-group
+			[tabs]="stepLabels()"
+			class="step-tab-group"
+			(tabClick)="onTabClick($event)" />
 		<button mat-icon-button (click)="dataSource.filter = ''">
 			<mat-icon>refresh</mat-icon>
 		</button>

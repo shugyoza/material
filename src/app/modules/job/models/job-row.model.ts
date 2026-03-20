@@ -11,5 +11,5 @@ export interface JobRow {
 	follow_up_date?: string[] | Date[];
 	excitement?: number;
 	url?: string;
-	description?: string
+	description?: string;
 }

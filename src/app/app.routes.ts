@@ -13,7 +13,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'settings',
-		loadComponent: () => 
+		loadComponent: () =>
 			import('./core/components/settings/settings').then(m => m.Settings),
 	},
 	{
