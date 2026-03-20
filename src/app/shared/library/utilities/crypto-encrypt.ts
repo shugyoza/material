@@ -1,6 +1,6 @@
 import * as CryptoJS from 'crypto-js';
 import { isString } from '../type-guards/is-string';
-import { isPlainObject } from '../type-guards/is-object';
+import { isPlainObject } from '../type-guards/is-plain-object';
 
 export function encrypt(value: unknown, key: string): string | null {
 	if (isString(value)) {
