@@ -57,7 +57,16 @@
 	<ng-container cdkColumnDef="job_position">
 		<th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Job Position</th>
 		<td cdk-cell *cdkCellDef="let row" class="cdk-header-cell-align-start">
-			{{ row.job_position }}
+			<mat-form-field>
+				<input
+					matInput
+					#jobPositionInputRef
+					[class.input-btn]="!(jobPositionInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(jobPositionInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.job_position"
+					(click)="onClick($event)"
+					(blur)="jobPositionInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
 		</td>
 	</ng-container>
 
@@ -69,7 +78,18 @@
 			class="cdk-header-cell-align-start">
 			Company
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.company }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#companyInputRef
+					[class.input-btn]="!(companyInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(companyInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.company"
+					(click)="onClick($event)"
+					(blur)="companyInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="min_salary">
@@ -80,7 +100,18 @@
 			class="cdk-header-cell-align-start">
 			Min. Salary
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.min_salary }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#minSalaryInputRef
+					[class.input-btn]="!(minSalaryInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(minSalaryInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.min_salary"
+					(click)="onClick($event)"
+					(blur)="minSalaryInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="max_salary">
@@ -91,7 +122,18 @@
 			class="cdk-header-cell-align-start">
 			Max. Salary
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.max_salary }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#maxSalaryInputRef
+					[class.input-btn]="!(maxSalaryInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(maxSalaryInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.max_salary"
+					(click)="onClick($event)"
+					(blur)="maxSalaryInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="job_location">
@@ -102,7 +144,18 @@
 			class="cdk-header-cell-align-start">
 			Location
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.job_location }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#locationInputRef
+					[class.input-btn]="!(locationInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(locationInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.job_location"
+					(click)="onClick($event)"
+					(blur)="locationInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="application_status">
@@ -113,7 +166,18 @@
 			class="cdk-header-cell-align-start">
 			Status
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.application_status }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#applicationStatusInputRef
+					[class.input-btn]="!(applicationStatusInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(applicationStatusInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.application_status"
+					(click)="onClick($event)"
+					(blur)="applicationStatusInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="posted_date">
@@ -124,7 +188,18 @@
 			class="cdk-header-cell-align-start">
 			Date Posted
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.posted_date }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#postedDateInputRef
+					[class.input-btn]="!(postedDateInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(postedDateInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.posted_date"
+					(click)="onClick($event)"
+					(blur)="postedDateInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="save_date">
@@ -135,7 +210,18 @@
 			class="cdk-header-cell-align-start">
 			Date Saved
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.save_date | myDate }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#saveDateInputRef
+					[class.input-btn]="!(saveDateInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(saveDateInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.save_date | myDate"
+					(click)="onClick($event)"
+					(blur)="saveDateInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="deadline_date">
@@ -146,7 +232,18 @@
 			class="cdk-header-cell-align-start">
 			Deadline
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.deadline_date | myDate }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#deadlineDateInputRef
+					[class.input-btn]="!(deadlineDateInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(deadlineDateInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.deadline_date | myDate"
+					(click)="onClick($event)"
+					(blur)="deadlineDateInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="applied_date">
@@ -157,7 +254,18 @@
 			class="cdk-header-cell-align-start">
 			Date Applied
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.applied_date | myDate }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#appliedDateInputRef
+					[class.input-btn]="!(appliedDateInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(appliedDateInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.applied_date | myDate"
+					(click)="onClick($event)"
+					(blur)="appliedDateInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="follow_up_date">
@@ -168,7 +276,18 @@
 			class="cdk-header-cell-align-start">
 			Follow Up
 		</th>
-		<td cdk-cell *cdkCellDef="let row">{{ row.follow_up_date | myDate }}</td>
+		<td cdk-cell *cdkCellDef="let row">
+			<mat-form-field>
+				<input
+					matInput
+					#followUpDateInputRef
+					[class.input-btn]="!(followUpDateInputRef.dataset['mode'] === 'edit')"
+					[attr.type]="!(followUpDateInputRef.dataset['mode'] === 'edit') ? 'button' : 'text'"
+					[value]="row.follow_up_date | myDate"
+					(click)="onClick($event)"
+					(blur)="followUpDateInputRef.dataset['mode'] = 'view'" />
+			</mat-form-field>
+		</td>
 	</ng-container>
 
 	<ng-container cdkColumnDef="excitement">

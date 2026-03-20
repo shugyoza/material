@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, Observable, of, tap } from 'rxjs';
+import { MatInputModule } from '@angular/material/input';
 
 import { MyDatePipe } from '../../../../shared/library/pipes/my-date.pipe/my-date-pipe';
 import { TabGroup } from '../../../../shared/library/components/tab-group/tab-group';
@@ -28,87 +29,6 @@ import { TabGroup } from '../../../../shared/library/components/tab-group/tab-gr
 import { JobRow } from '../../models/job-row.model';
 import { HttpService } from '../../services/http.service';
 import { MyHttpResponse } from '../../../../shared/library/models/my-http-response.model';
-
-const JOB_DATA: JobRow[] = [
-	{
-		job_id: 1,
-		job_position: 'Software Engineer',
-		company: 'Google',
-		max_salary: 100000,
-		job_location: 'Mountain View, CA',
-		application_status: 'Applied',
-		save_date: new Date('2021-01-01'),
-		deadline_date: new Date('2021-01-01'),
-		applied_date: new Date('2021-01-01'),
-		follow_up_date: [new Date('2021-01-01')],
-		excitement: 3.5,
-	},
-	{
-		job_id: 2,
-		job_position: 'Software Engineer',
-		company: 'Meta',
-		max_salary: 100000,
-		job_location: 'Menlo Park, CA',
-		application_status: 'Interviewing',
-		save_date: new Date('2021-01-01'),
-		deadline_date: new Date('2021-01-01'),
-		applied_date: new Date('2021-01-01'),
-		follow_up_date: [new Date('2021-01-01')],
-		excitement: 3.5,
-	},
-	{
-		job_id: 3,
-		job_position: 'Software Engineer',
-		company: 'Netflix',
-		max_salary: 100000,
-		job_location: 'San Jose, CA',
-		application_status: 'Applying',
-		save_date: new Date('2021-01-01'),
-		deadline_date: new Date('2021-01-01'),
-		applied_date: new Date('2021-01-01'),
-		follow_up_date: [new Date('2021-01-01')],
-		excitement: 3.5,
-	},
-	{
-		job_id: 4,
-		job_position: 'Software Engineer',
-		company: 'Yahoo',
-		max_salary: 100000,
-		job_location: 'Menlo Park, CA',
-		application_status: 'Interviewing',
-		save_date: new Date('2021-01-01'),
-		deadline_date: new Date('2021-01-01'),
-		applied_date: new Date('2021-01-01'),
-		follow_up_date: [new Date('2021-01-01')],
-		excitement: 3.5,
-	},
-	{
-		job_id: 5,
-		job_position: 'Software Engineer',
-		company: 'Linkedin',
-		max_salary: 100000,
-		job_location: 'San Jose, CA',
-		application_status: 'Applying',
-		save_date: new Date('2021-01-01'),
-		deadline_date: new Date('2021-01-01'),
-		applied_date: new Date('2021-01-01'),
-		follow_up_date: [new Date('2021-01-01')],
-		excitement: 3.5,
-	},
-	{
-		job_id: 6,
-		job_position: 'Software Engineer',
-		company: 'Adobe',
-		max_salary: 100000,
-		job_location: 'San Jose, CA',
-		application_status: 'Negotiating',
-		save_date: new Date('2021-01-01'),
-		deadline_date: new Date('2021-01-01'),
-		applied_date: new Date('2021-01-01'),
-		follow_up_date: [new Date('2021-01-01')],
-		excitement: 3.5,
-	},
-];
 
 @Component({
 	selector: 'app-job-tracker',
@@ -119,6 +39,7 @@ const JOB_DATA: JobRow[] = [
 		MatIconModule,
 		MatCardModule,
 		MatFormFieldModule,
+		MatInputModule,
 		MatListModule,
 		MatSortModule,
 		CdkMenuModule,
@@ -303,5 +224,18 @@ export class JobTracker implements AfterViewInit {
 
 	onTabClick(label: string): void {
 		this.dataSource.filter = label;
+	}
+
+	onClick($event: Event): void {
+		const target = $event.target as HTMLElement;
+		const mode = target.dataset['mode'];
+
+		const is = {
+			view: !mode || mode === 'view',
+			edit: !!mode && mode === 'edit',
+		};
+
+		const toggled = is.view ? 'edit' : 'view';
+		target.dataset['mode'] = toggled;
 	}
 }

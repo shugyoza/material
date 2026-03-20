@@ -5,6 +5,22 @@ table {
 }
 
 :host {
+	@include mat.form-field-overrides(
+		(
+			filled-container-color: transparent,
+		)
+	);
+
+	input {
+		text-align: left;
+	}
+
+	mat-form-field {
+		height: 5rem;
+	}
+}
+
+:host {
 	.star-rating {
 		@include mat.icon-overrides(
 			(
