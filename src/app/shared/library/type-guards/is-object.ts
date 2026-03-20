@@ -16,6 +16,7 @@ export function isPlainObject(value: unknown): value is object {
 		not.string &&
 		not.number &&
 		not.date &&
-		typeof value === 'object'
+		typeof value === 'object' &&
+		value === Object(value)
 	);
 }
