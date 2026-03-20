@@ -40,6 +40,15 @@ html,
 body {
 	height: 100%;
 }
+
+// reset button default styling
+button,
+.input-btn {
+	border: unset;
+	background-color: unset;
+	text-align: center;
+}
+
 body {
 	margin: 0;
 	font-family: Roboto, 'Helvetica Neue', sans-serif;
