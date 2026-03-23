@@ -11,7 +11,7 @@ import { MyHttpResponse } from '../../../shared/library/models/my-http-response.
 export class HttpService {
 	private readonly http = inject(HttpClient);
 
-	getJobs(): Observable<MyHttpResponse<JobRow[]>> {
+	fetchJobs(): Observable<MyHttpResponse<JobRow[]>> {
 		const response$ = this.http.get<MyHttpResponse<JobRow[]>>(
 			'/mock/job/jobs.json'
 		);
