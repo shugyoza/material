@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Add a New Job Post</h2>
+<mat-dialog-content class="new-job-dialog-content" [formGroup]="newJob">
+	<mat-form-field>
+		<mat-label>Job Title</mat-label>
+		<input matInput formControlName="job_position" cdkFocusInitial />
+	</mat-form-field>
+
+	<mat-form-field>
+		<mat-label>URL for Original Posting</mat-label>
+		<input matInput formControlName="url" />
+	</mat-form-field>
+
+	<mat-form-field>
+		<mat-label>Company Name</mat-label>
+		<input matInput formControlName="company" />
+	</mat-form-field>
+
+	<mat-form-field>
+		<mat-label>Location</mat-label>
+		<input matInput formControlName="job_location" />
+	</mat-form-field>
+
+	<mat-form-field>
+		<mat-label>Job Description</mat-label>
+		<textarea matInput formControlName="description"></textarea>
+	</mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button matButton [mat-dialog-close]="{ continue: false }">Cancel</button>
+	<button
+		matButton
+		[mat-dialog-close]="{ continue: true, output: newJob.value}">
+		Save
+	</button>
+</mat-dialog-actions>
