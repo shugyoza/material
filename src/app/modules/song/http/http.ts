@@ -16,7 +16,6 @@ export class Http {
 	getTodos() {
 		const response$ = this._http.get('api/dev/todos');
 
-		response$.subscribe(val => console.log(19, val));
 		return response$;
 	}
 }
