@@ -30,6 +30,7 @@ import { JobService } from '../../services/job.service/job.service';
 import { AddNewJob } from './components/add-new-job/add-new-job';
 import { MyDialog } from '../../../../core/services/dialog/dialog';
 import { IndexedDbService } from '../../../../core/services/indexed-db.service/indexed-db.service';
+import { JobApplicationStatus } from '../../enums/job-application-status.enum';
 
 @Component({
 	selector: 'app-job-tracker',
@@ -105,34 +106,46 @@ export class JobTracker implements AfterViewInit {
 		map(jobs => {
 			return [
 				{
-					badge: jobs.filter(job => job.application_status === 'Bookmarked')
-						.length,
-					label: 'Bookmarked',
+					badge: jobs.filter(
+						job => job.application_status === JobApplicationStatus.BOOKMARKED
+					).length,
+					label: JobApplicationStatus.BOOKMARKED,
 				},
 				{
-					badge: jobs.filter(job => job.application_status === 'Applying')
-						.length,
-					label: 'Applying',
+					badge: jobs.filter(
+						job => job.application_status === JobApplicationStatus.APPLYING
+					).length,
+					label: JobApplicationStatus.APPLYING,
 				},
 				{
-					badge: jobs.filter(job => job.application_status === 'Applied')
-						.length,
-					label: 'Applied',
+					badge: jobs.filter(
+						job => job.application_status === JobApplicationStatus.APPLIED
+					).length,
+					label: JobApplicationStatus.APPLIED,
 				},
 				{
-					badge: jobs.filter(job => job.application_status === 'Interviewing')
-						.length,
-					label: 'Interviewing',
+					badge: jobs.filter(
+						job => job.application_status === JobApplicationStatus.INTERVIEWING
+					).length,
+					label: JobApplicationStatus.INTERVIEWING,
 				},
 				{
-					badge: jobs.filter(job => job.application_status === 'Negotiating')
-						.length,
-					label: 'Negotiating',
+					badge: jobs.filter(
+						job => job.application_status === JobApplicationStatus.NEGOTIATING
+					).length,
+					label: JobApplicationStatus.NEGOTIATING,
 				},
 				{
-					badge: jobs.filter(job => job.application_status === 'Accepted')
-						.length,
-					label: 'Accepted',
+					badge: jobs.filter(
+						job => job.application_status === JobApplicationStatus.ACCEPTED
+					).length,
+					label: JobApplicationStatus.ACCEPTED,
+				},
+				{
+					badge: jobs.filter(
+						job => job.application_status === JobApplicationStatus.ARCHIVED
+					).length,
+					label: JobApplicationStatus.ARCHIVED,
 				},
 			];
 		})
@@ -158,22 +171,24 @@ export class JobTracker implements AfterViewInit {
 			row: JobRow,
 			filter: string
 		): boolean => {
-			switch (filter) {
-				case 'Bookmarked':
-					return row.application_status === 'Bookmarked';
-				case 'Applying':
-					return row.application_status === 'Applying';
-				case 'Applied':
-					return row.application_status === 'Applied';
-				case 'Interviewing':
-					return row.application_status === 'Interviewing';
-				case 'Negotiating':
-					return row.application_status === 'Negotiating';
-				case 'Accepted':
-					return row.application_status === 'Accepted';
-				default:
-					return true;
-			}
+			const result: Record<string, boolean> = {
+				[JobApplicationStatus.BOOKMARKED]:
+					row.application_status === JobApplicationStatus.BOOKMARKED,
+				[JobApplicationStatus.APPLYING]:
+					row.application_status === JobApplicationStatus.APPLYING,
+				[JobApplicationStatus.APPLIED]:
+					row.application_status === JobApplicationStatus.APPLIED,
+				[JobApplicationStatus.INTERVIEWING]:
+					row.application_status === JobApplicationStatus.INTERVIEWING,
+				[JobApplicationStatus.NEGOTIATING]:
+					row.application_status === JobApplicationStatus.NEGOTIATING,
+				[JobApplicationStatus.ACCEPTED]:
+					row.application_status === JobApplicationStatus.ACCEPTED,
+				[JobApplicationStatus.ARCHIVED]:
+					row.application_status === JobApplicationStatus.ARCHIVED,
+			};
+
+			return result[filter] ?? true;
 		};
 	}
 
