@@ -19,16 +19,17 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { filter, from, map, Observable, of, switchMap } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
+import { HttpStatusCode } from '@angular/common/http';
 
 import { MyDatePipe } from '../../../../shared/library/pipes/my-date.pipe/my-date-pipe';
 import { TabGroup } from '../../../../shared/library/components/tab-group/tab-group';
-
 import { JobRow } from '../../models/job-row.model';
-import { HttpService } from '../../services/http.service';
-import { MyHttpResponse } from '../../../../shared/library/models/my-http-response.model';
+import { JobService } from '../../services/job.service/job.service';
+import { AddNewJob } from './components/add-new-job/add-new-job';
+import { MyDialog } from '../../../../core/services/dialog/dialog';
+import { IndexedDbService } from '../../../../core/services/indexed-db.service/indexed-db.service';
 
 @Component({
 	selector: 'app-job-tracker',
@@ -54,25 +55,30 @@ import { MyHttpResponse } from '../../../../shared/library/models/my-http-respon
 	styleUrl: './job-tracker.scss',
 })
 export class JobTracker implements AfterViewInit {
-	private readonly _httpService = inject(HttpService);
+	private readonly _indexedDbService = inject(IndexedDbService);
+
+	private readonly _jobService = inject(JobService);
+
+	private readonly _dialogService = inject(MyDialog);
 
 	readonly sort = viewChild(MatSort);
+
+	readonly sortedBy = signal<Sort>({
+		active: 'job_id',
+		direction: 'desc',
+	});
+
+	readonly db = computed(() => this._indexedDbService.db());
+
+	readonly online = this._jobService.online;
+
+	readonly edit = signal<boolean>(false);
 
 	readonly stars = signal<(0 | 0.5 | 1)[]>([0, 0, 0, 0, 0]);
 
 	readonly dataSource = new MatTableDataSource<JobRow>();
 
-	readonly jobs$: Observable<MyHttpResponse<JobRow[]> | null> =
-		this._httpService.getJobs().pipe(
-			catchError(() => of(null)),
-			tap(response => {
-				this.dataSource.data = response?.body.data ?? [];
-			})
-		);
-
-	readonly jobs = toSignal<MyHttpResponse<JobRow[]> | null>(this.jobs$, {
-		initialValue: null,
-	});
+	jobs$: Observable<JobRow[]> = this._getJobs();
 
 	readonly optionalColumns = signal([
 		{ key: 'min_salary', label: 'Min. Salary', selected: false },
@@ -95,41 +101,56 @@ export class JobTracker implements AfterViewInit {
 		return ['job_position', 'company'].concat(optionalColumns);
 	});
 
-	readonly stepLabels = computed(() => {
-		const jobs = this.jobs()?.body.data ?? [];
-
-		return [
-			{
-				badge: jobs.filter(job => job.application_status === 'Bookmarked')
-					.length,
-				label: 'Bookmarked',
-			},
-			{
-				badge: jobs.filter(job => job.application_status === 'Applying').length,
-				label: 'Applying',
-			},
-			{
-				badge: jobs.filter(job => job.application_status === 'Applied').length,
-				label: 'Applied',
-			},
-			{
-				badge: jobs.filter(job => job.application_status === 'Interviewing')
-					.length,
-				label: 'Interviewing',
-			},
-			{
-				badge: jobs.filter(job => job.application_status === 'Negotiating')
-					.length,
-				label: 'Negotiating',
-			},
-			{
-				badge: jobs.filter(job => job.application_status === 'Accepted').length,
-				label: 'Accepted',
-			},
-		];
-	});
+	readonly stepLabels$ = this.jobs$.pipe(
+		map(jobs => {
+			return [
+				{
+					badge: jobs.filter(job => job.application_status === 'Bookmarked')
+						.length,
+					label: 'Bookmarked',
+				},
+				{
+					badge: jobs.filter(job => job.application_status === 'Applying')
+						.length,
+					label: 'Applying',
+				},
+				{
+					badge: jobs.filter(job => job.application_status === 'Applied')
+						.length,
+					label: 'Applied',
+				},
+				{
+					badge: jobs.filter(job => job.application_status === 'Interviewing')
+						.length,
+					label: 'Interviewing',
+				},
+				{
+					badge: jobs.filter(job => job.application_status === 'Negotiating')
+						.length,
+					label: 'Negotiating',
+				},
+				{
+					badge: jobs.filter(job => job.application_status === 'Accepted')
+						.length,
+					label: 'Accepted',
+				},
+			];
+		})
+	);
 
 	readonly groupBy = signal<null | 'Status'>(null);
+
+	private _getJobs(): Observable<JobRow[]> {
+		return this._jobService.jobsResponse$.pipe(
+			map(response => {
+				const data = response?.body.data ?? [];
+
+				this.dataSource.data = data;
+
+				return data;
+			})
+		);
+	}
 
 	ngAfterViewInit(): void {
 		this.dataSource.sort = this.sort();
@@ -237,5 +258,43 @@ export class JobTracker implements AfterViewInit {
 
 		const toggled = is.view ? 'edit' : 'view';
 		target.dataset['mode'] = toggled;
+	}
+
+	addAJob(): void {
+		const options = {
+			panelClass: 'custom-dialog-style',
+			autoFocus: true,
+			hasBackdrop: true,
+			backdropClass: 'translucent-backdrop',
+		};
+		const storeName = 'jobs';
+
+		// updata jobsResponse$ in service
+		this._jobService.jobsResponse$ = this._dialogService
+			.openDialog<AddNewJob, typeof options>(AddNewJob, options)
+			.pipe(
+				filter(response => !!response && response.continue === true),
+				map(response => response.data),
+				switchMap(job => {
+					const added = this._indexedDbService.addOne(storeName, job);
+
+					if (!added) {
+						return of(null);
+					}
+
+					return from(added);
+				}),
+				filter(response => {
+					return (
+						!!response &&
+						response.status.ok &&
+						response.status.code === HttpStatusCode.Created &&
+						!!response.body.data.job_id
+					);
+				}),
+				switchMap(() => this._jobService.getJobs())
+			);
+		// update jobs$ in this component in reference to the updated jobsResponse$ in the service
+		this.jobs$ = this._getJobs();
 	}
 }

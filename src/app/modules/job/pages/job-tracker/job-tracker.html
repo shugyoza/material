@@ -1,9 +1,10 @@
-@let displayedColumns = columns();
+@let displayedColumns = columns(); @if (jobs$ | async) {}
 
 <section class="top-section">
 	<span>
+		@let stepLabels = (stepLabels$ | async) ??[];
 		<app-tab-group
-			[tabs]="stepLabels()"
+			[tabs]="stepLabels"
 			class="step-tab-group"
 			(tabClick)="onTabClick($event)" />
 		<button mat-icon-button (click)="dataSource.filter = ''">
@@ -58,6 +59,8 @@
 	[dataSource]="dataSource"
 	matSort
 	multiTemplateDataRows
+	[matSortActive]="sortedBy().active"
+	[matSortDirection]="sortedBy().direction"
 	(matSortChange)="onMatSortChange($event)">
 	<ng-container cdkColumnDef="job_position">
 		<th cdk-header-cell *cdkHeaderCellDef mat-sort-header>Job Position</th>

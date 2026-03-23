@@ -25,5 +25,13 @@ export class AddNewJob {
 		company: new FormControl<null | string>(null),
 		job_location: new FormControl<null | string>(null),
 		description: new FormControl<null | string>(null),
+		application_status: new FormControl<null | string>('Bookmarked'),
+		min_salary: new FormControl<null | number>(null),
+		max_salary: new FormControl<null | number>(null),
+		save_date: new FormControl<null | string>(null),
+		deadline_date: new FormControl<null | string>(null),
+		applied_date: new FormControl<null | string>(null),
+		follow_up_date: new FormControl<null | string[]>(null),
+		excitement: new FormControl<null | number>(0),
 	});
 }
