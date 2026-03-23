@@ -27,9 +27,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
 	<button matButton [mat-dialog-close]="{ continue: false }">Cancel</button>
-	<button
-		matButton
-		[mat-dialog-close]="{ continue: true, output: newJob.value}">
+	<button matButton [mat-dialog-close]="{ continue: true, data: newJob.value}">
 		Save
 	</button>
 </mat-dialog-actions>
