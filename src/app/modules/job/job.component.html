@@ -1,5 +1,5 @@
-@let isOnline = online();
-@let label = isOnline ? 'online' : 'offline';
+@let online = online$ | async;
+@let label = online ? 'online' : 'offline';
 
 <app-tab-nav-bar [tabs]="tabs()" />
 <button
@@ -10,7 +10,7 @@
 	matTooltipPosition="above"
 	(click)="toggleDbConnection()">
 	<mat-icon>
-		{{ isOnline ? 'cloud' : 'cloud_off' }}
+		{{ online ? 'cloud' : 'cloud_off' }}
 	</mat-icon>
 </button>
 

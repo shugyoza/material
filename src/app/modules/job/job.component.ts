@@ -1,8 +1,9 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AsyncPipe } from '@angular/common';
 
 import { JobService } from './services/job.service/job.service';
 import { TabNavBar } from '../../shared/library/tab-nav-bar/tab-nav-bar';
@@ -14,6 +15,7 @@ import { Tab } from '../../shared/library/tab-nav-bar/tab.interface';
 		MatButtonModule,
 		MatIconModule,
 		MatTooltipModule,
+		AsyncPipe,
 		TabNavBar,
 		RouterOutlet,
 	],
@@ -23,13 +25,15 @@ import { Tab } from '../../shared/library/tab-nav-bar/tab.interface';
 export class JobComponent {
 	private readonly _jobService = inject(JobService);
 
-	readonly online = computed<boolean>(() => this._jobService.online());
+	readonly online$ = this._jobService.online$;
 
 	readonly tabs = signal<Tab[]>([
 		{ label: 'Job Tracker', path: '/job/job-tracker' },
 	]);
 
 	toggleDbConnection(): void {
-		this._jobService.online.update(online => !online);
+		const online = this._jobService.online.value;
+
+		this._jobService.online.setValue(!online);
 	}
 }

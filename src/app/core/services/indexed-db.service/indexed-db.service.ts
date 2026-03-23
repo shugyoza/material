@@ -139,7 +139,6 @@ export class IndexedDbService {
 
 	fetchData<ROWS>(storeName: string): Promise<MyHttpResponse<ROWS>> {
 		const db = this.db()!;
-		console.log({ db });
 
 		return new Promise<MyHttpResponse<ROWS>>((resolve, reject) => {
 			// Open our object store and then get a cursor list of all the different data items in the IDB to iterate through
