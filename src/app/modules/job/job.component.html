@@ -1,6 +1,17 @@
+@let isOnline = online();
+@let label = isOnline ? 'online' : 'offline';
+
 <app-tab-nav-bar [tabs]="tabs()" />
-<button mat-icon-button (click)="null">
-	<mat-icon>cloud</mat-icon>
+<button
+	mat-icon-button
+	[color]="'primary'"
+	[aria-label]="label"
+	[matTooltip]="label"
+	matTooltipPosition="above"
+	(click)="toggleDbConnection()">
+	<mat-icon>
+		{{ isOnline ? 'cloud' : 'cloud_off' }}
+	</mat-icon>
 </button>
 
 <router-outlet />
