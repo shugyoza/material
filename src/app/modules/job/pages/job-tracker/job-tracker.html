@@ -1,3 +1,5 @@
+@let displayedColumns = columns();
+
 <section class="top-section">
 	<span>
 		<app-tab-group
@@ -9,13 +11,16 @@
 		</button>
 	</span>
 	<div class="second-section">
-		<mat-select
-			class="group-by"
-			[value]="groupBy()"
-			(selectionChange)="groupBy.set($event.value)">
-			<mat-option value="null"> Group by: None </mat-option>
-			<mat-option value="Status"> Group by: Status </mat-option>
-		</mat-select>
+		<mat-form-field>
+			<mat-label>Group By: </mat-label>
+			<mat-select
+				class="group-by"
+				[value]="groupBy()"
+				(selectionChange)="groupBy.set($event.value)">
+				<mat-option [value]="null"> None </mat-option>
+				<mat-option value="Status"> Status </mat-option>
+			</mat-select>
+		</mat-form-field>
 		<button matButton="outlined" [cdkMenuTriggerFor]="columnSelections">
 			<mat-icon>view_column</mat-icon>
 			Columns
@@ -24,9 +29,9 @@
 			<mat-icon>menu</mat-icon>
 			Menu
 		</button>
-		<button matButton="filled">
+		<button matButton="filled" (click)="addAJob()">
 			<mat-icon>add_circle</mat-icon>
-			Add a New Job
+			Add a Job
 		</button>
 	</div>
 </section>
@@ -315,7 +320,7 @@
 	<ng-container cdkColumnDef="secondary">
 		<td
 			cdk-cell
-			[attr.colspan]="columns().length"
+			[attr.colspan]="displayedColumns.length"
 			*cdkCellDef="let row; let dataIndex = dataIndex;">
 			<!-- row.job_id exists in the ... display text -->
 		</td>
@@ -323,7 +328,7 @@
 
 	<tr
 		cdk-header-row
-		*cdkHeaderRowDef="columns(); sticky: true"
+		*cdkHeaderRowDef="displayedColumns; sticky: true"
 		class="sticky-header"></tr>
 
 	<!-- As we utilize multiTemplateDataRows directive for secondary row, the rowIndex reference should be dataIndex,
@@ -335,5 +340,5 @@
 
 	<tr
 		cdk-row
-		*cdkRowDef="let row; columns: columns(); let rowIndex = dataIndex"></tr>
+		*cdkRowDef="let row; columns: displayedColumns; let rowIndex = dataIndex"></tr>
 </table>
